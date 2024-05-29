@@ -119,7 +119,7 @@ from within the postgres cli change to drupal10:
 
 - ***Modify database setting***
 >```
->ALTER DATABASE drupal10;
+>ALTER DATABASE drupal10
 >SET bytea_output = 'escape';
 >\q
 >```
