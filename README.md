@@ -551,7 +551,7 @@ If this worked correctly, Blazegraph should respond with some XML letting us kno
 >```
 #### Install Solr:
 run following as root to extract and install solr:
-- ```sudo tar xzf solr-9.5.0.tgz solr-9.5.0/bin/install_solr_service.sh --strip-components=2```
+- ```sudo tar xzf solr-9.6.0.tgz solr-9.6.0/bin/install_solr_service.sh --strip-components=2```
 - ```sudo bash ./install_solr_service.sh solr-9.6.0.tgz -i /opt -d /var/solr -u solr -s solr -p 8983```
 
 ##### Runnig the above command will do the following:
