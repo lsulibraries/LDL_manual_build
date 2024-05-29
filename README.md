@@ -573,16 +573,25 @@ run following as root to extract and install solr:
 - ```sudo echo "fs.file-max = 65535" >> /etc/sysctl.conf```
 - ```sudo sysctl -p```
 
+#### make sure solr is running:
+- ```sudo systemctl status solr```
+
+- **If it was not running:**
+  - ```cd /opt/solr-9.6.0```
+  - ```bin/solr start```
+
+- ```sudo systemctl status solr```
 #### Create Solr Core
 
 - ```sudo mkdir -p /var/solr/data/islandora8```
 - ```sudo mkdir -p /var/solr/data/islandora8/conf```
 - ```cp /mnt/hgfs/shared/solr_9.x_config/* /var/solr/data/islandora8/conf/```
 - ```sudo chown -R solr:solr /var/solr```
-- ```cd /opt/solr```
+- ```cd /opt/solr-9.6.0```
 - ```sudo -u solr bin/solr create -c islandora8 -p 8983```
 
 **We will configure index via gui after site installed***
+
 
 # Crayfish microservices
 #### Adding this PPA to your system:
