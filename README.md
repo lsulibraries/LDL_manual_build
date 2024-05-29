@@ -577,7 +577,7 @@ run following as root to extract and install solr:
 
 - ```sudo mkdir -p /var/solr/data/islandora8```
 - ```sudo mkdir -p /var/solr/data/islandora8/conf```
-- ```cp /mnt/shared/solr_9.x_config/* /var/solr/data/islandora8/conf/```
+- ```cp /mnt/hgfs/shared/solr_9.x_config/* /var/solr/data/islandora8/conf/```
 - ```sudo chown -R solr:solr /var/solr```
 - ```cd /opt/solr```
 - ```sudo -u solr bin/solr create -c islandora8 -p 8983```
