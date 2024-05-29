@@ -590,7 +590,7 @@ run following as root to extract and install solr:
 - ```cd /opt/solr-9.6.0```
 - ```sudo -u solr bin/solr create -c islandora8 -p 8983```
 
-**We will configure index via gui after site installed***
+***We will configure index via gui after site installed***
 
 
 # Crayfish microservices
