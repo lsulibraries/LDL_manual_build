@@ -53,7 +53,7 @@ These commands should all be executed in sequence from within the vmware CLI:
 - ```mkdir /mnt/hgfs/``` 
 - ```sudo vmhgfs-fuse .host:/ /mnt/hgfs/ -o allow_other -o uid=1000```
 
-
+## Start the build:
 - execute in the vmware cli after shared folders are connected:
 - ```sh /mnt/hgfs/shared/scratch_1.sh```
 the above command runs a script containing the following:
