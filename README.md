@@ -111,8 +111,8 @@ from within the postgres cli change to drupal10:
 
 ***Grant privileges, Enable extension,Modify database setting***
 - ```sudo -u postgres psql```
-- connect to drupal10 database: ```/c drupal10```
 >```
+>\c drupal10
 >GRANT ALL PRIVILEGES ON DATABASE drupal10 TO drupal;
 >GRANT CREATE ON SCHEMA public TO drupal;
 >CREATE EXTENSION pg_trgm;
