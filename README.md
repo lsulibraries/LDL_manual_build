@@ -67,6 +67,7 @@ the above command runs a script containing the following:
  
 # Install php and postgresql:
 - ```sh /mnt/hgfs/shared/scratch_2.sh```
+
 the above command runs the following script the :
 >```
 >#!/bin/bash
