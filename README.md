@@ -155,9 +155,8 @@ scratch_3.sh contents:
 # Configure apache server settings:
 - ```sudo cp /mnt/hgfs/shared/ports.conf /etc/apache2/ports.conf```
 - ***Apache virtual host configuration***
-- We edit the default virtual host configuration file located in /etc/apache2/sites-available/ and /etc/apache2/sites-enabled/.
-- ```sudo cp /mnt/hgfs/shared/000-default-v1.conf /etc/apache2/sites-enabled/000-default.conf```
-- ```sudo cp /mnt/hgfs/shared/000-default-v1.conf /etc/apache2/sites-available/000-default.conf```
+  - ```sudo cp /mnt/hgfs/shared/000-default-v1.conf /etc/apache2/sites-enabled/000-default.conf```
+  - ```sudo cp /mnt/hgfs/shared/000-default-v1.conf /etc/apache2/sites-available/000-default.conf```
 - Copy command above edits the default virtual host configuration file located in /etc/apache2/sites-available/ and /etc/apache2/sites-enabled/.
 >```
 ><VirtualHost *:80>
