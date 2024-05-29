@@ -106,7 +106,6 @@ from within the postgres cli change to drupal10:
 >```
 >create database drupal10 encoding 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;
 >create user drupal with encrypted password 'drupal';
->/q
 >```
 
 ***Grant privileges, Enable extension,Modify database setting***
@@ -116,7 +115,6 @@ from within the postgres cli change to drupal10:
 >GRANT ALL PRIVILEGES ON DATABASE drupal10 TO drupal;
 >GRANT CREATE ON SCHEMA public TO drupal;
 >CREATE EXTENSION pg_trgm;
->\q
 >```
 
 - ***Modify database setting***
