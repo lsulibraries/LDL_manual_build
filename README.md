@@ -460,10 +460,9 @@ check here for link: https://github.com/Islandora/Syn/releases/ copy the link (i
 
 ### Adding the Syn Valve to Tomcat | Enable the Syn Valve for all of Tomcat:
 - ```sudo nano /opt/tomcat/conf/context.xml```
-Add this line before the closing tag:
+Add this line before the closing Context (</context>):
 >```
 >    <Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/>
-></Context>
 >```
 
 - ```sudo systemctl restart tomcat```
