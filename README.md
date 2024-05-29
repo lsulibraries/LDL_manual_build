@@ -125,6 +125,7 @@ from within the postgres cli change to drupal10:
 >```
 - ```sudo systemctl restart postgresql```
 - ***Editing pg_hba.conf for User Authentication in PostgreSQL***
+
 ```cp /mnt/hgfs/shared/pg_hba.conf /etc/postgresql/15/main/```
 - Adds the following authentication settings for PostgreSQL users and databases on localhost. Note: Do not copy the configurations below into the pg_hba.conf file, as the indentations are incorrect.
 >```
