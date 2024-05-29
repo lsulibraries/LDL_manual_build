@@ -176,7 +176,7 @@ scratch_3.sh contents:
 ***Now We create a Drupal virtual host configuration file using***
 - Copy over configuration from shared folder:
 
- - ```sudo cp /mnt/hgfs/shared/drupal-v1.conf /etc/apache2/sites-enabled/drupal.conf```
+ - ```sudo cp /mnt/hgfs/shared/drupal-v1.conf /etc/apache2/sites-available/drupal.conf```
 - Or paste following to /etc/apache2/sites-available/drupal.conf:
 
 ```sudo nano /etc/apache2/sites-available/drupal.conf```
