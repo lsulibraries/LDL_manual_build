@@ -265,10 +265,9 @@ press enter for all default user prompts
 type y for yes
 
 - ***install tomcat***
-find the tar.gz here: https://tomcat.apache.org/download-90.cgi
-copy the TOMCAT_TARBALL_LINK as of 09-06-23 it was: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz
-copy the TOMCAT_TARBALL_LINK as of 02-07-24 it was: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz
+- find the tar.gz here: https://tomcat.apache.org/download-90.cgi
 - ```sh /mnt/hgfs/shared/scratch_4.sh```
+
 The following shell script will execute the commands below:
 >```
 >#!/bin/bash
@@ -277,9 +276,11 @@ The following shell script will execute the commands below:
 >sudo mkdir tomcat
 >sudo wget -O tomcat.tar.gz https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.tar.gz
 >sudo tar -zxvf tomcat.tar.gz
->sudo mv /opt/apache-tomcat-9.0.85/* /opt/tomcat
+>sudo mv /opt/apache-tomcat-9.0.89/* /opt/tomcat
 >sudo chown -R tomcat:tomcat /opt/tomcat
 >```
+- Make sure to change the tomcat version in scrathc_4 in ```sudo mv /opt/apache-tomcat-9.0.89/* /opt/tomcat```
+
 scratch_5.sh (if the tomcat tarball link is different you must change the path in the script or run the commands in the scratch_5 alt section):
 
 - ```sh /mnt/hgfs/shared/scratch_5.sh```
