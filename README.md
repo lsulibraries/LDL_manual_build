@@ -952,7 +952,7 @@ Navigate to ```configuration -> access controll -> islandora access and select i
 - **Ensure you have set maxiumum file size**
    - we can do it at this point if where we're editing each mediaTypes 
    - Or **upload size and max post size settings.php:**
-     - ```sudo nano /etc/php/8.1/apache2/php.ini```
+     - ```sudo nano /etc/php/8.3/apache2/php.ini```
      - ```change post_max_size = 8M to post_max_size = 200M```
      - ```change upload_max_filesize = 8M to upload_max_filesize = 200M```
      - ```change max_file_uploads = 200 to an appropriate number (1000?)```
