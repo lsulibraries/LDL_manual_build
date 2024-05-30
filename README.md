@@ -949,12 +949,16 @@ Navigate to ```configuration -> access controll -> islandora access and select i
    - Example: for audio: field_media_audio_file
    - Except image, and specifically, field_media_image that file type is image
 
-- Ensure you have set maxiumum file size
+- **Ensure you have set maxiumum file size**
    - we can do it at this point if where we're editing each mediaTypes 
-   - might be doable in settings.php, when we setting flysystem to fedora
-   - might any settings that we define the destination such as apache php.ini
+   - Or **upload size and max post size settings.php:**
+     - ```sudo nano /etc/php/8.1/apache2/php.ini```
+     - ```change post_max_size = 8M to post_max_size = 200M```
+     - ```change upload_max_filesize = 8M to upload_max_filesize = 200M```
+     - ```change max_file_uploads = 200 to an appropriate number (1000?)```
 
 - restart apache and tomcat, daemon-reload, cache rebuild
+    - ```sudo systemctl restart apache2 tomcat```
 
 # re-islandora Workbench to be on V1.0.0:
 #### Remove dev version and install V1 cause dev version is not determined by workbench anymore:
