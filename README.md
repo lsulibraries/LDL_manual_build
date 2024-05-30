@@ -899,7 +899,6 @@ Some, we already configured in prerequsits, but we will make sure all the config
 #### Select default Flysystem:
 visit /admin/config/media/file-system to select the flysystem from the dropdown.
 
-
 # Run the migrations command and Enabling EVA Views:
 run the migration tagged with islandora  to populate some taxonomies.
 
@@ -922,32 +921,44 @@ run the migration tagged with islandora  to populate some taxonomies.
 #### group type:
 - Navigate to Groups -> create a group type
 
+#### Groups role and group role permissions:
+- **Create specific roles:**
+  - For administratiopn access create Admin, Admin Outside, and Admin Inside. Ensure each role has the appropriate admin permissions.
+
+  - You can also create different roles for members, content creators, or other specific roles, and assign these roles to specific users.
+
+- **Edit Group Type:**
+  - Go back to your Group type, and assign the individual admin role you created to that group type.
+
+- **Assign role to the user**:
+  - In Drupal, navigate to Admin > People to manage user roles:
+
+    - Assign the administrator role to your user.
+
+    - You can also assign users as content creators for specific group types. This way, they will only have access to the group types and groups they are assigned to, and will not have access to other group types or groups within those types.
+
 #### Set islandora access in access controllL 
 - Navigate to ```configuration -> access controll -> islandora access and select islandora_access```
 
-#### Create field for islandora access for islandora Content type:
+#### Create islandora access field for islandora Content type:
 - Navigate to ```structure -> content types -> repository item -> manage fields -> create a access terms -> type is Reference -> Reference type: Taxonomy term, Vocabulary: Islandora Access```
 
-#### Create field for islandora access for each Media types :
+#### Create islandora access field for each Media types :
 - Navigate to ```structure -> mediatypes -> edit one of the media types -> edit -> manage fields -> create a field -> create a access terms -> type is Reference -> Reference type = Islandora Access```
 
-#### Media types Access term:
-- for each media type we need to have access terms so we re use the one we created
+- For each media type, we need to have field access terms. We can reuse the access terms we have already created.
 
-Navigate to ```configuration -> access controll -> islandora access and select islandora_access -> select islandora_access```
+#### Select islandora access for each nodes and media:
+- Navigate to ```configuration -> access controll -> islandora access```
 
-#### Groups role and group role permissions:
-- Groups must be created with the Administrator role, insider and ousider, and individual user. 
-  - If not, the groups created will not be hidden from the administrator account. 
-- If you find yourself unable to delete a group type due to hidden groups 
-   - Edit the Roles under the group type and creat an Outsider Administrator Role that can see and delete individual groups 
+- Select islandora_access for the repository items content type and all media types.
+
 
 #### Fix the destination for each media type (Important for media ingestion for each media types):
 - Navigate ```Structure>Media types```
  
-- for each media type edit the field that type is file and set Upload destination to the Public files instead of fedora:
+- For each media type, edit the field where the type is file and set the Upload destination to Public files (for fedora-less system)
    - Example: for audio: field_media_audio_file
-   - Except image, and specifically, field_media_image that file type is image
 
 #### Ensure you have set maxiumum file size
 - **upload size and max post size settings.php:**
@@ -956,8 +967,10 @@ Navigate to ```configuration -> access controll -> islandora access and select i
   - ```change upload_max_filesize = 8M to upload_max_filesize = 200M```
   - ```change max_file_uploads = 200 to an appropriate number (1000?)```
 
-- restart apache and tomcat, daemon-reload, cache rebuild
+#### restart apache and tomcat, daemon-reload, cache rebuild
     - ```sudo systemctl restart apache2 tomcat```
+    - ```sudo systemctl daemon-reload```
+    - ```drush cr```
 
 # re-islandora Workbench to be on V1.0.0:
 #### Remove dev version and install V1 cause dev version is not determined by workbench anymore:
