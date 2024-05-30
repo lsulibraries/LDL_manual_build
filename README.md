@@ -1041,10 +1041,10 @@ Because we have custom fields that are not part of the default Drupal fields in 
 }
 ```
 
-  - **Create fields:**
-    - Navigate to configurations>delvelopment>add fields programmatically> under Content> copy json configuration for creating fields> Hit save Configuration
-    - Then select node from dropdown> Click Create fields now
-    - Json format for creating fields with different data types:
+    - **Create fields:**
+      - Navigate to configurations>delvelopment>add fields programmatically> under Content> copy json configuration for creating fields> Hit save Configuration
+      - Then select node from dropdown> Click Create fields now
+      - Json format for creating fields with different data types:
 
 ### 2. now run the workbench to ingest our content to the server:
    - ```cd islandora_workbench```
