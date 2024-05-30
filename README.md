@@ -919,11 +919,11 @@ run the migration tagged with islandora  to populate some taxonomies.
 - ```drush cr```
 
 # Group Configuration:
-#### Create 
 #### group type:
-- set available content and install group media and group media image and all:
+- Navigate to Groups -> create a group type
 
-Navigate to ```configuration -> access controll -> islandora access and select islandora_access```
+#### Set islandora access in access controllL 
+- Navigate to ```configuration -> access controll -> islandora access and select islandora_access```
 
 #### create a group:
 - Navigate to ```structure -> content types -> repository item -> manage fields -> create a access terms -> type is Reference -> Reference type: Taxonomy term, Vocabulary: Islandora Access```
