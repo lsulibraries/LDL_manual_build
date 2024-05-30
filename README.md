@@ -716,7 +716,8 @@ add activemq bin directory to default environment variable:
 #### ActiveMQ ConfigurationL(Important)
 ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the default tcp://127.0.0.1:61613, this will have to be set:
 - ```sudo nano /usr/share/activemq/conf/activemq.xml```
-- Inside the <transportConnectors> element, find the configuration for the STOMP transport connector and change the stomp url to 127.0.0.1:61613
+- Inside the <transportConnectors> element, find the configuration for the STOMP transport connector and change the stomp url from 0.0.0.0 to 127.0.0.1:61613
+- Keep the port and the rest.
 - ```name="stomp" uri="stomp://127.0.0.1:61613"```
 
 # 2. Karaf 
