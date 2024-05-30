@@ -703,7 +703,7 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 #### Set manual ActiveMQ as default ActiveMQ:
 add activemq bin directory to default environment variable:
 >```
->sudo ~/.bashrc
+>sudo nano ~/.bashrc
 >export PATH=$PATH:/usr/share/activemq/bin
 >source ~/.bashrc
 >```
