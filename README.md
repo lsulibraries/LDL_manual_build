@@ -1024,7 +1024,12 @@ Because we have custom fields that are not part of the default Drupal fields in 
   - **Enable modules:** ```drush en field_create field_create_from_json```
 
   - **Create a JSON configuration script to define fields with specific data types:**
-    - Check bellow json sample:
+
+  - **Create fields:**
+     - Navigate to configurations>delvelopment>add fields programmatically> under Content> copy json configuration for creating fields> Hit save Configuration
+     - Then select node from dropdown> Click Create fields now
+     - Json format for creating fields with different data types:
+  - **Example JSON syntax for creating fields:**
 ```json
 {
  "field_name": { # Machine name of the field
@@ -1040,12 +1045,6 @@ Because we have custom fields that are not part of the default Drupal fields in 
  }
 }
 ```
-
-    - **Create fields:**
-      - Navigate to configurations>delvelopment>add fields programmatically> under Content> copy json configuration for creating fields> Hit save Configuration
-      - Then select node from dropdown> Click Create fields now
-      - Json format for creating fields with different data types:
-
 ### 2. now run the workbench to ingest our content to the server:
    - ```cd islandora_workbench```
    - ```./workbench --config LDLingest.yml```
