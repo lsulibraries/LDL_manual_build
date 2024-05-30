@@ -904,6 +904,7 @@ visit /admin/config/media/file-system to select the flysystem from the dropdown.
 run the migration tagged with islandora  to populate some taxonomies.
 
 #### Run the migrations taged with islandora:
+- ```cd /opt/drupal/islandora-starter-site```
 - ```composer exec -- drush migrate:import --userid=1 --tag=islandora```
 
 #### Enabling EVA Views:
