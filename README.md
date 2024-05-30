@@ -974,9 +974,10 @@ run the migration tagged with islandora  to populate some taxonomies.
 
 # re-islandora Workbench to be on V1.0.0:
 #### Remove dev version and install V1 cause dev version is not determined by workbench anymore:
+```cd /opt/drupal/islandora-starter-site```
 - remove mjordan/islandora_workbench_integration from composer.json and update composer
-
-```composer update```
+```sudo composer update```
+#### Delete the old one:
 
 #### Re-install and enable(Running command bellow will get V1 ) 
 - ```sudo -u www-data composer require mjordan/islandora_workbench_integration```
