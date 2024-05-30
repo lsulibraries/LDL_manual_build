@@ -914,7 +914,7 @@ run the migration tagged with islandora  to populate some taxonomies.
 - ```cd /opt/drupal/islandora-starter-site```
 - ```sudo -u www-data composer require digitalutsc/islandora_group```
 - ```sudo -u www-data composer require 'drupal/rules:^3.0@alpha'```
-- ```drush en -y islandora_group gnode```
+- ```drush en -y islandora_group gnode rules```
 #### Rebuild Cache:
 - ```drush cr```
 
