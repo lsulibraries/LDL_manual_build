@@ -1008,6 +1008,40 @@ mimic_implicite for postgresql error occures while creating new content, After g
 Need to be decided later
 
 # Run workbench ingest:
-- after running our transformation tools, we now run the workbench to ingest our content to the server:
+- after running our transformation tools, we are ready to ingest. to do that you can go over steps bellow:
+
+### 1. Create custom fields in our dataset: 
+Because we have our custome fields that are not part of default drupal fields in the database tables, so workbench will error that **Headers require a amatching Drupal fields name**. Therefore we need to create theme in any of bellow ways:
+
+- **On GUI (Slow process, not recommended):**
+  - Navigate to structure>Content types> Repository items> manage fields> add field
+ 
+- **Batch ingest fields with json configuration scrips:**
+  - **Install the field_create Module:** 
+```sudo -u www-data composer require 'drupal/field_create:^1.0'```
+
+  - **Enable modules:** ```drush en field_create field_create_from_json```
+
+  - **Create fields:**
+    - Navigate to configurations>delvelopment>add fields programmatically> under Content> copy json configuration for creating fields> Hit save Configuration
+    - Then select node from dropdown> Click Create fields now
+    - Json format for creating fields with different data types:
+```json
+{
+  "field_name": { # Machine name of the field
+    "name": "field_name", #Machine name of the field
+    "label": "field name", #Enter name of the field without '_' as a field lable name
+    "type": "text", # type of the field can be assigned in "type"
+    "force": true,
+    "bundles": {
+      "islandora_object": { #islandora content type
+        "label": "islandora object" #description for islandora content type
+      }
+    }
+  }
+}
+```
+
+### 2. now run the workbench to ingest our content to the server:
    - ```cd islandora_workbench```
    - ```./workbench --config LDLingest.yml```
