@@ -1008,7 +1008,7 @@ mimic_implicite for postgresql error occures while creating new content, After g
 Need to be decided later
 
 # Run workbench ingest:
-- after running our transformation tools, we are ready to ingest. to do that you can go over steps bellow:
+After running our transformation tools, we are ready to ingest the data. To do this, follow the steps below:
 
 ### 1. Create custom fields in our dataset: 
 Because we have our custome fields that are not part of default drupal fields in the database tables, so workbench will error that **Headers require a amatching Drupal fields name**. Therefore we need to create theme in any of bellow ways:
