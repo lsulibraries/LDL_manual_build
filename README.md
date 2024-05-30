@@ -925,10 +925,10 @@ run the migration tagged with islandora  to populate some taxonomies.
 #### Set islandora access in access controllL 
 - Navigate to ```configuration -> access controll -> islandora access and select islandora_access```
 
-#### create a group:
+#### Create field for islandora access for islandora Content type:
 - Navigate to ```structure -> content types -> repository item -> manage fields -> create a access terms -> type is Reference -> Reference type: Taxonomy term, Vocabulary: Islandora Access```
 
-#### Media type:
+#### Create field for islandora access for each Media types :
 - Navigate to ```structure -> mediatypes -> edit one of the media types -> edit -> manage fields -> create a field -> create a access terms -> type is Reference -> Reference type = Islandora Access```
 
 #### Media types Access term:
@@ -949,13 +949,12 @@ Navigate to ```configuration -> access controll -> islandora access and select i
    - Example: for audio: field_media_audio_file
    - Except image, and specifically, field_media_image that file type is image
 
-- **Ensure you have set maxiumum file size**
-   - we can do it at this point if where we're editing each mediaTypes 
-   - Or **upload size and max post size settings.php:**
-     - ```sudo nano /etc/php/8.3/apache2/php.ini```
-     - ```change post_max_size = 8M to post_max_size = 200M```
-     - ```change upload_max_filesize = 8M to upload_max_filesize = 200M```
-     - ```change max_file_uploads = 200 to an appropriate number (1000?)```
+#### Ensure you have set maxiumum file size
+- **upload size and max post size settings.php:**
+  - ```sudo nano /etc/php/8.3/apache2/php.ini```
+  - ```change post_max_size = 8M to post_max_size = 200M```
+  - ```change upload_max_filesize = 8M to upload_max_filesize = 200M```
+  - ```change max_file_uploads = 200 to an appropriate number (1000?)```
 
 - restart apache and tomcat, daemon-reload, cache rebuild
     - ```sudo systemctl restart apache2 tomcat```
