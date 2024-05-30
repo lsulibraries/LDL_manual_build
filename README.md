@@ -919,6 +919,7 @@ run the migration tagged with islandora  to populate some taxonomies.
 - ```drush cr```
 
 # Group Configuration:
+#### Create 
 #### group type:
 - set available content and install group media and group media image and all:
 
