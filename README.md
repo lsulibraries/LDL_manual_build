@@ -993,8 +993,8 @@ run the migration tagged with islandora  to populate some taxonomies.
 - ```sudo nano /etc/php/8.3/apache2/php.ini```
 - ```max_file_uploads = ???```
 
-# Fix postgresql mimic_implicite error fix after islandora_group, islandora workbench installation:
-mimic_implicite for postgresql error occures while creating new content, After groupmedia module installaion, causes the content not to be created in postgresql database
+# Fix postgresql mimic_implicite error:
+mimic_implicite for postgresql error occures while creating new content, After groupmedia module installaion, causes the content not to be created in postgresql database. here are steps to resolve it:
 
 #### Copy the fixed postgresql edited php files over:
 - ```sudo cp /mnt/hgfs/shared/postgres-core-module-src-driver/Connection.php /opt/drupal/islandora-starter-site/web/core/modules/pgsql/src/Driver/Database/pgsql/```
