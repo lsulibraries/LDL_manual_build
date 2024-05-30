@@ -732,7 +732,8 @@ Check Alpaca installation in offial Islandora Github:
 #### install php-intl 8.3:
 ```sudo apt-get install php8.3-intl```
 
-#### create islandora starter site project(Check with dockerized to see if we need latest version maybe?)
+#### create islandora starter site project
+
 - ```cd /opt/drupal```
 - ```sudo composer create-project islandora/islandora-starter-site:1.8.0```
 - ```cd /opt/drupal/islandora-starter-site```
