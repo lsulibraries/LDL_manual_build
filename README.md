@@ -797,10 +797,11 @@ Check Alpaca installation in offial Islandora Github:
 
 # Install the site using composer or drush:
 - **1. install using Composer:**
-  - ```composer exec -- drush site:install --existing-config```
+  - ```sudo composer exec -- drush site:install --existing-config```
  
 - **2. Install with Drush:**
   - ```sudo -u www-data drush site-install --existing-config --db-url="pgsql://drupal:drupal@127.0.0.1:5432/drupal10"```
+
 #### Change default username and password:
 - ```sudo drush upwd admin admin```
 
