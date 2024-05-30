@@ -1026,8 +1026,8 @@ Because we have custom fields that are not part of the default Drupal fields in 
   - **Create a JSON configuration script to define fields with specific data types:**
 
   - **Create fields:**
-     - Navigate to configurations>delvelopment>add fields programmatically> under Content> copy json configuration for creating fields> Hit save Configuration
-     - Then select node from dropdown> Click Create fields now
+     - Navigate to configurations>delvelopment>add fields programmatically> under Content dropdown> copy json configuration for creating fields> Click save Configuration
+     - Then select node from dropdown > Click Create fields now
      - Json format for creating fields with different data types:
   - **Example JSON syntax for creating fields:**
 ```json
