@@ -961,7 +961,7 @@ run the migration tagged with islandora  to populate some taxonomies.
    - Example: for audio: field_media_audio_file
 
 #### Ensure you have set maxiumum file size
-- **upload size and max post size settings.php:**
+- **upload size and max post size:**
   - ```sudo nano /etc/php/8.3/apache2/php.ini```
   - ```change post_max_size = 8M to post_max_size = 200M```
   - ```change upload_max_filesize = 8M to upload_max_filesize = 200M```
