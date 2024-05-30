@@ -767,7 +767,7 @@ Check Alpaca installation in offial Islandora Github:
 #### 1. Re-configure drupal.conf:
 - ```sudo cp /mnt/hgfs/shared/drupal.conf /etc/apache2/sites-enabled/drupal.conf```
 
-- **Bellow is the lines that Changed in Apache configuration:**
+- **Bellow is the lines that Changed in drupal.conf Apache configuration:**
 >```
 >Alias /drupal "/opt/drupal/islandora-starter-site/web"
 >DocumentRoot "/opt/drupal/islandora-starter-site/web"
@@ -778,7 +778,7 @@ Check Alpaca installation in offial Islandora Github:
 - ```sudo cp /mnt/hgfs/shared/000-default.conf /etc/apache2/sites-enabled/000-default.conf```
 - ```sudo cp /mnt/hgfs/shared/000-default.conf /etc/apache2/sites-available/000-default.conf```
 
-- **Bellow is the lines that Changed in Apache configuration:**
+- **Bellow is the lines that Changed in 000-default.conf Apache configuration:**
 >```
 > DocumentRoot "/opt/drupal/islandora-starter-site/web"
 > <Directory "/opt/drupal/islandora-starter-site/web">
