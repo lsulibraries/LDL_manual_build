@@ -1004,7 +1004,8 @@ mimic_implicite for postgresql error occures while creating new content, After g
 - ```sudo systemctl restart apache2 postgresql```
 - ```sudo systemctl status apache2 postgresql```
 
-# Configure default Flysystem (Need to be decided later)
+# Configure default Flysystem:
+Need to be decided later
 
 # Run workbench ingest:
 - after running our transformation tools, we now run the workbench to ingest our content to the server:
