@@ -368,8 +368,8 @@ fedora-config.sh contains:
 >sudo chmod 644 /opt/fcrepo/config/i8_namespaces.yml
 >
 >sudo cp /mnt/hgfs/shared/allowed_external_hosts.txt /opt/fcrepo/config/
->sudo chown tomcat:tomcat /opt/fcrepo/config/allowed_external_hosts.txt
->sudo chmod 644 /opt/fcrepo/config/allowed_external_hosts.txt
+>sudo chown tomcat:tomcat /opt/fcrepo/config/allowed_hosts.txt
+>sudo chmod 644 /opt/fcrepo/config/allowed_hosts.txt
 >
 >sudo cp /mnt/hgfs/shared/fcrepo.properties /opt/fcrepo/config/
 >sudo chown tomcat:tomcat /opt/fcrepo/config/fcrepo.properties
