@@ -948,14 +948,14 @@ run the migration tagged with islandora  to populate some taxonomies.
 
     - You can also assign users as content creators for specific group types. This way, they will only have access to the group types and groups they are assigned to, and will not have access to other group types or groups within those types.
 
-#### Set islandora access in access controllL 
+#### Set islandora access in access controll 
 - Navigate to ```configuration -> access controll -> islandora access and select islandora_access```
 
 #### Create islandora access field for islandora Content type:
-- Navigate to ```structure -> content types -> repository item -> manage fields -> create a access terms -> type is Reference -> Reference type: Taxonomy term, Vocabulary: Islandora Access```
+- Navigate to ```structure -> content types -> repository item -> manage fields -> create a access terms (name = access_terms) -> type is Reference -> Reference type: Taxonomy term, Vocabulary: Islandora Access```
 
 #### Create islandora access field for each Media types :
-- Navigate to ```structure -> mediatypes -> edit one of the media types -> edit -> manage fields -> create a field -> create a access terms -> type is Reference -> Reference type = Islandora Access```
+- Navigate to ```structure -> mediatypes -> edit one of the media types -> edit -> manage fields -> create a field -> create a access terms field (name = access_terms) -> type is Reference -> Reference type = Islandora Access```
 
 - For each media type, we need to have field access terms. We can reuse the access terms we have already created.
 
