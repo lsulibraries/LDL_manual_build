@@ -397,8 +397,8 @@ fedora-config.sh contains:
 - ```sudo chown tomcat:tomcat /opt/tomcat/bin/setenv.sh```
 
 ### Edit and Ensuring Tomcat Users Are In Place
-Add following to xml after version="1.0" in <tomcat-users>:
-- ``sudo nano /opt/tomcat/conf/tomcat-users.xml``
+- Add following to xml after version="1.0" in <tomcat-users>:
+  - ``sudo nano /opt/tomcat/conf/tomcat-users.xml``
 >```
 >  <role rolename="tomcat"/>
 >  <role rolename="fedoraAdmin"/>
@@ -407,7 +407,7 @@ Add following to xml after version="1.0" in <tomcat-users>:
 >  <user username="fedoraAdmin" password="FEDORA_ADMIN_PASSWORD" roles="fedoraAdmin"/>
 >  <user username="fedoraUser" password="FEDORA_USER_PASSWORD" roles="fedoraUser"/>
 >```
-
+- Or ```cp /mnt/hgfs/shared/tomcat-users.xml /opt/tomcat/conf/```
 ### tomcat users permissions:
 >```
 >sudo chmod 600 /opt/tomcat/conf/tomcat-users.xml
