@@ -728,9 +728,15 @@ ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the de
 karaf is not been used to install latest Alpaca Microservices any more, We will install alpaca Microservices in a another way later
 
 # 3. Alpaca:
-Check Alpaca installation in offial Islandora Github:
+- Make a directory for Alpaca and download the latest version of Alpaca from the Maven repository. E.g.
+>``
+>mkdir /opt/alpaca
+>cd /opt/alpaca
+>curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0
+>``
+- ```java -jar /opt/alpaca/alpaca.jar```
+- Look at the [example.properties](https://github.com/Islandora/Alpaca/blob/2.x/example.properties) file to see some example settings.
 
-- (https://islandora.github.io/documentation/installation/manual/installing-alpaca/)
 
 # Download and Scaffold Drupal, Create a project using the Islandora Starter Site:
 #### install php-intl 8.3:
