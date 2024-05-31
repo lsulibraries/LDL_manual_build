@@ -934,7 +934,7 @@ run the migration tagged with islandora  to populate some taxonomies.
 
 #### Groups role and group role permissions:
 - **Create specific roles:**
-  - For administratiopn access create Admin, Admin Outside, and Admin Inside. Ensure each role has the appropriate admin permissions.
+  - For administratiopn access we create Admin individual, Admin Outside, and Admin Inside. Ensure each role has the appropriate admin permissions.
 
   - You can also create different roles for members, content creators, or other specific roles, and assign these roles to specific users.
 
@@ -954,10 +954,12 @@ run the migration tagged with islandora  to populate some taxonomies.
 #### Create islandora access field for islandora Content type:
 - Navigate to ```structure -> content types -> repository item -> manage fields -> create a access terms (name = access_terms) -> type is Reference -> Reference type: Taxonomy term, Vocabulary: Islandora Access```
 
-#### Create islandora access field for each Media types :
+#### Create field access terms for each Media types :
 - Navigate to ```structure -> mediatypes -> edit one of the media types -> edit -> manage fields -> create a field -> create a access terms field (name = access_terms) -> type is Reference -> Reference type = Islandora Access```
+  - Example: We craete field access terms for audio and machine name in list of fields is field_access_terms
 
-- For each media type, we need to have field access terms. We can reuse the access terms we have already created.
+- For each media type, we need to have field access terms. After creating field_access_terms for one media type (ex: audio) this can be re-used for other media types.
+  - Example: After creating field_access_terms for one of the 
 
 #### Select islandora access for each nodes and media:
 - Navigate to ```configuration -> access controll -> islandora access```
@@ -970,6 +972,7 @@ run the migration tagged with islandora  to populate some taxonomies.
  
 - For each media type, edit the field where the type is file and set the Upload destination to Public files (for fedora-less system)
    - Example: for audio: field_media_audio_file
+   - Image media type's field type is **Image** not **file**
 
 #### Ensure you have set maxiumum file size
 - **upload size and max post size:**
