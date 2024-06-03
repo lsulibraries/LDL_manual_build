@@ -971,6 +971,10 @@ run the migration tagged with islandora  to populate some taxonomies.
 - Select islandora_access for the repository items content type and all media types.
 - Select islandora_access for the each media types.
 
+#### set available content in group type:
+- navigate to groups>group type> set avaialble content
+- install each content one by one
+
 #### Fix the destination for each media type (Important for media ingestion for each media types):
 - Navigate ```Structure>Media types```
  
