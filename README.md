@@ -934,12 +934,13 @@ run the migration tagged with islandora  to populate some taxonomies.
 
 #### Groups role and group role permissions:
 - **Create specific roles:**
-  - For administratiopn access we create Admin individual, Admin Outside, and Admin Inside. Ensure each role has the appropriate admin permissions.
+  - Navigate to Groups>Grope Type> edit group role of created Group Type > 
+  - For administratiopn access we create roles for admin, and ensure each role has the appropriate admin permissions:
+    -  Admin individual with administration roles
+    -  Admin Outsider
+    -  Admin Insider
 
   - You can also create different roles for members, content creators, or other specific roles, and assign these roles to specific users.
-
-- **Edit Group Type:**
-  - Go back to your Group type, and assign the individual admin role you created to that group type.
 
 - **Assign role to the user**:
   - In Drupal, navigate to Admin > People to manage user roles:
@@ -948,10 +949,13 @@ run the migration tagged with islandora  to populate some taxonomies.
 
     - You can also assign users as content creators for specific group types. This way, they will only have access to the group types and groups they are assigned to, and will not have access to other group types or groups within those types.
 
-#### Set islandora access in access controll 
-- Navigate to ```configuration -> access controll -> islandora access and select islandora_access```
+#### Assign islandora access To the group type we created:
+- Navigate to ```configuration -> access controll -> select islandora_access for <GroupTypeName>```
 
-#### Create islandora access field for islandora Content type:
+#### Create Group:
+- Mavigate to Groups> Create Groups
+
+#### Create field access terms for Repository Item Content type:
 - Navigate to ```structure -> content types -> repository item -> manage fields -> create a access terms (name = access_terms) -> type is Reference -> Reference type: Taxonomy term, Vocabulary: Islandora Access```
 
 #### Create field access terms for each Media types :
@@ -965,7 +969,7 @@ run the migration tagged with islandora  to populate some taxonomies.
 - Navigate to ```configuration -> access controll -> islandora access```
 
 - Select islandora_access for the repository items content type and all media types.
-
+- Select islandora_access for the each media types.
 
 #### Fix the destination for each media type (Important for media ingestion for each media types):
 - Navigate ```Structure>Media types```
@@ -973,6 +977,8 @@ run the migration tagged with islandora  to populate some taxonomies.
 - For each media type, edit the field where the type is file and set the Upload destination to Public files (for fedora-less system)
    - Example: for audio: field_media_audio_file
    - Image media type's field type is **Image** not **file**
+
+
 
 #### Ensure you have set maxiumum file size
 - **upload size and max post size:**
