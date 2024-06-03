@@ -988,9 +988,9 @@ run the migration tagged with islandora  to populate some taxonomies.
   - ```change max_file_uploads = 200 to an appropriate number (1000?)```
 
 #### restart apache and tomcat, daemon-reload, cache rebuild
-    - ```sudo systemctl restart apache2 tomcat```
-    - ```sudo systemctl daemon-reload```
-    - ```drush cr```
+- ```sudo systemctl restart apache2 tomcat```
+- ```sudo systemctl daemon-reload```
+- ```drush cr```
 
 # re-islandora Workbench to be on V1.0.0:
 #### Remove dev version and install V1 cause dev version is not determined by workbench anymore:
