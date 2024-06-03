@@ -630,25 +630,25 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 >#Homarus Configs
 >#sudo rm -r /opt/crayfish/Homarus/cfg
 >sudo mkdir /opt/crayfish/Homarus/cfg
->sudo cp /mnt/hgfs/shared/Crayfish-confs/homarus.config.yaml /opt/crayfish/Homarus/cfg/config.yaml
+>sudo cp /mnt/hgfs/shared/homarus.config.yaml /opt/crayfish/Homarus/cfg/config.yaml
 >
 >#houdini Configs
->sudo cp /mnt/hgfs/shared/Crayfish-confs/houdini.services.yaml /opt/crayfish/Houdini/config/services.yaml
->sudo cp /mnt/hgfs/shared/Crayfish-confs/crayfish_commons.yml /opt/crayfish/Houdini/config/packages/crayfish_commons.yml
->sudo cp /mnt/hgfs/shared/Crayfish-confs/monolog.yml /opt/crayfish/Houdini/config/packages/monolog.yml
->sudo cp /mnt/hgfs/shared/Crayfish-confs/security.yml /opt/crayfish/Houdini/config/packages/security.yml
+>sudo cp /mnt/hgfs/shared/houdini.services.yaml /opt/crayfish/Houdini/config/services.yaml
+>sudo cp /mnt/hgfs/shared/crayfish_commons.yml /opt/crayfish/Houdini/config/packages/crayfish_commons.yml
+>sudo cp /mnt/hgfs/shared/monolog.yml /opt/crayfish/Houdini/config/packages/monolog.yml
+>sudo cp /mnt/hgfs/shared/security.yml /opt/crayfish/Houdini/config/packages/security.yml
 >#Hypercube Configs
 >
 >sudo mkdir /opt/crayfish/Hypercube/cfg
->sudo cp /mnt/hgfs/shared/Crayfish-confs/hypercube.config.yaml /opt/crayfish/Hypercube/cfg/config.yaml
+>sudo cp /mnt/hgfs/shared/hypercube.config.yaml /opt/crayfish/Hypercube/cfg/config.yaml
 >
 >#Milliner Configs
 >sudo mkdir /opt/crayfish/Milliner/cfg/
->sudo cp /mnt/hgfs/shared/Crayfish-confs/milliner.config.yaml /opt/crayfish/Milliner/cfg/config.yaml
+>sudo cp /mnt/hgfs/shared/milliner.config.yaml /opt/crayfish/Milliner/cfg/config.yaml
 >
 >#Recast Configs
 >sudo mkdir /opt/crayfish/Recast/cfg
->sudo cp /mnt/hgfs/shared/Crayfish-confs/recast.config.yaml /opt/crayfish/Recast/cfg/config.yaml
+>sudo cp /mnt/hgfs/shared/recast.config.yaml /opt/crayfish/Recast/cfg/config.yaml
 >
 >#Permissions
 >sudo chown www-data:www-data /opt/crayfish/Homarus/cfg/config.yaml
