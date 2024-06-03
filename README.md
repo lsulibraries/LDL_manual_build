@@ -1047,7 +1047,10 @@ Because we have custom fields that are not part of the default Drupal fields in 
 
   - **Create fields:**
      - Navigate to configurations>delvelopment>add fields programmatically> under Content dropdown> copy json configuration for creating fields> Click save Configuration
-     - Then select node from dropdown > Click Create fields now
+     - Then under Action tab select node from dropdown > Click Create fields now
+       - if json configurations where correct it will show you message that says: **Processed fields for node.**
+
+
      - Json format for creating fields with different data types:
   - **Example JSON syntax for creating fields:**
 ```json
