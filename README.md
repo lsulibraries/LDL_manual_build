@@ -746,7 +746,7 @@ karaf is not been used to install latest Alpaca Microservices any more, We will 
 #### create islandora starter site project
 
 - ```cd /opt/drupal```
-- ```sudo composer create-project islandora/islandora-starter-site:1.8.0```
+- ```sudo -u www-data composer create-project islandora/islandora-starter-site:1.8.0```
 - ```cd /opt/drupal/islandora-starter-site```
 
 #### Install drush using composer at islandora-starter-site
@@ -808,7 +808,7 @@ karaf is not been used to install latest Alpaca Microservices any more, We will 
 
 # Install the site using composer or drush:
 - **1. install using Composer:**
-  - ```sudo composer exec -- drush site:install --existing-config```
+  - ```sudo -u www-data composer exec -- drush site:install --existing-config```
  
 - **2. Install with Drush:**
   - ```sudo -u www-data drush site-install --existing-config --db-url="pgsql://drupal:drupal@127.0.0.1:5432/drupal10"```
@@ -821,7 +821,7 @@ for example, giving the default admin user the role:
 
 #### 1. Using Composer:
 - ```cd /opt/drupal/islandora-starter-site```
-- ```composer exec -- drush user:role:add fedoraadmin admin```
+- ```sudo -u www-data composer exec -- drush user:role:add fedoraadmin admin```
  
 #### 2. Using Drush:**
 - cd /opt/drupal/islandora-starter-site
@@ -915,7 +915,8 @@ run the migration tagged with islandora  to populate some taxonomies.
 
 #### Run the migrations taged with islandora:
 - ```cd /opt/drupal/islandora-starter-site```
-- ```composer exec -- drush migrate:import --userid=1 --tag=islandora```
+- ```sudo -u www-data composer exec -- drush migrate:import --userid=1 --tag=islandora```
+- OR Run ```sudo -u www-data drush -y -l localhost --userid=1 mim --all```
 
 #### Enabling EVA Views:
 - ```drush -y views:enable display_media```
