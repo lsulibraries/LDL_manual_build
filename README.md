@@ -819,6 +819,34 @@ Alpaca integrates and manages various microservices in an Islandora installation
 ### Run Alpaca using configurations: 
 - ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties```
 
+### Alpaca will perform the following tasks:
+- **Connect to ActiveMQ:**
+
+  - Broker URL: tcp://localhost:61616
+  - Maximum Redeliveries: 5
+  - Number of connections: 10
+
+- **Handle HTTP Requests:**
+  - Custom HTTP client options with specific timeouts (all set to -1, meaning no timeout).
+
+- **Fedora Indexing:**
+- Enable Fedora indexer.
+- Connect to queues for content, delete, media, and external file indexing.
+- Base URL for the Milliner service: http://127.0.0.1:8000/milliner/
+
+- **Triplestore Indexing:**
+  Enable Triplestore indexer.
+  Base URL for Triplestore: http://127.0.0.1:8080/bigdata/namespace/kb/sparql
+  Connect to queues for indexing and deleting data.
+
+- **Generate Derivatives:**
+  - Enable and configure FITS, Homarus, Houdini, and OCR services for generating derivatives.
+  - Each service connects to its respective queue and service URL.
+  - Example: FITS service URL is http://localhost:8000/crayfits
+
+- **Concurrent Consumers:**
+  - Configure concurrent consumer settings for various indexers and derivative services (all set to -1, meaning default values will be used).
+
 ### Extra notes:
 - **Configuration:**
   - If we are installing everything on the same server, the provided example properties should be fine as-is. Simply rename the file to alpaca.properties and run the command mentioned above.
