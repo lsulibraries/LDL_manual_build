@@ -818,8 +818,10 @@ We are geting passed karaf and terminated karaf from our old documentation. Kara
 >derivative.ocr.async-consumer=false
 >```
 
+
 ### Run Alpaca using configurations: 
 - ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties```
+
 
 ### Alpaca will perform the following tasks:
 - **Connect to ActiveMQ:**
@@ -849,6 +851,7 @@ We are geting passed karaf and terminated karaf from our old documentation. Kara
 - **Concurrent Consumers:**
    - Configure concurrent consumer settings for various indexers and derivative services (all set to -1, meaning default values will be used).
 
+
 ### Extra notes:
 - **Configuration:**
   - If we are installing everything on the same server, the provided example properties should be fine as-is. Simply rename the file to alpaca.properties and run the command mentioned above.
@@ -856,6 +859,7 @@ We are geting passed karaf and terminated karaf from our old documentation. Kara
   - If Alpaca is running on a different machine, we will just need to update the URLs in the configuration file to point to the correct host for the various services.
 
 - **Alpaca Activity:** We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
+
 
 # Download and Scaffold Drupal, Create a project using the Islandora Starter Site:
 #### install php-intl 8.3:
