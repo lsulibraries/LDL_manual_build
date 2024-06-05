@@ -742,7 +742,10 @@ Alpaca integrates and manages various microservices in an Islandora installation
 
 ### Copy alpaca.properties:
 - Next, we need to copy over the configuration file containing the necessary flags so Alpaca knows how to connect to all required services. This configuration file is named alpaca.properties and should be executed using the following command:
-Here is the alpaca.properties configuration file:
+
+- Look at the [example.properties](https://github.com/Islandora/Alpaca/blob/2.x/example.properties) file to see some example settings.
+
+- Here is the alpaca.properties configuration file:
 >```
 ># Common options
 >error.maxRedeliveries=5
@@ -813,10 +816,8 @@ Here is the alpaca.properties configuration file:
 >derivative.ocr.async-consumer=false
 >```
 
-
+### Run Alpaca using configurations: 
 - ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties```
-
-- Look at the [example.properties](https://github.com/Islandora/Alpaca/blob/2.x/example.properties) file to see some example settings.
 
 ### Extra notes:
 - **Configuration:**
