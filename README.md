@@ -733,7 +733,7 @@ karaf is not been used to install latest Alpaca Microservices any more, We will 
 >mkdir /opt/alpaca
 >cd /opt/alpaca
 >curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0
->``
+>```
 - ```java -jar /opt/alpaca/alpaca.jar```
 
 - Look at the [example.properties](https://github.com/Islandora/Alpaca/blob/2.x/example.properties) file to see some example settings.
