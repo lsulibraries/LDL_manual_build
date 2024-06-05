@@ -368,8 +368,8 @@ fedora-config.sh contains:
 >sudo chmod 644 /opt/fcrepo/config/i8_namespaces.yml
 >
 >sudo cp /mnt/hgfs/shared/allowed_external_hosts.txt /opt/fcrepo/config/
->sudo chown tomcat:tomcat /opt/fcrepo/config/allowed_hosts.txt
->sudo chmod 644 /opt/fcrepo/config/allowed_hosts.txt
+>sudo chown tomcat:tomcat /opt/fcrepo/config/allowed_external_hosts.txt
+>sudo chmod 644 /opt/fcrepo/config/allowed_external_hosts.txt
 >
 >sudo cp /mnt/hgfs/shared/fcrepo.properties /opt/fcrepo/config/
 >sudo chown tomcat:tomcat /opt/fcrepo/config/fcrepo.properties
@@ -746,6 +746,10 @@ We are geting passed karaf and terminated karaf from our old documentation. Kara
 - Next, we need to copy over the configuration file containing the necessary flags so Alpaca knows how to connect to all required services. This configuration file is named alpaca.properties and should be executed using the following command:
 
 - Look at the [example.properties](https://github.com/Islandora/Alpaca/blob/2.x/example.properties) file to see some example settings.
+
+- configuration:
+   - find activemq user and password at ```cd /usr/share/activemq/conf/credentials.properties```
+   - Triplestore base URL: triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
 
 - Here is the alpaca.properties configuration file:
 >```
