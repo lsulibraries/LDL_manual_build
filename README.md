@@ -728,13 +728,90 @@ ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the de
 karaf is not been used to install latest Alpaca Microservices any more, We will install alpaca Microservices in a another way later
 
 # 3. Alpaca:
+### download alpaca.jar:
 - Make a directory for Alpaca and download the latest version of Alpaca from the Maven repository. E.g.
 >```
 >mkdir /opt/alpaca
 >cd /opt/alpaca
 >curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
+>cp /mnt/hgfs/shared/alpaca.properties /opt/alpaca/
 >```
-- ```java -jar /opt/alpaca/alpaca.jar```
+
+### Copy alpaca.properties:
+- Next, we need to copy over the configuration file containing the necessary flags so Alpaca knows how to connect to all required services. This configuration file is named alpaca.properties and should be executed using the following command:
+Here is the alpaca.properties configuration file:
+>```
+># Common options
+>error.maxRedeliveries=5
+>jms.brokerUrl=tcp://localhost:61616
+>jms.username=
+>jms.password=
+>jms.connections=10
+>
+># Custom Http client options
+># All timeouts in milliseconds
+>request.configurer.enabled=false
+>request.timeout=-1
+>connection.timeout=-1
+>socket.timeout=-1
+>
+># Additional HTTP endpoint options, these can be for Camel or to be sent to the baseUrl or service.url
+>http.additional_options=
+>
+># Fedora indexer options
+>fcrepo.indexer.enabled=true
+>fcrepo.indexer.node=queue:islandora-indexing-fcrepo-content
+>fcrepo.indexer.delete=queue:islandora-indexing-fcrepo-delete
+>fcrepo.indexer.media=queue:islandora-indexing-fcrepo-media
+>fcrepo.indexer.external=queue:islandora-indexing-fcrepo-file-external
+>fcrepo.indexer.milliner.baseUrl=http://127.0.0.1:8000/milliner/
+>fcrepo.indexer.concurrent-consumers=-1
+>fcrepo.indexer.max-concurrent-consumers=-1
+>fcrepo.indexer.async-consumer=false
+>
+># Triplestore indexer options
+>triplestore.indexer.enabled=true
+>triplestore.baseUrl=http://127.0.0.1:8080/bigdata/namespace/kb/sparql
+>triplestore.index.stream=queue:islandora-indexing-triplestore-index
+>triplestore.delete.stream=queue:islandora-indexing-triplestore-delete
+>triplestore.indexer.concurrent-consumers=-1
+>triplestore.indexer.max-concurrent-consumers=-1
+>triplestore.indexer.async-consumer=false
+>
+># Derivative services
+>derivative.systems.installed=fits,homarus,houdini,ocr
+>
+>derivative.fits.enabled=true
+>derivative.fits.in.stream=queue:islandora-connector-fits
+>derivative.fits.service.url=http://localhost:8000/crayfits
+>derivative.fits.concurrent-consumers=-1
+>derivative.fits.max-concurrent-consumers=-1
+>derivative.fits.async-consumer=false
+>
+>derivative.homarus.enabled=true
+>derivative.homarus.in.stream=queue:islandora-connector-homarus
+>derivative.homarus.service.url=http://127.0.0.1:8000/homarus/convert
+>derivative.homarus.concurrent-consumers=-1
+>derivative.homarus.max-concurrent-consumers=-1
+>derivative.homarus.async-consumer=false
+>
+>derivative.houdini.enabled=true
+>derivative.houdini.in.stream=queue:islandora-connector-houdini
+>derivative.houdini.service.url=http://127.0.0.1:8000/houdini/convert
+>derivative.houdini.concurrent-consumers=-1
+>derivative.houdini.max-concurrent-consumers=-1
+>derivative.houdini.async-consumer=false
+>
+>derivative.ocr.enabled=true
+>derivative.ocr.in.stream=queue:islandora-connector-ocr
+>derivative.ocr.service.url=http://localhost:8000/hypercube
+>derivative.ocr.concurrent-consumers=-1
+>derivative.ocr.max-concurrent-consumers=-1
+>derivative.ocr.async-consumer=false
+>```
+
+
+- ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties```
 
 - Look at the [example.properties](https://github.com/Islandora/Alpaca/blob/2.x/example.properties) file to see some example settings.
 
