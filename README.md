@@ -824,30 +824,30 @@ We are geting passed karaf and terminated karaf from our old documentation. Kara
 ### Alpaca will perform the following tasks:
 - **Connect to ActiveMQ:**
 
-  - Broker URL: tcp://localhost:61616
-  - Maximum Redeliveries: 5
-  - Number of connections: 10
+   - Broker URL: tcp://localhost:61616
+   - Maximum Redeliveries: 5
+   - Number of connections: 10
 
 - **Handle HTTP Requests:**
-  - Custom HTTP client options with specific timeouts (all set to -1, meaning no timeout).
+   - Custom HTTP client options with specific timeouts (all set to -1, meaning no timeout).
 
 - **Fedora Indexing:**
-- Enable Fedora indexer.
-- Connect to queues for content, delete, media, and external file indexing.
-- Base URL for the Milliner service: http://127.0.0.1:8000/milliner/
+   - Enable Fedora indexer.
+   - Connect to queues for content, delete, media, and external file indexing.
+   - Base URL for the Milliner service: http://127.0.0.1:8000/milliner/
 
 - **Triplestore Indexing:**
-  Enable Triplestore indexer.
-  Base URL for Triplestore: http://127.0.0.1:8080/bigdata/namespace/kb/sparql
-  Connect to queues for indexing and deleting data.
+   - Enable Triplestore indexer.
+   - Base URL for Triplestore: http://127.0.0.1:8080/bigdata/namespace/kb/sparql
+   - Connect to queues for indexing and deleting data.
 
 - **Generate Derivatives:**
-  - Enable and configure FITS, Homarus, Houdini, and OCR services for generating derivatives.
-  - Each service connects to its respective queue and service URL.
-  - Example: FITS service URL is http://localhost:8000/crayfits
+   - Enable and configure FITS, Homarus, Houdini, and OCR services for generating derivatives.
+   - Each service connects to its respective queue and service URL.
+   - Example: FITS service URL is http://localhost:8000/crayfits
 
 - **Concurrent Consumers:**
-  - Configure concurrent consumer settings for various indexers and derivative services (all set to -1, meaning default values will be used).
+   - Configure concurrent consumer settings for various indexers and derivative services (all set to -1, meaning default values will be used).
 
 ### Extra notes:
 - **Configuration:**
