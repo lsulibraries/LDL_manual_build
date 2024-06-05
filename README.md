@@ -729,7 +729,9 @@ We are geting passed karaf and terminated karaf from our old documentation. Kara
 
 # 3. Alpaca:
 ### Alpaca importance in islandora ecosystem:
-Alpaca integrates and manages various microservices in an Islandora installation, handling content indexing, derivative generation, message routing from Drupal, service integration with repositories and endpoints, and configuration management for seamless system functionality.
+- Alpaca integrates and manages various microservices in an Islandora installation, handling content indexing, derivative generation, message routing from Drupal, service integration with repositories and endpoints, and configuration management for seamless system functionality.
+
+- In more detail, Alpaca will connect to the ActiveMQ broker, handle HTTP requests, index content in Fedora and Triplestore, and generate derivatives using FITS, Homarus, Houdini, and OCR services based on the queues and URLs specified in the configuration file.
 
 ### download alpaca.jar:
 - Make a directory for Alpaca and download the latest version of Alpaca from the Maven repository. E.g.
