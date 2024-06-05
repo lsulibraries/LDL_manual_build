@@ -729,7 +729,7 @@ karaf is not been used to install latest Alpaca Microservices any more, We will 
 
 # 3. Alpaca:
 - Make a directory for Alpaca and download the latest version of Alpaca from the Maven repository. E.g.
->``
+>```
 >mkdir /opt/alpaca
 >cd /opt/alpaca
 >curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0
