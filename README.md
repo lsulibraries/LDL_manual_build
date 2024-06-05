@@ -725,9 +725,12 @@ ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the de
 - ```name="stomp" uri="stomp://127.0.0.1:61613"```
 
 # 2. Karaf 
-karaf is not been used to install latest Alpaca Microservices any more, We will install alpaca Microservices in a another way later
+We are geting passed karaf and terminated karaf from our old documentation. Karaf is not been used to install latest Alpaca Microservices any more, We will install alpaca with a jar file in the next step.
 
 # 3. Alpaca:
+### Alpaca importance in islandora ecosystem:
+Alpaca integrates and manages various microservices in an Islandora installation, handling content indexing, derivative generation, message routing from Drupal, service integration with repositories and endpoints, and configuration management for seamless system functionality.
+
 ### download alpaca.jar:
 - Make a directory for Alpaca and download the latest version of Alpaca from the Maven repository. E.g.
 >```
@@ -815,6 +818,13 @@ Here is the alpaca.properties configuration file:
 
 - Look at the [example.properties](https://github.com/Islandora/Alpaca/blob/2.x/example.properties) file to see some example settings.
 
+### Extra notes:
+- **Configuration:**
+  - If we are installing everything on the same server, the provided example properties should be fine as-is. Simply rename the file to alpaca.properties and run the command mentioned above.
+
+  - If Alpaca is running on a different machine, we will just need to update the URLs in the configuration file to point to the correct host for the various services.
+
+- **Alpaca Activity:** We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
 
 # Download and Scaffold Drupal, Create a project using the Islandora Starter Site:
 #### install php-intl 8.3:
