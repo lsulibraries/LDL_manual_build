@@ -771,8 +771,8 @@ Karaf is not been used to install latest Alpaca Microservices any more, We will 
 ># Common options
 >error.maxRedeliveries=5
 >jms.brokerUrl=tcp://localhost:61616
->jms.username=
->jms.password=
+>jms.username=system
+>jms.password=manager
 >jms.connections=10
 >
 ># Custom Http client options
