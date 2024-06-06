@@ -353,8 +353,9 @@ sudo -u postgres psql
 >```
 >create database fcrepo encoding 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;
 >create user fedora with encrypted password 'fedora';
+>\c fcrepo
 >grant all privileges on database fcrepo to fedora;
->GRANT CREATE ON SCHEMA public TO fcrepo;
+>GRANT CREATE ON SCHEMA public TO fedora;
 >\q
 >```
 
