@@ -388,9 +388,6 @@ fedora-config.sh contains:
 >sudo chmod 644 /opt/fcrepo/config/fcrepo.properties 
 >```
 
-- double check /opt/fcrepo/config/allowed_hosts.txt got created and listens to port 8000
-- ```cp /mnt/hgfs/shared/allowed_hosts.txt /opt/fcrepo/config/allowed_hosts.txt```
-
 ### Adding the Fedora Variables to JAVA_OPTS, change setenv:
 - ```sudo nano /opt/tomcat/bin/setenv.sh```
 
