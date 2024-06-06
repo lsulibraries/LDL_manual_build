@@ -733,8 +733,9 @@ ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the de
 - Keep the port and the rest.
 - ```name="stomp" uri="stomp://127.0.0.1:61613"```
   - 61623 is fcrepo dynamic stomp port we configured in fcrepo.properties
-### 2. Karaf 
-We are geting passed karaf and terminated karaf from our old documentation. Karaf is not been used to install latest Alpaca Microservices any more, We will install alpaca with a jar file in the next step.
+
+### NOTE:
+**Karaf** is not been used to install latest Alpaca Microservices any more, We will install alpaca with a jar file in the following steps.
 
 ### 2. Alpaca:
 #### Alpaca importance in islandora ecosystem:
