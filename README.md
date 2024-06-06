@@ -679,7 +679,7 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 >```
 - ```sudo systemctl reload apache2```
 
-# ActiveMQ/Alpaca/Karaf/Crayfish:
+# ActiveMQ/Alpaca:
 ### 1. ActiveMQ:
 #### The latest ActiveMQ manual installation:
 >```
@@ -733,16 +733,16 @@ ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the de
 - Keep the port and the rest.
 - ```name="stomp" uri="stomp://127.0.0.1:61613"```
 
-# 2. Karaf 
+### 2. Karaf 
 We are geting passed karaf and terminated karaf from our old documentation. Karaf is not been used to install latest Alpaca Microservices any more, We will install alpaca with a jar file in the next step.
 
-# 3. Alpaca:
-### Alpaca importance in islandora ecosystem:
+### 2. Alpaca:
+#### Alpaca importance in islandora ecosystem:
 - Alpaca integrates and manages various microservices in an Islandora installation, handling content indexing, derivative generation, message routing from Drupal, service integration with repositories and endpoints, and configuration management for seamless system functionality.
 
 - In more detail, Alpaca will connect to the ActiveMQ broker, handle HTTP requests, index content in Fedora and Triplestore, and generate derivatives using FITS, Homarus, Houdini, and OCR services based on the queues and URLs specified in the configuration file.
 
-### download alpaca.jar:
+#### download alpaca.jar:
 - Make a directory for Alpaca and download the latest version of Alpaca from the Maven repository. E.g.
 >```
 >mkdir /opt/alpaca
@@ -750,7 +750,7 @@ We are geting passed karaf and terminated karaf from our old documentation. Kara
 >curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
 >```
 
-### Copy alpaca.properties:
+#### Copy alpaca.properties:
 - Next, we need to copy over the configuration file containing the necessary flags so Alpaca knows how to connect to all required services. This configuration file is named alpaca.properties and should be executed using the following command:
   - ```cp /mnt/hgfs/shared/alpaca.properties /opt/alpaca/```
 
