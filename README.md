@@ -414,8 +414,8 @@ fedora-config.sh contains:
 >sudo chown tomcat:tomcat /opt/tomcat/conf/tomcat-users.xml
 >```
 
-#### downloade fedora Latest Release:
-- you may want to check visit: https://github.com/fcrepo/fcrepo/releases choose the latest version and ajust the commands below if needed
+### download fedora Latest Release:
+- **NOTE:** You may want to check visit: https://github.com/fcrepo/fcrepo/releases choose the latest version and ajust the commands below if needed
 
 ```sh /mnt/hgfs/shared/fedora-dl.sh```
 The following shell script will execute the commands below to download fedora war file and will place it to catalina webapp directory:
@@ -426,14 +426,14 @@ The following shell script will execute the commands below to download fedora wa
 >sudo chown tomcat:tomcat /opt/tomcat/webapps/fcrepo.war
 >```
 
-#### Enable fedora endpoint:
+### Enable fedora endpoint:
 - **Start the server:**
   - ```/opt/tomcat/bin/startup.sh```
 
 - **Restart tomcat:**
   - ```sudo systemctl start tomcat```
 
-#### Fedora should be enabled:
+### Fedora should be enabled:
 - Once it starts up, Fedora REST API should be available at http://localhost:8080/fcrepo/rest. The username is **fedoraAdmin** and we defined the password before as FEDORA_ADMIN_PASSWORD (default: "islandora").
 
 
