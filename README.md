@@ -416,8 +416,8 @@ fedora-config.sh contains:
 
 ### download fedora Latest Release:
 - **NOTE:** You may want to check visit: https://github.com/fcrepo/fcrepo/releases choose the latest version and ajust the commands below if needed
+- ```sh /mnt/hgfs/shared/fedora-dl.sh```
 
-```sh /mnt/hgfs/shared/fedora-dl.sh```
 The following shell script will execute the commands below to download fedora war file and will place it to catalina webapp directory:
 >```
 >#!/bin/bash
