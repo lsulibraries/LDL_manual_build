@@ -406,9 +406,9 @@ fedora-config.sh contains:
 >```
 
 ### tomcat users permissions:
-- We have given correct privileges to fedora user
+- **1- postgres privileges:** We have given correct postgres privileges to fedora user in fcrepo database
 
-- Also the following permissions to tomcat-users:
+- **2- tomcat-users permission:**
 >```
 >sudo chmod 600 /opt/tomcat/conf/tomcat-users.xml
 >sudo chown tomcat:tomcat /opt/tomcat/conf/tomcat-users.xml
