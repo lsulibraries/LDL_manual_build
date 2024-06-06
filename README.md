@@ -373,6 +373,7 @@ fedora-config.sh contains:
 >sudo chown tomcat:tomcat /opt/fcrepo/config/allowed_external_hosts.txt
 >sudo chmod 644 /opt/fcrepo/config/allowed_external_hosts.txt
 >
+>#fcrepo.properties - It's configured according to our needs:
 >sudo cp /mnt/hgfs/shared/fcrepo.properties /opt/fcrepo/config/
 >sudo chown tomcat:tomcat /opt/fcrepo/config/fcrepo.properties
 >sudo chmod 640 /opt/fcrepo/config/fcrepo.properties
@@ -381,11 +382,6 @@ fedora-config.sh contains:
 >sudo cp /mnt/hgfs/shared/repository.json /opt/fcrepo/config/repository.json
 >sudo chown tomcat:tomcat /opt/fcrepo/config/repository.json
 >sudo chmod 644 /opt/fcrepo/config/repository.json
->
->#fcrepo.properties
->sudo cp /mnt/hgfs/shared/fcrepo.properties /opt/fcrepo/config/ 
->sudo chown tomcat:tomcat /opt/fcrepo/config/fcrepo.properties
->sudo chmod 644 /opt/fcrepo/config/fcrepo.properties 
 >```
 
 ### Adding the Fedora Variables to JAVA_OPTS, change setenv:
