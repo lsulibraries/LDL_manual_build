@@ -767,6 +767,9 @@ Karaf is not been used to install latest Alpaca Microservices any more, We will 
 
 - Run Alpaca
   - ```java -jar /opt/alpaca/alpaca.jar --spring.config.location=/opt/alpaca/alpaca.properties```
+  - OR?
+  - ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties```
+
 
 - apache configuration:
 >```
