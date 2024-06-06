@@ -433,8 +433,9 @@ The following shell script will execute the commands below to download fedora wa
 - **Restart tomcat:**
   - ```sudo systemctl start tomcat```
 
-### Fedora should be enabled:
-- Once it starts up, Fedora REST API should be available at http://localhost:8080/fcrepo/rest. The username is **fedoraAdmin** and we defined the password before as FEDORA_ADMIN_PASSWORD (default: "islandora").
+### Navigate to Fedora endpoint:
+- Once tomcat starts up, Fedora REST API should be available at **http://localhost:8080/fcrepo/rest**.
+- The username is **fedoraAdmin** and we defined the password before as FEDORA_ADMIN_PASSWORD (We set: "islandora").
 
 
 
