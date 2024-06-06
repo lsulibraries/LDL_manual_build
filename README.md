@@ -680,7 +680,7 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 - ```sudo systemctl reload apache2```
 
 # ActiveMQ/Alpaca:
-### 1. ActiveMQ:
+## 1. ActiveMQ:
 #### The latest ActiveMQ manual installation:
 >```
 >cd /usr/share/
@@ -737,7 +737,99 @@ ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the de
 ### Note for Karaf:
 Karaf is not been used to install latest Alpaca Microservices any more, We will install alpaca with a jar file in the following steps.
 
-### 2. Alpaca:
+## 2. Alpaca:
+##
+### STEPS AND CHECKS:
+#### Crayfish:
+- Ran this missed command:
+  - sudo apt-get -y install imagemagick tesseract-ocr ffmpeg poppler-utils
+
+- update composers for each microservice in opt/crayfish/
+- Re copied crayfish configs with localhost ip instead of 130....!
+- Reloaded apache2
+
+#### Alpaca:
+- downloaded alpaca jar file
+- copied default configured alpaca properties
+
+#### Checks:
+- localhost OR 127.0.0.1 in alpca properties: 
+  - localhost->fits, ocr, jms brocker
+  - 127.0.0.1 -> milliner, triplestore, homarus, houdini
+
+- Check activemq enable
+
+- Chown and chmod:
+>```
+>sudo chown www-data:www-data /opt/alpaca/alpaca.properties
+>sudo chmod 644 /opt/alpaca/alpaca.properties
+>```
+
+- Run Alpaca
+  - ```java -jar /opt/alpaca/alpaca.jar --spring.config.location=/opt/alpaca/alpaca.properties```
+
+- apache configuration:
+>```
+><VirtualHost *:8000>
+>    ServerName localhost
+>
+>    DocumentRoot /var/www/html
+>
+>    <Directory /opt/crayfish>
+>        Options Indexes FollowSymLinks
+>        AllowOverride None
+>        Require all granted
+>    </Directory>
+>
+>    ProxyPass /crayfits http://127.0.0.1:8000/crayfits
+>    ProxyPassReverse /crayfits http://127.0.0.1:8000/crayfits
+>
+>    ProxyPass /homarus http://127.0.0.1:8000/homarus
+>    ProxyPassReverse /homarus http://127.0.0.1:8000/homarus
+>
+>    ProxyPass /houdini http://127.0.0.1:8000/houdini
+>    ProxyPassReverse /houdini http://127.0.0.1:8000/houdini
+>
+>    ProxyPass /hypercube http://127.0.0.1:8000/hypercube
+>    ProxyPassReverse /hypercube http://127.0.0.1:8000/hypercube
+>
+>    ProxyPass /milliner http://127.0.0.1:8000/milliner
+>    ProxyPassReverse /milliner http://127.0.0.1:8000/milliner
+>
+>    ProxyPass /recast http://127.0.0.1:8000/recast
+>    ProxyPassReverse /recast http://127.0.0.1:8000/recast
+>
+>    ErrorLog ${APACHE_LOG_DIR}/error.log
+>    CustomLog ${APACHE_LOG_DIR}/access.log combined
+></VirtualHost>
+>```
+
+- edit alpaca.service:
+  - ```sudo nano /etc/systemd/system/alpaca.service```
+```ini
+[Unit]
+Description=Islandora Alpaca
+After=network.target
+
+[Service]
+User=www-data
+ExecStart=/usr/bin/java -jar /opt/alpaca/alpaca.jar --spring.config.location=/opt/alpaca/alpaca.properties
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- Reload systemd and start the Alpaca service:
+```sh
+sudo systemctl daemon-reload
+sudo systemctl start alpaca.service
+sudo systemctl enable alpaca.service
+```
+##
+
 #### Alpaca importance in islandora ecosystem:
 - Alpaca integrates and manages various microservices in an Islandora installation, handling content indexing, derivative generation, message routing from Drupal, service integration with repositories and endpoints, and configuration management for seamless system functionality.
 
