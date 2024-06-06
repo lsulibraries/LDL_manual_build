@@ -354,6 +354,7 @@ sudo -u postgres psql
 >create database fcrepo encoding 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;
 >create user fedora with encrypted password 'fedora';
 >grant all privileges on database fcrepo to fedora;
+>GRANT CREATE ON SCHEMA public TO fcrepo;
 >\q
 >```
 
@@ -397,8 +398,10 @@ fedora-config.sh contains:
 - ```sudo chown tomcat:tomcat /opt/tomcat/bin/setenv.sh```
 
 ### Edit and Ensuring Tomcat Users Are In Place
-- Add following to xml after version="1.0" in <tomcat-users>:
-  - ``sudo nano /opt/tomcat/conf/tomcat-users.xml``
+- ```cp /mnt/hgfs/shared/tomcat-users.xml /opt/tomcat/conf/```
+
+- Copied tomcat-users.xml file will update following to tomcat-users.xml:
+- ```sudo nano /opt/tomcat/conf/tomcat-users.xml```
 >```
 >  <role rolename="tomcat"/>
 >  <role rolename="fedoraAdmin"/>
@@ -407,27 +410,35 @@ fedora-config.sh contains:
 >  <user username="fedoraAdmin" password="FEDORA_ADMIN_PASSWORD" roles="fedoraAdmin"/>
 >  <user username="fedoraUser" password="FEDORA_USER_PASSWORD" roles="fedoraUser"/>
 >```
-- Or ```cp /mnt/hgfs/shared/tomcat-users.xml /opt/tomcat/conf/```
+
 ### tomcat users permissions:
+- We have given correct privileges to fedora user
+
+- Also the following permissions to tomcat-users:
 >```
 >sudo chmod 600 /opt/tomcat/conf/tomcat-users.xml
 >sudo chown tomcat:tomcat /opt/tomcat/conf/tomcat-users.xml
 >```
 
 #### downloade fedora Latest Release:
+- you may want to check visit: https://github.com/fcrepo/fcrepo/releases choose the latest version and ajust the commands below if needed
+
 ```sh /mnt/hgfs/shared/fedora-dl.sh```
-The following shell script will execute the commands below
+The following shell script will execute the commands below to download fedora war file and will place it to catalina webapp directory:
 >```
 >#!/bin/bash
->#sudo wget -O fcrepo.war https://github.com/fcrepo/fcrepo/releases/download/fcrepo-6.4.1/fcrepo-webapp-6.4.1.war
 >sudo wget -O fcrepo.war https://github.com/fcrepo/fcrepo/releases/download/fcrepo-6.5.0/fcrepo-webapp-6.5.0.war
 >sudo mv fcrepo.war /opt/tomcat/webapps
 >sudo chown tomcat:tomcat /opt/tomcat/webapps/fcrepo.war
->sudo systemctl start tomcat
 >```
 
-you may want to check
-visit: https://github.com/fcrepo/fcrepo/releases choose the latest version and ajust the commands below if needed
+#### Enable fedora endpoint:
+- ```/opt/tomcat/bin/.startup.sh```
+- ```sudo systemctl start tomcat```
+
+#### Fedora should be enabled:
+- Once it starts up, Fedora REST API should be available at http://localhost:8080/fcrepo/rest. The username is **fedoraAdmin** and we defined the password before as FEDORA_ADMIN_PASSWORD (default: "islandora").
+
 
 
 # Syn:
