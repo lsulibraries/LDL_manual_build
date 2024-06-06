@@ -748,16 +748,21 @@ We are geting passed karaf and terminated karaf from our old documentation. Kara
 >mkdir /opt/alpaca
 >cd /opt/alpaca
 >curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
->cp /mnt/hgfs/shared/alpaca.properties /opt/alpaca/
 >```
 
 ### Copy alpaca.properties:
 - Next, we need to copy over the configuration file containing the necessary flags so Alpaca knows how to connect to all required services. This configuration file is named alpaca.properties and should be executed using the following command:
+  - ```cp /mnt/hgfs/shared/alpaca.properties /opt/alpaca/```
 
 - Look at the [example.properties](https://github.com/Islandora/Alpaca/blob/2.x/example.properties) file to see some example settings.
 
 - configuration:
-   - find activemq user and password at ```cd /usr/share/activemq/conf/credentials.properties```
+   - find activemq user and password in credentials in ```nano /usr/share/activemq/conf/credentials.properties```
+   >```
+   >activemq.username=system
+   >activemq.password=manager
+   >guest.password=password
+   >```
    - Triplestore base URL: triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
 
 - Here is the alpaca.properties configuration file:
