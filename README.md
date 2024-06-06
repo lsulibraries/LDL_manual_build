@@ -607,7 +607,7 @@ run following as root to extract and install solr:
 
 # Crayfish microservices
 #### Adding this PPA to your system:
-- ```sudo add-apt-repository -y ppa:lyrasis/imagemagick-jp2```
+- ```sudo add-apt-repository -y ppa:lyrasis/imagemagick-jp2``` 
 - ```sudo apt-get update```
 - ```sudo apt-get -y install imagemagick tesseract-ocr ffmpeg poppler-utils```
 
