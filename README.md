@@ -196,8 +196,8 @@ scratch_3.sh contents:
 - ```sudo a2ensite drupal```
 - ```sudo a2enmod rewrite```
 - ```sudo systemctl restart apache2```
-- ```sudo chown -R www-data:www-data /opt/drupal```
-- ```sudo chmod -R 755 /opt/drupal```
+- ```sudo chown www-data:www-data /opt/drupal```
+- ```sudo chmod 755 /opt/drupal```
 
 
 #### Add PDO extentions for postgresql and mysql:
