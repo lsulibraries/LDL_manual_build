@@ -612,6 +612,11 @@ If this worked correctly, Blazegraph should respond with some XML letting us kno
 
 
 # Crayfish microservices
+#### Installing Prerequisites
+- **Imagemagick**, which will be used for image processing. We'll be using the LYRASIS build of imagemagick here, which supports JP2 files.
+- **Tesseract**, which will be used for optical character recognition; note that by default Tesseract can only understand English; several other individual Tesseract language packs can be installed using apt-get, and a list of available packs can be procured with sudo apt cache search tesseract-ocr
+- **FFMPEG**, which will be used for video processing
+
 #### Adding this PPA to your system:
 - ```sudo add-apt-repository -y ppa:lyrasis/imagemagick-jp2``` 
 - ```sudo apt-get update```
