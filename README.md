@@ -555,12 +555,14 @@ If this worked correctly, Blazegraph should respond with some XML letting us kno
 - ```source ~/.bashrc```
 
 #### download 9.x solr:
+- download latest version of solr. Check the solr download page to make sure you are installing the latest version.
+
 ```sh /mnt/hgfs/shared/solr-dl.sh```
 >```
 >cd /opt
 >sudo wget https://www.apache.org/dyn/closer.lua/solr/solr/9.6.0/solr-9.6.0.tgz?action=download
 >sudo mv solr-9.6.0.tgz?action=download solr-9.6.0.tgz
->sudo tar xzf solr-9.6.0.tgz solr-9.6.0/bin/install_solr_service.sh --strip-components=2
+>sudo tar xzf solr-9.6.0.tgz solr-9.6.1/bin/install_solr_service.sh --strip-components=2
 >```
 #### Install Solr:
 run following as root to extract and install solr:
@@ -738,109 +740,14 @@ ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the de
 Karaf is not been used to install latest Alpaca Microservices any more, We will install alpaca with a jar file in the following steps.
 
 ## 2. Alpaca:
-##
-### STEPS AND CHECKS:
-#### Crayfish:
-- Ran this missed command:
-  - sudo apt-get -y install imagemagick tesseract-ocr ffmpeg poppler-utils
+Alapca is a Java middleware that handle communication between various components of Islandora.
 
-- update composers for each microservice in opt/crayfish/
-- Re copied crayfish configs with localhost ip instead of 130....!
-- Reloaded apache2
+### we need Download, alpaca.jar file, configure alpaca then run the JAR file
+### Downlaod Alpaca jar file:
+- Make a directory for Alpaca and download the latest version of Alpaca from the Maven repository. E.g.
+  - mkdir /opt/alpaca cd /opt/alpaca curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0
 
-#### Alpaca:
-- downloaded alpaca jar file
-- copied default configured alpaca properties
-
-#### Checks:
-- New alpaca.properties: (Created alpaca_v2.properties)
-- ```cp /mnt/hgfs/shared/alpaca_v2.properties /opt/alpaca```
-- ```mv alpaca_v2.properties alpaca.properties```
-```properties
-# Common options
-error.maxRedeliveries=4
-jms.brokerUrl=tcp://localhost:61616
-jms.username=system
-jms.password=manager
-jms.connections=10
-jms.concurrent-consumers=1
-
-# Custom Http client options
-# All timeouts in milliseconds
-request.configurer.enabled=false
-request.timeout=-1
-connection.timeout=-1
-socket.timeout=-1
-
-# Additional HTTP endpoint options, these can be for Camel or to be sent to the baseUrl or service.url
-http.additional_options=
-
-#islandora-indexing-fcrepo
-# Fedora indexer options
-fcrepo.indexer.enabled=true
-fcrepo.indexer.node=queue:islandora-indexing-fcrepo-content
-fcrepo.indexer.delete=queue:islandora-indexing-fcrepo-delete
-fcrepo.indexer.media=queue:islandora-indexing-fcrepo-media
-fcrepo.indexer.external=queue:islandora-indexing-fcrepo-file-external
-fcrepo.indexer.milliner.baseUrl=http://localhost:8000/milliner/
-fcrepo.indexer.concurrent-consumers=-1
-fcrepo.indexer.max-concurrent-consumers=-1
-fcrepo.indexer.async-consumer=true
-
-# Triplestore indexer options
-triplestore.indexer.enabled=false
-#triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
-triplestore.baseUrl=http://localhost:8080/bigdata/namespace/kb/sparql
-triplestore.index.stream=queue:islandora-indexing-triplestore-index
-triplestore.delete.stream=queue:islandora-indexing-triplestore-delete
-triplestore.indexer.concurrent-consumers=1
-triplestore.indexer.max-concurrent-consumers=1
-triplestore.indexer.async-consumer=true
-
-#islandora-connector-derivative
-# Derivative services
-derivative.<item>.enabled=true
-derivative.<item>.in.stream=queue:islandora-item-connector.index
-derivative.<item>.service.url=http://example.org/derivative/convert
-derivative.<item>.concurrent-consumers=1
-derivative.<item>.max-concurrent-consumers=1
-derivative.<item>.async-consumer=true
-derivative.systems.installed=houdini,fits
-derivative.houdini.enabled=true
-derivative.houdini.in.stream=queue:islandora-connector-houdini
-derivative.houdini.service.url=http://127.0.0.1:8000/houdini/convert
-derivative.houdini.concurrent-consumers=1
-derivative.houdini.max-concurrent-consumers=4
-derivative.houdini.async-consumer=true
-derivative.fits.enabled=true
-derivative.fits.in.stream=queue:islandora-connector-fits
-derivative.fits.service.url=http://127.0.0.1:8000/crayfits
-derivative.fits.concurrent-consumers=2
-derivative.fits.max-concurrent-consumers=2
-derivative.fits.async-consumer=false
-
-#Customizing HTTP client timeouts
-request.configurer.enabled=true
-request.timeout=-1
-connection.timeout=-1
-socket.timeout=-1
-
-#Alter HTTP options
-#http.additional_options=authMethod=Basic,authUsername=Jim,authPassword=1234
-```
-
-- localhost OR 127.0.0.1 in alpca properties: (Dont think so)
-  - localhost->fits, ocr, jms brocker
-  - 127.0.0.1 -> milliner, triplestore, homarus, houdini
-
-- Check activemq enable
-
-- Chown and chmod:
->```
->sudo chown www-data:www-data /opt/alpaca/alpaca.properties
->sudo chmod 644 /opt/alpaca/alpaca.properties
->```
-
+### Alpaca Configuration:
 - Run Alpaca
   - ```java -jar /opt/alpaca/alpaca.jar --spring.config.location=/opt/alpaca/alpaca.properties```
   - OR?
