@@ -562,11 +562,15 @@ If this worked correctly, Blazegraph should respond with some XML letting us kno
 >cd /opt
 >sudo wget https://www.apache.org/dyn/closer.lua/solr/solr/9.6.0/solr-9.6.0.tgz?action=download
 >sudo mv solr-9.6.0.tgz?action=download solr-9.6.0.tgz
->sudo tar xzf solr-9.6.0.tgz solr-9.6.1/bin/install_solr_service.sh --strip-components=2
 >```
 #### Install Solr:
-run following as root to extract and install solr:
-- ```sudo bash ./install_solr_service.sh solr-9.6.0.tgz -i /opt -d /var/solr -u solr -s solr -p 8983```
+- Run **either** of followings as root to extract and install solr:
+
+- run the following to install solr with specified options for solr directory and port:
+  - ```sudo bash ./install_solr_service.sh solr-9.6.0.tgz -i /opt -d /var/solr -u solr -s solr -p 8983```
+
+- or running following to install solr with default values
+  - ```sudo tar xzf solr-9.6.0.tgz solr-9.6.1/bin/install_solr_service.sh --strip-components=2
 
 ##### Runnig the above command will do the following:
 - extracted solr-9.6.0 to /opt
