@@ -401,8 +401,8 @@ fedora-config.sh contains:
 >  <role rolename="fedoraAdmin"/>
 >  <role rolename="fedoraUser"/>
 >  <user username="tomcat" password="TOMCAT_PASSWORD" roles="tomcat"/>
->  <user username="fedoraAdmin" password="FEDORA_ADMIN_PASSWORD" roles="fedoraAdmin"/>
->  <user username="fedoraUser" password="FEDORA_USER_PASSWORD" roles="fedoraUser"/>
+>  <user username="fedoraAdmin" password="islandora" roles="fedoraAdmin"/>
+>  <user username="fedoraUser" password="islandora" roles="fedoraUser"/>
 >```
 
 ### tomcat users permissions:
