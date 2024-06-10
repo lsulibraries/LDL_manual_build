@@ -897,7 +897,10 @@ derivative.fits.max-concurrent-consumers=2
   -  ```8080/blazegraph/namespace/islandora/sparql``` OR ```8080/bigdata/namespace/kb/sparql```
 - Custom Http client options, Additional HTTP endpoint options, Alter HTTP options configs
 - **Check alpaca_v2.properties in my shared!**
-
+- fix /opt/fcrepo/config/syn-settings.xml user and roles:
+```sh
+  <token user='islandora' roles='fedoraAdmin'>ISLANDORA_SYN_TOKEN</token>
+```
 
 ## Run Alpaca
   - ```java -jar /opt/alpaca/alpaca.jar --spring.config.location=/opt/alpaca/alpaca.properties```
