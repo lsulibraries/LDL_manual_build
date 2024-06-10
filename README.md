@@ -886,11 +886,14 @@ derivative.fits.service.url=http://127.0.0.1:8000/crayfits
 derivative.fits.concurrent-consumers=2
 derivative.fits.max-concurrent-consumers=2
 ```
-### Alpaca wont run even after 2 days of running! Need to check the proper config from properties. Specially
+### Alpaca wont run even after 2 days of running! Need to check the proper config from properties. Specially:
 - Crayfish services for islandora-connector-derivative Configuration and fcrepo indexing optoin!
 - Fedora indexer options: we have indexer for milliner! do we need for others as well?
 - triplestore: Check baseUrl endpoint.
   -  ```8080/blazegraph/namespace/islandora/sparql``` OR ```8080/bigdata/namespace/kb/sparql```
+- Custom Http client options, Additional HTTP endpoint options, Alter HTTP options configs
+- **Check alpaca_v2.properties in my shared!**
+
 
 ## Run Alpaca
   - ```java -jar /opt/alpaca/alpaca.jar --spring.config.location=/opt/alpaca/alpaca.properties```
