@@ -740,13 +740,12 @@ ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the de
 - ```name="stomp" uri="stomp://127.0.0.1:61613"```
   - 61623 is fcrepo dynamic stomp port we configured in fcrepo.properties
 
-### Note for Karaf:
-Karaf is not been used to install latest Alpaca Microservices any more, We will install alpaca with a jar file in the following steps.
 
 ## 2. Alpaca:
-Alapca is a Java middleware that handle communication between various components of Islandora.
+- Alapca is a Java middleware that handle communication between various components of Islandora.
 
-### we need Download, alpaca.jar file, configure alpaca then run the JAR file
+- We need Download, alpaca.jar file, configure alpaca then run the JAR file
+
 ### Downlaod Alpaca jar file:
 - Make a directory for Alpaca and download the latest version of Alpaca from the Maven repository. E.g.
   - mkdir /opt/alpaca cd /opt/alpaca curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0
