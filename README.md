@@ -885,10 +885,53 @@ derivative.<item>.max-concurrent-consumers=1
 derivative.<item>.async-consumer=true
 ```
 
+- **Customizing HTTP client timeouts:**
+You can alter the HTTP client from the defaults for its request, connection and socket timeouts.
+  - To do this you want to enable the request configurer.
+```sh
+request.configurer.enabled=true
+```
+
+  - Then set the next 3 timeouts (measured in milliseconds) to the desired timeout. The default for all three is -1 which indicates no timeout.
+```sh
+request.timeout=-1
+connection.timeout=-1
+socket.timeout=-1
+```
+
+- **Alter HTTP options:**
+By default, Alpaca uses two settings for the HTTP component, these are * disableStreamCache=true * connectionClose=true
+
+If you want to send additional configuration parameters or alter the existing defaults. You can add them as a comma separated list of key=value pairs.For example:
+```sh
+http.additional_options=authMethod=Basic,authUsername=Jim,authPassword=1234
+```
+
+These will be added to ALL http endpoint requests.
+
+- Note: We are currently running Camel 3.7.6, some configuration parameters on the above linked page might not be supported.
 
 ### Run Alpaca using configurations: 
 - ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties```
 
+### Create alpaca.service to use syustemd:
+```sudo nano /etc/systemd/system/alpaca.service```
+
+```sh
+[Unit]
+Description=Alpaca service
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=java -jar /opt/alpaca/alpaca.jar -c /opt/alpaca/alpaca.properties
+ExecStop=/bin/kill -15 $MAINPID
+SuccessExitStatus=143
+Restart=always
+
+[Install]
+WantedBy=default.target
+```
 
 ### Alpaca will perform the following tasks:
 - **Connect to ActiveMQ:**
