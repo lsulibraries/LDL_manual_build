@@ -688,7 +688,10 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 >sudo chown www-data:www-data /opt/crayfish/Milliner/cfg/config.yaml
 >sudo chmod 644 /opt/crayfish/Milliner/cfg/config.yaml
 >```
+
 - ```sudo systemctl reload apache2```
+### Enabling Each Crayfish Component Apache Configuration:
+```sudo a2enconf Homarus Houdini Hypercube Milliner Recast```
 
 # ActiveMQ/Alpaca:
 ## 1. ActiveMQ:
