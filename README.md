@@ -744,6 +744,8 @@ Karaf is not been used to install latest Alpaca Microservices any more, We will 
 #### Alpaca importance in islandora ecosystem:
 - Alpaca integrates and manages various microservices in an Islandora installation, handling content indexing, derivative generation, message routing from Drupal, service integration with repositories and endpoints, and configuration management for seamless system functionality.
 
+- Java middleware that handle communication between various components of Islandora.
+
 - In more detail, Alpaca will connect to the ActiveMQ broker, handle HTTP requests, index content in Fedora and Triplestore, and generate derivatives using FITS, Homarus, Houdini, and OCR services based on the queues and URLs specified in the configuration file.
 
 #### download alpaca.jar:
@@ -755,90 +757,133 @@ Karaf is not been used to install latest Alpaca Microservices any more, We will 
 >```
 
 #### Copy alpaca.properties:
+- Alpaca is made up of several services, each of these can be enabled or disabled individually.
+
 - Next, we need to copy over the configuration file containing the necessary flags so Alpaca knows how to connect to all required services. This configuration file is named alpaca.properties and should be executed using the following command:
   - ```cp /mnt/hgfs/shared/alpaca.properties /opt/alpaca/```
 
 - Look at the [example.properties](https://github.com/Islandora/Alpaca/blob/2.x/example.properties) file to see some example settings.
 
-- configuration:
-   - find activemq user and password in credentials in ```nano /usr/share/activemq/conf/credentials.properties```
-   >```
-   >activemq.username=system
-   >activemq.password=manager
-   >guest.password=password
-   >```
-   - Triplestore base URL: triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
+#### configuration:
+- **Common options:**
+```sh
+# Common options
+error.maxRedeliveries=4
+```
 
-- Here is the alpaca.properties configuration file:
->```
-># Common options
->error.maxRedeliveries=5
->jms.brokerUrl=tcp://localhost:61616
->jms.username=system
->jms.password=manager
->jms.connections=10
->
-># Custom Http client options
-># All timeouts in milliseconds
->request.configurer.enabled=false
->request.timeout=-1
->connection.timeout=-1
->socket.timeout=-1
->
-># Additional HTTP endpoint options, these can be for Camel or to be sent to the baseUrl or service.url
->http.additional_options=
->
-># Fedora indexer options
->fcrepo.indexer.enabled=true
->fcrepo.indexer.node=queue:islandora-indexing-fcrepo-content
->fcrepo.indexer.delete=queue:islandora-indexing-fcrepo-delete
->fcrepo.indexer.media=queue:islandora-indexing-fcrepo-media
->fcrepo.indexer.external=queue:islandora-indexing-fcrepo-file-external
->fcrepo.indexer.milliner.baseUrl=http://127.0.0.1:8000/milliner/
->fcrepo.indexer.concurrent-consumers=-1
->fcrepo.indexer.max-concurrent-consumers=-1
->fcrepo.indexer.async-consumer=false
->
-># Triplestore indexer options
->triplestore.indexer.enabled=true
->triplestore.baseUrl=http://127.0.0.1:8080/bigdata/namespace/kb/sparql
->triplestore.index.stream=queue:islandora-indexing-triplestore-index
->triplestore.delete.stream=queue:islandora-indexing-triplestore-delete
->triplestore.indexer.concurrent-consumers=-1
->triplestore.indexer.max-concurrent-consumers=-1
->triplestore.indexer.async-consumer=false
->
-># Derivative services
->derivative.systems.installed=fits,homarus,houdini,ocr
->
->derivative.fits.enabled=true
->derivative.fits.in.stream=queue:islandora-connector-fits
->derivative.fits.service.url=http://localhost:8000/crayfits
->derivative.fits.concurrent-consumers=-1
->derivative.fits.max-concurrent-consumers=-1
->derivative.fits.async-consumer=false
->
->derivative.homarus.enabled=true
->derivative.homarus.in.stream=queue:islandora-connector-homarus
->derivative.homarus.service.url=http://127.0.0.1:8000/homarus/convert
->derivative.homarus.concurrent-consumers=-1
->derivative.homarus.max-concurrent-consumers=-1
->derivative.homarus.async-consumer=false
->
->derivative.houdini.enabled=true
->derivative.houdini.in.stream=queue:islandora-connector-houdini
->derivative.houdini.service.url=http://127.0.0.1:8000/houdini/convert
->derivative.houdini.concurrent-consumers=-1
->derivative.houdini.max-concurrent-consumers=-1
->derivative.houdini.async-consumer=false
->
->derivative.ocr.enabled=true
->derivative.ocr.in.stream=queue:islandora-connector-ocr
->derivative.ocr.service.url=http://localhost:8000/hypercube
->derivative.ocr.concurrent-consumers=-1
->derivative.ocr.max-concurrent-consumers=-1
->derivative.ocr.async-consumer=false
->```
+- **ActiveMQ options:**
+  - This defines the url to the ActiveMQ broker which you installed earlier.
+```sh
+# ActiveMQ options
+jms.brokerUrl=tcp://localhost:61616
+```
+  - This defines the login credentials (if required)
+```sh
+activemq.username=system
+activemq.password=manager
+```
+  - This defines how many messages to process simultaneously.
+```sh
+jms.connections=10
+```
+
+- **Fedora indexer options:**
+
+This service manages a Drupal node into a corresponding Fedora resource.
+
+  - Bellow defines whether the Fedora indexer is enabled or not.
+```sh
+# Fcrepo indexer options
+fcrepo.indexer.enabled=true
+```
+
+  - These define the various queues to listen on for the indexing/deletion messages. The part after queue: should match your Islandora instance "Actions".
+
+```sh
+fcrepo.indexer.node=queue:islandora-indexing-fcrepo-content
+fcrepo.indexer.delete=queue:islandora-indexing-fcrepo-delete
+fcrepo.indexer.media=queue:islandora-indexing-fcrepo-media
+fcrepo.indexer.external=queue:islandora-indexing-fcrepo-file-external
+```
+
+  - This defines the location of your Milliner microservice.
+```sh
+fcrepo.indexer.milliner.baseUrl=http://localhost:8000/milliner
+```
+
+  - These define the default number of concurrent consumers and maximum number of concurrent consumers working off your ActiveMQ instance. A value of -1 means no setting is applied.
+```sh
+fcrepo.indexer.concurrent-consumers=1
+fcrepo.indexer.max-concurrent-consumers=1
+```
+
+  - This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
+```sh
+fcrepo.indexer.async-consumer=true
+```
+
+- **Triplestore indexer options:**
+This service indexes the Drupal node into the configured triplestore
+
+  - This defines whether the Triplestore indexer is enabled or not.
+```sh
+# Triplestore indexer options
+triplestore.indexer.enabled=false
+```
+
+  - These define the various queues to listen on for the indexing/deletion messages. The part after queue: should match your Islandora instance "Actions".
+```sh
+triplestore.index.stream=queue:islandora-indexing-triplestore-index
+triplestore.delete.stream=queue:islandora-indexing-triplestore-delete
+```
+
+  - This defines the location of your triplestore's SPARQL update endpoint.
+```sh
+triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
+```
+
+  - These define the default number of concurrent consumers and maximum number of concurrent consumers working off your ActiveMQ instance. A value of -1 means no setting is applied.
+```sh
+triplestore.indexer.concurrent-consumers=1
+triplestore.indexer.max-concurrent-consumers=1
+```
+
+  - This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
+```sh
+triplestore.indexer.async-consumer=true
+```
+
+- **Derivative services(islandora-connector-derivative):**
+This service is used to configure an external microservice. This service will deploy multiple copies of its routes with different configured inputs and outputs based on properties.
+
+The routes to be configured are defined with the property derivative.systems.installed which expects a comma separated list. Each item in the list defines a new route and must also define 3 additional properties.
+
+
+  - This defines if the item service is enabled.
+```sh
+derivative.<item>.enabled=true
+```
+
+  - This is the input queue for the derivative microservice. The part after queue: should match your Islandora instance "Actions".
+```sh
+derivative.<item>.in.stream=queue:islandora-item-connector.index
+```
+
+  - This is the microservice URL to process the request.
+```sh
+derivative.<item>.service.url=http://example.org/derivative/convert
+```
+
+  - These define the default number of concurrent consumers and maximum number of concurrent consumers working off your ActiveMQ instance. A value of -1 means no setting is applied.
+```sh
+derivative.<item>.concurrent-consumers=1
+derivative.<item>.max-concurrent-consumers=1
+```
+
+  - This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
+```sh
+derivative.<item>.async-consumer=true
+```
 
 
 ### Run Alpaca using configurations: 
