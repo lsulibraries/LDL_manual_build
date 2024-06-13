@@ -78,20 +78,20 @@ fi
 /opt/activemq/bin/activemq start
 ```
 
-    - Check for Duplicate Brokers in activemq.xml
+- Check for Duplicate Brokers in activemq.xml
 
-        - Ensure there is *only one* <broker> element defined in your configuration:
+    - Ensure there is *only one* <broker> element defined in your configuration:
 
-        - Configure for multiple clusters:
-            - configure an ActiveMQ broker for a Shared File System Master-Slave setup using the KahaDB persistence adapter
+    - Configure for multiple clusters:
+        - configure an ActiveMQ broker for a Shared File System Master-Slave setup using the KahaDB persistence adapter
 
-            - If using a shared file system for KahaDB and multiple brokers are configured to access the same directory, only one broker can be active (master) at a time.
+        - If using a shared file system for KahaDB and multiple brokers are configured to access the same directory, only one broker can be active (master) at a time.
 
-            - The other brokers will detect the lock and wait in slave mode until the lock is released (e.g., if the master broker fails).
+        - The other brokers will detect the lock and wait in slave mode until the lock is released (e.g., if the master broker fails).
 
-            - If you intend to use a Shared File System Master-Slave setup, ensure that:
-                - Only one broker is intended to be active at a time.
-                - The shared directory is correctly configured in all brokers.
+        - If you intend to use a Shared File System Master-Slave setup, ensure that:
+            - Only one broker is intended to be active at a time.
+            - The shared directory is correctly configured in all brokers.
 ```sh
 <broker xmlns="http://activemq.apache.org/schema/core" brokerName="shared-broker" useJmx="true">
     <persistenceAdapter>
