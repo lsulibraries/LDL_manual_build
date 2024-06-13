@@ -135,13 +135,6 @@ sudo lsof -i :61616
 sudo kill -9 PID_NUMBER
 ```
 
-    - 2. configure in activemq.xml: **(CHECK IT)**
-```sh
-<managementContext>
-    <managementContext createConnector="true"/>
-</managementContext>
-```
-
 ***************************************************************************************************************************************************************************
 ## 4. Failed to start Apache ActiveMQ:
 ### ERROR:
