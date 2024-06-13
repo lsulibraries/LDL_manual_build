@@ -103,15 +103,15 @@ fi
 </broker>
 ```
 
-    - 4. Inspect the Network Connector:
+- 4. Inspect the Network Connector:
 
-        - If you are using network connectors, ensure they are correctly configured to avoid any conflicts or issues with clustering that might cause multiple instances to start.
+    - If you are using network connectors, ensure they are correctly configured to avoid any conflicts or issues with clustering that might cause multiple instances to start.
 ```sh
 <networkConnector name="connector1" uri="static:(tcp://remote-broker:61616)"/>
 ```
 
-    - 5. Check for Clustering Configurations:
-        - If you are using Master/Slave clustering, verify that the configurations are correctly set up to avoid any issues with locking.
+- 5. Check for Clustering Configurations:
+    - If you are using Master/Slave clustering, verify that the configurations are correctly set up to avoid any issues with locking.
 
 ***************************************************************************************************************************************************************************
 ## 3. Activemq stop will can not resolve created pid:
