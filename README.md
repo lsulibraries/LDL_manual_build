@@ -698,14 +698,14 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 >```
 
 #### Set permissions to ActiveMQ directory:
-```sh
+```
 >sudo chown -R activemq:activemq /opt/activemq
 >sudo chmod -R 755 /opt/activemq 
 >sudo chmod -R 755 /opt/activemq/bin/activemq
 ```
 
 #### Set Up Environment Variables, Add the following to /etc/default/activemq:
-```sh
+```
 >sudo sed -i 's/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="activemq"/' /opt/activemq/bin/setenv
 >## Increase memory if needed in same setenv:
 >ACTIVEMQ_OPTS_MEMORY="-Xms512M -Xmx1G"
@@ -714,7 +714,7 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 >sudo nano /etc/default/activemq
 ```
 #### Create a symlink to the init script and enable the service:
-```sh
+```
 >sudo ln -snf /opt/activemq/bin/activemq /etc/init.d/activemq 
 >sudo update-rc.d activemq defaults
 ```
@@ -761,9 +761,9 @@ WantedBy=multi-user.target
 - Copy over these two configurations for setup webconsole and Stopmp ports:
 ```sh
 # activemq main configurations:
->cp /mnt/hgfs/shared/configs/activemq.xml /opt/activemq/conf```
+cp /mnt/hgfs/shared/configs/activemq.xml /opt/activemq/conf```
 # for web console accessibility
->nano /mnt/hgfs/shared/configs/activemq.xml /opt/activemq/conf/jetty.xml
+nano /mnt/hgfs/shared/configs/activemq.xml /opt/activemq/conf/jetty.xml
 ```
 ### 2. Alpaca:
 #### Alpaca importance in islandora ecosystem:
