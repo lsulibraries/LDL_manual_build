@@ -698,32 +698,34 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 >```
 
 #### Set permissions to ActiveMQ directory:
-```
->sudo chown -R activemq:activemq /opt/activemq
->sudo chmod -R 755 /opt/activemq 
->sudo chmod -R 755 /opt/activemq/bin/activemq
+```sh
+sudo chown -R activemq:activemq /opt/activemq
+sudo chmod -R 755 /opt/activemq 
+sudo chmod -R 755 /opt/activemq/bin/activemq
 ```
 
 #### Set Up Environment Variables, Add the following to /etc/default/activemq:
+- Add activemq user to activemq environment file:
 ```
->sudo sed -i 's/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="activemq"/' /opt/activemq/bin/setenv
->## Increase memory if needed in same setenv:
->ACTIVEMQ_OPTS_MEMORY="-Xms512M -Xmx1G"
->sudo cp /opt/activemq/bin/setenv /etc/default/activemq
->sudo chmod -R 755 /etc/default/activemq
->sudo nano /etc/default/activemq
+#copy over activemq environment variables
+sudo cp /mnt/hgfs/shared/configs/activemq/setenv /opt/activemq/bin/setenv
+sudo cp /mnt/hgfs/shared/configs/activemq/setenv /etc/default/activemq
+# Set correct permissions:
+sudo chmod -R 755 /etc/default/activemq
+sudo nano /etc/default/activemq
 ```
+
 #### Create a symlink to the init script and enable the service:
 ```
->sudo ln -snf /opt/activemq/bin/activemq /etc/init.d/activemq 
->sudo update-rc.d activemq defaults
+sudo ln -snf /opt/activemq/bin/activemq /etc/init.d/activemq 
+sudo update-rc.d activemq defaults
 ```
 #### correct permissions to activemq and check symlink:
 - ```ls -l /etc/init.d/activemq```
 - ```sudo systemctl daemon-reload```
 
 #### Set Up Service:
-- ```sudo cp /mnt/hgfs/shared/activemq.service /etc/systemd/system/activemq.service```
+- ```sudo cp /mnt/hgfs/shared/configs/activemq/activemq.service /etc/systemd/system/activemq.service```
 - reload systemd to recognize the new service ```sudo systemctl daemon-reload```
 - activemq.service contains:
 ```sh
@@ -744,26 +746,28 @@ WantedBy=multi-user.target
 ```
 
 #### Enable an start Service:
->```
-># Start with system control
->sudo systemctl enable activemq
->sudo systemctl start activemq
->sudo systemctl status activemq
-># start from activemq directory:
->/opt/activemq/bin start
->```
+```
+# Start with system control
+sudo systemctl enable activemq
+sudo systemctl start activemq
+sudo systemctl status activemq
+# start from activemq directory:
+/opt/activemq/bin start
+```
 #### Ckeck started on the port:
 - you should see activemq is running on port 61616 with
-- ```sudo lsof -i :61616``` or ```netstat -a | grep 61616```
+  - ```sudo lsof -i :61616```
+- Or:
+  - ```netstat -a | grep 61616```
 
 #### ActiveMQ ConfigurationL(Important)
 - ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the default tcp://127.0.0.1:61613, this will have to be set:
 - Copy over these two configurations for setup webconsole and Stopmp ports:
 ```sh
 # activemq main configurations:
-cp /mnt/hgfs/shared/configs/activemq.xml /opt/activemq/conf```
+cp /mnt/hgfs/shared/configs/activemq/activemq.xml /opt/activemq/conf```
 # for web console accessibility
-nano /mnt/hgfs/shared/configs/activemq.xml /opt/activemq/conf/jetty.xml
+nano /mnt/hgfs/shared/configs/activemq/jetty.xml /opt/activemq/conf
 ```
 ### 2. Alpaca:
 #### Alpaca importance in islandora ecosystem:
