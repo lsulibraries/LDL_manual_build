@@ -684,62 +684,87 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 
 # ActiveMQ/Alpaca:
 ### 1. ActiveMQ:
-#### The latest ActiveMQ manual installation:
+#### Create ActiveMQ User:
+- ```sudo useradd -m -d /opt/activemq -s /bin/false activemq```
+
+#### Download and un-archive ActiveMQ:
 >```
->cd /usr/share/
->sudo wget https://archive.apache.org/dist/activemq/6.1.2/apache-activemq-6.1.2-bin.zip
->sudo unzip apache-activemq-6.1.2-bin.zip
->sudo mv apache-activemq-6.1.2 activemq
->```
-- Create directories:
->```
->sudo mkdir -p /var/lib/activemq
->sudo mkdir -p /var/lib/activemq/conf
+>mkdir /opt/activemq
+>cd /opt/activemq
+>sudo wget https://repository.apache.org/content/repositories/snapshots/org/apache/activemq/apache-activemq/6.2.0-SNAPSHOT/apache-activemq-6.2.0-20240714.112132-13-bin.tar.gz
+>sudo tar zxvf apache-activemq-6.2.0-20240714.112132-13-bin.tar.gz
+>sudo mv apache-activemq-6.2.0-SNAPSHOT/* .
+>sudo rm -rf apache-activemq-6.2.0-SNAPSHOT apache-activemq-6.2.0-20240714.112132-13-bin.tar.gz
 >```
 
-#### Create an ActiveMQ System User and Set Permissions:
->```
->cd /usr/share/activemq
->sudo useradd -r activemq -d /var/lib/activemq -s /sbin/nologin
->sudo chown -R activemq:activemq /var/lib/activemq
->sudo chown -R activemq:activemq /usr/share/activemq
->```
+#### Set permissions to ActiveMQ directory:
+```sh
+>sudo chown -R activemq:activemq /opt/activemq
+>sudo chmod -R 755 /opt/activemq 
+>sudo chmod -R 755 /opt/activemq/bin/activemq
+```
+
+#### Set Up Environment Variables, Add the following to /etc/default/activemq:
+```sh
+>sudo sed -i 's/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="activemq"/' /opt/activemq/bin/setenv
+>## Increase memory if needed in same setenv:
+>ACTIVEMQ_OPTS_MEMORY="-Xms512M -Xmx1G"
+>sudo cp /opt/activemq/bin/setenv /etc/default/activemq
+>sudo chmod -R 755 /etc/default/activemq
+>sudo nano /etc/default/activemq
+```
+#### Create a symlink to the init script and enable the service:
+```sh
+>sudo ln -snf /opt/activemq/bin/activemq /etc/init.d/activemq 
+>sudo update-rc.d activemq defaults
+```
+#### correct permissions to activemq and check symlink:
+- ```ls -l /etc/init.d/activemq```
+- ```sudo systemctl daemon-reload```
 
 #### Set Up Service:
 - ```sudo cp /mnt/hgfs/shared/activemq.service /etc/systemd/system/activemq.service```
 - reload systemd to recognize the new service ```sudo systemctl daemon-reload```
+- activemq.service contains:
+```sh
+[Unit]
+Description=Apache ActiveMQ
+After=network.target
+
+[Service]
+Type=forking
+User=activemq
+Group=activemq
+ExecStart=/opt/activemq/bin/activemq start
+ExecStop=/opt/activemq/bin/activemq stop
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
 
 #### Enable an start Service:
 >```
+># Start with system control
 >sudo systemctl enable activemq
 >sudo systemctl start activemq
 >sudo systemctl status activemq
+># start from activemq directory:
+>/opt/activemq/bin start
 >```
-
-#### Set manual ActiveMQ as default ActiveMQ:
-add activemq bin directory to default environment variable:
->```
->sudo nano ~/.bashrc
->export PATH=$PATH:/usr/share/activemq/bin
->source ~/.bashrc
->```
-
-#### Create a symbolic link For ActiveMQ:
-- ```sudo ln -s /usr/share/activemq/bin/activemq /usr/local/bin/activemq```
-- Check ActiveMQ Version to make sure it is installed and system can find the right service version:
-- ```activemq --version```
+#### Ckeck started on the port:
+- you should see activemq is running on port 61616 with
+- ```sudo lsof -i :61616``` or ```netstat -a | grep 61616```
 
 #### ActiveMQ ConfigurationL(Important)
-ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the default tcp://127.0.0.1:61613, this will have to be set:
-- ```sudo nano /usr/share/activemq/conf/activemq.xml```
-- Inside the <transportConnectors> element, find the configuration for the STOMP transport connector and change the stomp url from 0.0.0.0 to 127.0.0.1:61613
-- Keep the port and the rest.
-- ```name="stomp" uri="stomp://127.0.0.1:61613"```
-  - 61623 is fcrepo dynamic stomp port we configured in fcrepo.properties
-
-### Note for Karaf:
-Karaf is not been used to install latest Alpaca Microservices any more, We will install alpaca with a jar file in the following steps.
-
+- ActiveMQ expected to be listening for STOMP messages at a tcp url. If not the default tcp://127.0.0.1:61613, this will have to be set:
+- Copy over these two configurations for setup webconsole and Stopmp ports:
+```sh
+# activemq main configurations:
+>cp /mnt/hgfs/shared/configs/activemq.xml /opt/activemq/conf```
+# for web console accessibility
+>nano /mnt/hgfs/shared/configs/activemq.xml /opt/activemq/conf/jetty.xml
+```
 ### 2. Alpaca:
 #### Alpaca importance in islandora ecosystem:
 - Alpaca integrates and manages various microservices in an Islandora installation, handling content indexing, derivative generation, message routing from Drupal, service integration with repositories and endpoints, and configuration management for seamless system functionality.
