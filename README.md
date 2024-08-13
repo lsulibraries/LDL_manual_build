@@ -344,9 +344,9 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 #### stop tomcat and create fcrepo directy
 - ```sudo systemctl stop tomcat```
 - ```sudo mkdir -p /mnt/fcrepo/data/objects```
-- ```sudo cp /mnt/hgfs/shared/configs/fedora_configs/config /mnt/fcrepo/```
+- ```sudo cp -R /mnt/hgfs/shared/configs/fedora_configs/config /mnt/fcrepo/```
 - ```sudo chown -R tomcat:tomcat /mnt/fcrepo```
-- ```sudo chmod -R 755 /mnt/fcrepo/config```
+- ```sudo chmod -R 755 /mnt/fcrepo```
 
 #### Create fcrepo database, user, password in postgresql or maridb:
 - ```sudo -u postgres psql```
@@ -367,22 +367,18 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 - ```sudo chown tomcat:tomcat /opt/tomcat/bin/setenv.sh```
 
 ### Edit and Ensuring Tomcat Users Are In Place
-- ```cp /mnt/hgfs/shared/tomcat-users.xml /opt/tomcat/conf/```
-
-### tomcat users permissions:
-- **1- postgres privileges:** We have given correct postgres privileges to fedora user in fcrepo database
-
-- **2- tomcat-users permission:**
+- ```cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/tomcat-users.xml /opt/tomcat/conf```
+- tomcat-users permission:
 >```
->sudo chmod 600 /mnt/tomcat/conf/tomcat-users.xml
->sudo chown tomcat:tomcat /mnt/tomcat/conf/tomcat-users.xml
+>sudo chmod 600 /opt/tomcat/conf/tomcat-users.xml
+>sudo chown tomcat:tomcat /opt/tomcat/conf/tomcat-users.xml
 >```
+
 
 ### download fedora Latest Release:
 - **NOTE:** You may want to check visit [fcrepo repository](https://github.com/fcrepo/fcrepo/releases) to choose the latest version and ajust the commands below if needed
 - ```sh /mnt/hgfs/shared/fedora-dl.sh```
-
-The following shell script will execute the commands below to download fedora war file and will place it to catalina webapp directory:
+- The following shell script will execute the commands below to download fedora war file and will place it to catalina webapp directory:
 >```
 >#!/bin/bash
 >cd /opt
@@ -391,7 +387,7 @@ The following shell script will execute the commands below to download fedora wa
 >sudo chown tomcat:tomcat /opt/tomcat/webapps/fcrepo.war
 >```
 
-### Enable fedora endpoint:
+### Enable fedora and Start Fedora:
 - **Start Tomcat server:**
   - ```/opt/tomcat/bin/startup.sh```
 
@@ -404,7 +400,7 @@ The following shell script will execute the commands below to download fedora wa
 
 # Syn:
 ### Download syn:
-check here for link: https://github.com/Islandora/Syn/releases/ copy the link (if changed from syn-1.1.1) and replace the link in the command below:
+check here for link [Islandora Syn](https://github.com/Islandora/Syn/releases/) to check for latest version:
 - run the command:
 - ```sh /mnt/hgfs/shared/syn-dl.sh```
 >```
@@ -431,13 +427,13 @@ check here for link: https://github.com/Islandora/Syn/releases/ copy the link (i
 >```
 
 ### Adding the Syn Valve to Tomcat | Enable the Syn Valve for all of Tomcat:
-- ```sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/context.xml /opt/tomcat/conf```
+- Add Syn path to tomcat context.xml:
+```sh
+sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/context.xml /opt/tomcat/conf```
+sudo chmod 644 /opt/tomcat/conf/context.xml
+sudo chown tomcat:tomcat /opt/tomcat/conf/context.xml
+```
 - ```sudo systemctl restart tomcat```
-
-- By copying the tomcat's Context.xml we added bellow line before the closing Context (</context>):
->```
->    <Valve className="ca.islandora.syn.valve.SynValve" pathname="/mnt/fcrepo/config/syn-settings.xml"/>
->```
 
 
 ### Redhat logging:
