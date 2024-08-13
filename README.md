@@ -341,15 +341,15 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 >```
 
 ### Installing fedora
-- ***stop tomcat and create fcrepo directy***
+#### stop tomcat and create fcrepo directy
 - ```sudo systemctl stop tomcat```
 - ```sudo mkdir -p /mnt/fcrepo/data/objects```
-- ```sudo mv /mnt/hgfs/shared/configs/fedora_configs/config /mnt/fcrepo/```
+- ```sudo cp /mnt/hgfs/shared/configs/fedora_configs/config /mnt/fcrepo/```
 - ```sudo chown -R tomcat:tomcat /mnt/fcrepo```
-- ```sudo -u postgres psql```
+- ```sudo chmod -R 755 /mnt/fcrepo/config```
 
-- ***Create fcrepo database, user, password in postgresql or maridb:***
-sudo -u postgres psql
+#### Create fcrepo database, user, password in postgresql or maridb:
+- ```sudo -u postgres psql```
 >```
 >create database fcrepo encoding 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;
 >create user fedora with encrypted password 'fedora';
@@ -357,31 +357,6 @@ sudo -u postgres psql
 >grant all privileges on database fcrepo to fedora;
 >GRANT CREATE ON SCHEMA public TO fedora;
 >\q
->```
-
-- ***Adding fedora configurations:***
-- ```sudo sh /mnt/hgfs/shared/fedora-config.sh```
-
-fedora-config.sh contains:
->```
->#!/bin/bash
->sudo cp /mnt/hgfs/shared/i8_namespaces.yml /mnt/fcrepo/config/
->sudo chown tomcat:tomcat /mnt/fcrepo/config/i8_namespaces.yml
->sudo chmod 644 /mnt/fcrepo/config/i8_namespaces.yml
->
->sudo cp /mnt/hgfs/shared/allowed_external_hosts.txt /mnt/fcrepo/config/
->sudo chown tomcat:tomcat /mnt/fcrepo/config/allowed_external_hosts.txt
->sudo chmod 644 /mnt/fcrepo/config/allowed_external_hosts.txt
->
->#fcrepo.properties - It's configured according to our needs:
->sudo cp /mnt/hgfs/shared/fcrepo.properties /mnt/fcrepo/config/
->sudo chown tomcat:tomcat /mnt/fcrepo/config/fcrepo.properties
->sudo chmod 640 /mnt/fcrepo/config/fcrepo.properties
->
->#From our old build instructions
->sudo cp /mnt/hgfs/shared/repository.json /mnt/fcrepo/config/repository.json
->sudo chown tomcat:tomcat /mnt/fcrepo/config/repository.json
->sudo chmod 644 /mnt/fcrepo/config/repository.json
 >```
 
 ### Adding the Fedora Variables to JAVA_OPTS, change setenv:
@@ -394,17 +369,6 @@ fedora-config.sh contains:
 ### Edit and Ensuring Tomcat Users Are In Place
 - ```cp /mnt/hgfs/shared/tomcat-users.xml /opt/tomcat/conf/```
 
-- Copied tomcat-users.xml file will update following to tomcat-users.xml:
-- ```sudo nano /opt/tomcat/conf/tomcat-users.xml```
->```
->  <role rolename="tomcat"/>
->  <role rolename="fedoraAdmin"/>
->  <role rolename="fedoraUser"/>
->  <user username="tomcat" password="TOMCAT_PASSWORD" roles="tomcat"/>
->  <user username="fedoraAdmin" password="FEDORA_ADMIN_PASSWORD" roles="fedoraAdmin"/>
->  <user username="fedoraUser" password="FEDORA_USER_PASSWORD" roles="fedoraUser"/>
->```
-
 ### tomcat users permissions:
 - **1- postgres privileges:** We have given correct postgres privileges to fedora user in fcrepo database
 
@@ -415,7 +379,7 @@ fedora-config.sh contains:
 >```
 
 ### download fedora Latest Release:
-- **NOTE:** You may want to check visit: https://github.com/fcrepo/fcrepo/releases choose the latest version and ajust the commands below if needed
+- **NOTE:** You may want to check visit [fcrepo repository](https://github.com/fcrepo/fcrepo/releases) to choose the latest version and ajust the commands below if needed
 - ```sh /mnt/hgfs/shared/fedora-dl.sh```
 
 The following shell script will execute the commands below to download fedora war file and will place it to catalina webapp directory:
@@ -428,7 +392,7 @@ The following shell script will execute the commands below to download fedora wa
 >```
 
 ### Enable fedora endpoint:
-- **Start the server:**
+- **Start Tomcat server:**
   - ```/opt/tomcat/bin/startup.sh```
 
 - **Restart tomcat:**
@@ -468,22 +432,16 @@ check here for link: https://github.com/Islandora/Syn/releases/ copy the link (i
 
 ### Adding the Syn Valve to Tomcat | Enable the Syn Valve for all of Tomcat:
 - ```sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/context.xml /opt/tomcat/conf```
+- ```sudo systemctl restart tomcat```
 
 - By copying the tomcat's Context.xml we added bellow line before the closing Context (</context>):
 >```
->    <Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/>
+>    <Valve className="ca.islandora.syn.valve.SynValve" pathname="/mnt/fcrepo/config/syn-settings.xml"/>
 >```
 
-- ```sudo systemctl restart tomcat```
 
 ### Redhat logging:
->``` 
->sudo cp /mnt/hgfs/shared/fcrepo-logback.xml /mnt/fcrepo/config/
->sudo chmod 644 /mnt/fcrepo/config/fcrepo-logback.xml
->sudo chown tomcat:tomcat /mnt/fcrepo/config/fcrepo-logback.xml
->```
->
-- Then alter your $JAVA_OPTS like above to include:
+- alter your $JAVA_OPTS like above to include:
   - **Before:** export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/mnt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"
   - **After:** export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/mnt/fcrepo/config/fcrepo.properties -Dlogback.configurationFile=/mnt/fcrepo/config/fcrepo-logback.xml -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"
  
