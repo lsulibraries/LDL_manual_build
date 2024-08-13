@@ -752,10 +752,12 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 >sudo systemctl enable activemq
 >sudo systemctl start activemq
 >sudo systemctl status activemq
-
-># start from activemq directory:
+>
+>#start from activemq directory:
 >/opt/activemq/bin start
 >```
+
+
 #### Ckeck started on the port:
 - you should see activemq is running on port 61616 with
   - ```sudo lsof -i :61616```
