@@ -343,9 +343,9 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 ### Installing fedora
 - ***stop tomcat and create fcrepo directy***
 - ```sudo systemctl stop tomcat```
-- ```sudo mkdir -p /opt/fcrepo/data/objects```
-- ```sudo mkdir /opt/fcrepo/config```
-- ```sudo chown -R tomcat:tomcat /opt/fcrepo```
+- ```sudo mkdir -p /mnt/fcrepo/data/objects```
+- ```sudo mv /mnt/hgfs/shared/configs/fedora_configs/config /mnt/fcrepo/```
+- ```sudo chown -R tomcat:tomcat /mnt/fcrepo```
 - ```sudo -u postgres psql```
 
 - ***Create fcrepo database, user, password in postgresql or maridb:***
@@ -365,23 +365,23 @@ sudo -u postgres psql
 fedora-config.sh contains:
 >```
 >#!/bin/bash
->sudo cp /mnt/hgfs/shared/i8_namespaces.yml /opt/fcrepo/config/
->sudo chown tomcat:tomcat /opt/fcrepo/config/i8_namespaces.yml
->sudo chmod 644 /opt/fcrepo/config/i8_namespaces.yml
+>sudo cp /mnt/hgfs/shared/i8_namespaces.yml /mnt/fcrepo/config/
+>sudo chown tomcat:tomcat /mnt/fcrepo/config/i8_namespaces.yml
+>sudo chmod 644 /mnt/fcrepo/config/i8_namespaces.yml
 >
->sudo cp /mnt/hgfs/shared/allowed_external_hosts.txt /opt/fcrepo/config/
->sudo chown tomcat:tomcat /opt/fcrepo/config/allowed_external_hosts.txt
->sudo chmod 644 /opt/fcrepo/config/allowed_external_hosts.txt
+>sudo cp /mnt/hgfs/shared/allowed_external_hosts.txt /mnt/fcrepo/config/
+>sudo chown tomcat:tomcat /mnt/fcrepo/config/allowed_external_hosts.txt
+>sudo chmod 644 /mnt/fcrepo/config/allowed_external_hosts.txt
 >
 >#fcrepo.properties - It's configured according to our needs:
->sudo cp /mnt/hgfs/shared/fcrepo.properties /opt/fcrepo/config/
->sudo chown tomcat:tomcat /opt/fcrepo/config/fcrepo.properties
->sudo chmod 640 /opt/fcrepo/config/fcrepo.properties
+>sudo cp /mnt/hgfs/shared/fcrepo.properties /mnt/fcrepo/config/
+>sudo chown tomcat:tomcat /mnt/fcrepo/config/fcrepo.properties
+>sudo chmod 640 /mnt/fcrepo/config/fcrepo.properties
 >
 >#From our old build instructions
->sudo cp /mnt/hgfs/shared/repository.json /opt/fcrepo/config/repository.json
->sudo chown tomcat:tomcat /opt/fcrepo/config/repository.json
->sudo chmod 644 /opt/fcrepo/config/repository.json
+>sudo cp /mnt/hgfs/shared/repository.json /mnt/fcrepo/config/repository.json
+>sudo chown tomcat:tomcat /mnt/fcrepo/config/repository.json
+>sudo chmod 644 /mnt/fcrepo/config/repository.json
 >```
 
 ### Adding the Fedora Variables to JAVA_OPTS, change setenv:
@@ -410,8 +410,8 @@ fedora-config.sh contains:
 
 - **2- tomcat-users permission:**
 >```
->sudo chmod 600 /opt/tomcat/conf/tomcat-users.xml
->sudo chown tomcat:tomcat /opt/tomcat/conf/tomcat-users.xml
+>sudo chmod 600 /mnt/tomcat/conf/tomcat-users.xml
+>sudo chown tomcat:tomcat /mnt/tomcat/conf/tomcat-users.xml
 >```
 
 ### download fedora Latest Release:
@@ -421,6 +421,7 @@ fedora-config.sh contains:
 The following shell script will execute the commands below to download fedora war file and will place it to catalina webapp directory:
 >```
 >#!/bin/bash
+>cd /opt
 >sudo wget -O fcrepo.war https://github.com/fcrepo/fcrepo/releases/download/fcrepo-6.5.0/fcrepo-webapp-6.5.0.war
 >sudo mv fcrepo.war /opt/tomcat/webapps
 >sudo chown tomcat:tomcat /opt/tomcat/webapps/fcrepo.war
@@ -436,8 +437,6 @@ The following shell script will execute the commands below to download fedora wa
 ### Navigate to Fedora endpoint:
 - Once tomcat starts up, Fedora REST API should be available at **http://localhost:8080/fcrepo/rest**.
 - The username is **fedoraAdmin** and we defined the password before as FEDORA_ADMIN_PASSWORD (We set: "islandora").
-
-
 
 # Syn:
 ### Download syn:
@@ -462,15 +461,15 @@ check here for link: https://github.com/Islandora/Syn/releases/ copy the link (i
 >sudo openssl rsa -pubout -in "/opt/keys/syn_private.key" -out "/opt/keys/syn_public.key"
 >sudo chown www-data:www-data /opt/keys/syn*
 >sudo mkdir /opt/syn
->sudo cp /mnt/hgfs/shared/syn-settings.xml /opt/fcrepo/config/
->sudo chown tomcat:tomcat /opt/fcrepo/config/syn-settings.xml
->sudo chmod 600 /opt/fcrepo/config/syn-settings.xml
+>sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/syn-settings.xml /mnt/fcrepo/config/
+>sudo chown tomcat:tomcat /mnt/fcrepo/config/syn-settings.xml
+>sudo chmod 600 /mnt/fcrepo/config/syn-settings.xml
 >```
 
 ### Adding the Syn Valve to Tomcat | Enable the Syn Valve for all of Tomcat:
-- ```sudo nano /opt/tomcat/conf/context.xml```
+- ```sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/context.xml /opt/tomcat/conf```
 
-- Then add this line before the closing Context (</context>):
+- By copying the tomcat's Context.xml we added bellow line before the closing Context (</context>):
 >```
 >    <Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/>
 >```
@@ -479,15 +478,15 @@ check here for link: https://github.com/Islandora/Syn/releases/ copy the link (i
 
 ### Redhat logging:
 >``` 
->sudo cp /mnt/hgfs/shared/fcrepo-logback.xml /opt/fcrepo/config/
->sudo chmod 644 /opt/fcrepo/config/fcrepo-logback.xml
->sudo chown tomcat:tomcat /opt/fcrepo/config/fcrepo-logback.xml
+>sudo cp /mnt/hgfs/shared/fcrepo-logback.xml /mnt/fcrepo/config/
+>sudo chmod 644 /mnt/fcrepo/config/fcrepo-logback.xml
+>sudo chown tomcat:tomcat /mnt/fcrepo/config/fcrepo-logback.xml
 >```
 >
 - Then alter your $JAVA_OPTS like above to include:
-  - **Before:** export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"
-  - **After:** export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -Dlogback.configurationFile=/opt/fcrepo/config/fcrepo-logback.xml -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"
-
+  - **Before:** export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/mnt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"
+  - **After:** export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/mnt/fcrepo/config/fcrepo.properties -Dlogback.configurationFile=/mnt/fcrepo/config/fcrepo-logback.xml -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"
+ 
 - ```sudo nano /opt/tomcat/bin/setenv.sh```
 - Comment line 5 and uncomment line 6
 
