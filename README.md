@@ -711,7 +711,8 @@ Folowing command will move Crayfish Microservices Config files and Apache Config
 >sudo cp /mnt/hgfs/shared/configs/activemq/setenv /opt/activemq/bin/setenv
 >sudo cp /mnt/hgfs/shared/configs/activemq/setenv /etc/default/activemq
 
-># Set correct permissions:
+# Set correct permissions:
+>```
 >sudo chmod -R 755 /etc/default/activemq
 >sudo nano /etc/default/activemq
 >```
