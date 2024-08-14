@@ -650,7 +650,27 @@ run following as root to extract and install solr:
 ># for web console accessibility
 >cp /mnt/hgfs/shared/configs/activemq/jetty.xml /opt/activemq/conf
 >```
-### 2. Alpaca:
+##
+### 2. Crayfish Microservices:
+#### Clone Isandora Crayfish repository:
+```sh
+sudo mkdir /opt/crayfish 
+sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
+```
+
+#### Install Required Services on VM:
+- Bellow shell scripts will install required services for Crayfish Microservices to perform their tasks:
+- ```sudo sh /mnt/hgfs/shared/configs/crayfish_configs/crayfish-requriments.sh```
+
+#### Configure Virtual Host for Crayfits and Crayfish microservices:
+- ```sudo sh /mnt/hgfs/shared/configs/crayfish_configs/crayfish-virtual-host.sh```
+- Above command will perform bellow tasks:
+    - Copy over apache configuration for all microservices on port `8000`.
+    - Enable apache ***virtual host*** for microservices.
+    - Update ***Apache Ports*** to listen to port `8000` and Restart apache service.
+
+##
+### 3. Alpaca:
 #### Alpaca importance in islandora ecosystem:
 - Alpaca integrates and manages various microservices in an Islandora installation, handling content indexing, derivative generation, message routing from Drupal, service integration with repositories and endpoints, and configuration management for seamless system functionality.
 
