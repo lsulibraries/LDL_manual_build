@@ -429,7 +429,7 @@ check here for link [Islandora Syn](https://github.com/Islandora/Syn/releases/) 
 ### Adding the Syn Valve to Tomcat | Enable the Syn Valve for all of Tomcat:
 - Add Syn path to tomcat context.xml:
 ```sh
-sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/context.xml /opt/tomcat/conf```
+sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/context.xml /opt/tomcat/conf
 sudo chmod 644 /opt/tomcat/conf/context.xml
 sudo chown tomcat:tomcat /opt/tomcat/conf/context.xml
 ```
