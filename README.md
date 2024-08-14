@@ -687,166 +687,11 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 >```
 
 #### Copy alpaca.properties:
-- Alpaca is made up of several services, each of these can be enabled or disabled individually.
-
-- Next, we need to copy over the configuration file containing the necessary flags so Alpaca knows how to connect to all required services. This configuration file is named alpaca.properties and should be executed using the following command:
-  - ```cp /mnt/hgfs/shared/alpaca.properties /opt/alpaca/```
-
-- Look at the [example.properties](https://github.com/Islandora/Alpaca/blob/2.x/example.properties) file to see some example settings.
-
-#### configuration:
-- **Common options:**
-```sh
-# Common options
-error.maxRedeliveries=4
-```
-
-- **ActiveMQ options:**
-  - This defines the url to the ActiveMQ broker which you installed earlier.
-```sh
-# ActiveMQ options
-jms.brokerUrl=tcp://localhost:61616
-```
-  - This defines the login credentials (if required)
-```sh
-activemq.username=system
-activemq.password=manager
-```
-  - This defines how many messages to process simultaneously.
-```sh
-jms.connections=10
-```
-
-- **Fedora indexer options:**
-
-This service manages a Drupal node into a corresponding Fedora resource.
-
-  - Bellow defines whether the Fedora indexer is enabled or not.
-```sh
-# Fcrepo indexer options
-fcrepo.indexer.enabled=true
-```
-
-  - These define the various queues to listen on for the indexing/deletion messages. The part after queue: should match your Islandora instance "Actions".
-
-```sh
-fcrepo.indexer.node=queue:islandora-indexing-fcrepo-content
-fcrepo.indexer.delete=queue:islandora-indexing-fcrepo-delete
-fcrepo.indexer.media=queue:islandora-indexing-fcrepo-media
-fcrepo.indexer.external=queue:islandora-indexing-fcrepo-file-external
-```
-
-  - This defines the location of your Milliner microservice.
-```sh
-fcrepo.indexer.milliner.baseUrl=http://localhost:8000/milliner
-```
-
-  - These define the default number of concurrent consumers and maximum number of concurrent consumers working off your ActiveMQ instance. A value of -1 means no setting is applied.
-```sh
-fcrepo.indexer.concurrent-consumers=1
-fcrepo.indexer.max-concurrent-consumers=1
-```
-
-  - This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
-```sh
-fcrepo.indexer.async-consumer=true
-```
-
-- **Triplestore indexer options:**
-This service indexes the Drupal node into the configured triplestore
-
-  - This defines whether the Triplestore indexer is enabled or not.
-```sh
-# Triplestore indexer options
-triplestore.indexer.enabled=false
-```
-
-  - These define the various queues to listen on for the indexing/deletion messages. The part after queue: should match your Islandora instance "Actions".
-```sh
-triplestore.index.stream=queue:islandora-indexing-triplestore-index
-triplestore.delete.stream=queue:islandora-indexing-triplestore-delete
-```
-
-  - This defines the location of your triplestore's SPARQL update endpoint.
-```sh
-triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
-```
-
-  - These define the default number of concurrent consumers and maximum number of concurrent consumers working off your ActiveMQ instance. A value of -1 means no setting is applied.
-```sh
-triplestore.indexer.concurrent-consumers=1
-triplestore.indexer.max-concurrent-consumers=1
-```
-
-  - This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
-```sh
-triplestore.indexer.async-consumer=true
-```
-
-- **Derivative services(islandora-connector-derivative):**
-This service is used to configure an external microservice. This service will deploy multiple copies of its routes with different configured inputs and outputs based on properties.
-
-The routes to be configured are defined with the property derivative.systems.installed which expects a comma separated list. Each item in the list defines a new route and must also define 3 additional properties.
-
-
-  - This defines if the item service is enabled.
-```sh
-derivative.<item>.enabled=true
-```
-
-  - This is the input queue for the derivative microservice. The part after queue: should match your Islandora instance "Actions".
-```sh
-derivative.<item>.in.stream=queue:islandora-item-connector.index
-```
-
-  - This is the microservice URL to process the request.
-```sh
-derivative.<item>.service.url=http://example.org/derivative/convert
-```
-
-  - These define the default number of concurrent consumers and maximum number of concurrent consumers working off your ActiveMQ instance. A value of -1 means no setting is applied.
-```sh
-derivative.<item>.concurrent-consumers=1
-derivative.<item>.max-concurrent-consumers=1
-```
-
-  - This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
-```sh
-derivative.<item>.async-consumer=true
-```
-
-- **Customizing HTTP client timeouts:**
-You can alter the HTTP client from the defaults for its request, connection and socket timeouts.
-  - To do this you want to enable the request configurer.
-```sh
-request.configurer.enabled=true
-```
-
-  - Then set the next 3 timeouts (measured in milliseconds) to the desired timeout. The default for all three is -1 which indicates no timeout.
-```sh
-request.timeout=-1
-connection.timeout=-1
-socket.timeout=-1
-```
-
-- **Alter HTTP options:**
-By default, Alpaca uses two settings for the HTTP component, these are * disableStreamCache=true * connectionClose=true
-
-If you want to send additional configuration parameters or alter the existing defaults. You can add them as a comma separated list of key=value pairs.For example:
-```sh
-http.additional_options=authMethod=Basic,authUsername=Jim,authPassword=1234
-```
-
-These will be added to ALL http endpoint requests.
-
-- Note: We are currently running Camel 3.7.6, some configuration parameters on the above linked page might not be supported.
-
-### Run Alpaca using configurations: 
-- ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties```
+- Alpaca is made up of several services, each of these can be enabled or disabled individually with an alpaca properties:
+   - ```cp /mnt/hgfs/shared/config/alpaca/alpaca.properties /opt/alpaca/```
 
 ### Create alpaca.service to use syustemd:
-```sudo nano /etc/systemd/system/alpaca.service```
-
+- ```sudo nano /etc/systemd/system/alpaca.service```
 ```sh
 [Unit]
 Description=Alpaca service
@@ -863,33 +708,12 @@ Restart=always
 WantedBy=default.target
 ```
 
-### Alpaca will perform the following tasks:
-- **Connect to ActiveMQ:**
-
-   - Broker URL: tcp://localhost:61616
-   - Maximum Redeliveries: 5
-   - Number of connections: 10
-
-- **Handle HTTP Requests:**
-   - Custom HTTP client options with specific timeouts (all set to -1, meaning no timeout).
-
-- **Fedora Indexing:**
-   - Enable Fedora indexer.
-   - Connect to queues for content, delete, media, and external file indexing.
-   - Base URL for the Milliner service: http://127.0.0.1:8000/milliner/
-
-- **Triplestore Indexing:**
-   - Enable Triplestore indexer.
-   - Base URL for Triplestore: http://127.0.0.1:8080/bigdata/namespace/kb/sparql
-   - Connect to queues for indexing and deleting data.
-
-- **Generate Derivatives:**
-   - Enable and configure FITS, Homarus, Houdini, and OCR services for generating derivatives.
-   - Each service connects to its respective queue and service URL.
-   - Example: FITS service URL is http://localhost:8000/crayfits
-
-- **Concurrent Consumers:**
-   - Configure concurrent consumer settings for various indexers and derivative services (all set to -1, meaning default values will be used).
+### Run Alpaca using configurations: 
+#### 1. Run from alpaca directory:
+- ```cd /opt/alpaca
+- ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties```
+#### 2. Run with systemd:
+- ```sudo systemctl start alpaca```
 
 
 ### Extra notes:
