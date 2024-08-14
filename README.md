@@ -715,7 +715,12 @@ WantedBy=default.target
 #### 2. Run with systemd:
 - ```sudo systemctl start alpaca```
 
-
+### IMPORTANT - Alpaca integration with Workbench:
+- As of now Alpaca integrates with workbench on indexing new content to fedora resource and triplestore
+- It wont integrate with Workbench on handeling Derivitive when media created with Workbench, For now to do this we may need to:
+  - Index media to fedora manually under content/media and start action to index media to fedora and triplestore
+  - And we need to start action for create derivitives manualy under Content page
+  - 
 ### Extra notes:
 - **Configuration:**
   - If we are installing everything on the same server, the provided example properties should be fine as-is. Simply rename the file to alpaca.properties and run the command mentioned above.
