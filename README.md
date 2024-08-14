@@ -648,7 +648,7 @@ run following as root to extract and install solr:
 >cp /mnt/hgfs/shared/configs/activemq/activemq.xml /opt/activemq/conf```
 >
 ># for web console accessibility
->nano /mnt/hgfs/shared/configs/activemq/jetty.xml /opt/activemq/conf
+>cp /mnt/hgfs/shared/configs/activemq/jetty.xml /opt/activemq/conf
 >```
 ### 2. Alpaca:
 #### Alpaca importance in islandora ecosystem:
