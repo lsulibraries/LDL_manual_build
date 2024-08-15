@@ -64,7 +64,7 @@ the above command runs a script containing the following:
 >sudo add-apt-repository ppa:ondrej/apache2
 >sudo apt update
 >``` 
- 
+________________________________________
 # Install php and postgresql:
 - ```sh /mnt/hgfs/shared/scratch_2.sh```
 
@@ -96,7 +96,7 @@ change to
 >bytea_output = 'escape'
 >```
 - ```sudo systemctl restart postgresql```
-
+________________________________________
 # Setting Up PostgreSQL Database and User for Drupal 10:
 ***create up a drupal10 database and user***
 
@@ -133,7 +133,7 @@ from within the postgres cli change to drupal10:
 >local	  all		           all			                                  md5
 >#local	  DATABASE		   USER			                                  METHOD
 >```
-
+________________________________________
 # Install Composer
 
 - ```sh /mnt/hgfs/shared/scratch_3.sh```
@@ -151,7 +151,7 @@ scratch_3.sh contents:
 >sudo chown -R www-data:www-data /var/www/
 >```
 
-
+________________________________________
 # Configure apache server settings:
 - ```sudo cp /mnt/hgfs/shared/ports.conf /etc/apache2/ports.conf```
 - ***Apache virtual host configuration***
@@ -218,7 +218,7 @@ The following shell script will execute the commands below:
 - ```sudo systemctl restart postgresql apache2```
 - ```sudo systemctl status postgresql apache2```
 
-
+________________________________________
 # install tomcat and cantaloupe
 ### Install JAVA 17.0.1 
 - ***Create directory for Java installation:***
@@ -254,7 +254,7 @@ note this path for later use as JAVA_HOME. it is the same as the path above with
 >echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.bashrc
 >source ~/.bashrc
 >```
-
+________________________________________
 ### Install Tomcat:
 - ***create tomcat user:***
 - ```sudo addgroup tomcat```
@@ -296,7 +296,7 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 >sudo systemctl enable tomcat
 >sudo systemctl status tomcat
 >```
-
+________________________________________
 ### Cantatloupe:
 #### Install Cantaloupe 5.0.6
 - ```sh /mnt/hgfs/shared/scratch_6.sh```
@@ -397,7 +397,7 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 ### Navigate to Fedora endpoint:
 - Once tomcat starts up, Fedora REST API should be available at **http://localhost:8080/fcrepo/rest**.
 - The username is **fedoraAdmin** and we defined the password before as FEDORA_ADMIN_PASSWORD (We set: "islandora").
-
+________________________________________
 # Syn:
 ### Download syn:
 check here for link [Islandora Syn](https://github.com/Islandora/Syn/releases/) to check for latest version:
@@ -444,7 +444,7 @@ sudo chown tomcat:tomcat /opt/tomcat/conf/context.xml
 - ```sudo nano /opt/tomcat/bin/setenv.sh```
 - Comment line 5 and uncomment line 6
 
-
+________________________________________
 # installing blazegraph
 ### Creating a Working Space for Blazegraph and install Blazegraph:
 - ```sh /mnt/hgfs/shared/blazegraph-dl.sh```
@@ -497,7 +497,7 @@ If this worked correctly, Blazegraph should respond with **"CREATED: islandora"*
 - ```sudo curl -X POST -H "Content-Type: text/plain" --data-binary @/opt/blazegraph/conf/inference.nt http://localhost:8080/blazegraph/namespace/islandora/sparql```
 
 If this worked correctly, Blazegraph should respond with some XML letting us know it added the 2 entries from inference.nt to the namespace.
-
+________________________________________
 # installing solr
 #### Check JAVA_HOME:
 - ```sudo nano ~/.bashrc```
@@ -556,7 +556,7 @@ run following as root to extract and install solr:
 - ```sudo -u solr bin/solr create -c islandora8 -p 8983```
 
 ***We will configure index via gui after site installed***
-
+________________________________________
 # ActiveMQ/Alpaca:
 ### 1. ActiveMQ:
 #### Create ActiveMQ User:
@@ -586,7 +586,7 @@ run following as root to extract and install solr:
 >sudo cp /mnt/hgfs/shared/configs/activemq/setenv /opt/activemq/bin/setenv
 >sudo cp /mnt/hgfs/shared/configs/activemq/setenv /etc/default/activemq
 
-# Set correct permissions:
+##### Set correct permissions:
 >```
 >sudo chmod -R 755 /etc/default/activemq
 >sudo nano /etc/default/activemq
@@ -669,6 +669,44 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
     - Enable apache ***virtual host*** for microservices.
     - Update ***Apache Ports*** to listen to port `8000` and Restart apache service.
 
+#### Configure Logging:
+```sh
+sudo mkdir -p /var/log/islandora
+sudo chown -R www-data:www-data /var/log/islandora
+sudo chmod -R 775 /var/log/islandora
+```
+
+#### Authentication with fedora repository:
+- Authentication is ***not set***, and in configurations it's set to disable
+- We should come back to handle authentication between Fedora and Micro Services.
+
+#### Install Crayfits:
+- ```sudo sh /mnt/hgfs/shared/configs/crayfish_configs/crayfits_install.sh```
+- Above command will perform these tasks.
+    - Create directory for Fits.
+    - Download Fits files:
+    - Next, adds two lines to set Fits home directory to catalina properties.
+
+#### Install Crayfish Commons:
+```sh
+sudo mkdir /opt/crayfish/Commons
+cd /opt/crayfish/Commons
+composer require islandora/crayfish-commons
+```
+
+#### Install Crayfits and Crayfish microservices:
+- ```sudo sh /mnt/hgfs/shared/configs/crayfish_configs/crayfish-install.sh```
+- Running above command will run bellow commands to install Crayfish Microservices:
+```sh
+cd /opt
+sudo chown -R www-data:www-data crayfish
+sudo -u www-data composer install -d crayfish/Homarus
+sudo -u www-data composer install -d crayfish/Houdini
+sudo -u www-data composer install -d crayfish/Hypercube
+sudo -u www-data composer install -d crayfish/Milliner
+sudo -u www-data composer install -d crayfish/Recast
+sudo -u www-data composer install -d crayfish/CrayFits
+```
 ##
 ### 3. Alpaca:
 #### Alpaca importance in islandora ecosystem:
@@ -729,7 +767,7 @@ WantedBy=default.target
 
 - **Alpaca Activity:** We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
 
-
+________________________________________
 # Download and Scaffold Drupal, Create a project using the Islandora Starter Site:
 #### install php-intl 8.3:
 ```sudo apt-get install php8.3-intl```
@@ -796,7 +834,7 @@ WantedBy=default.target
 #### Again, make sure you have already done followings:
 - You should have granted all privileges to the user Drupal when created the table and databases before site install so that these are all permissions on user to create tables on database.
 - You should have installed PDO extention before site install.
-
+________________________________________
 # Install the site using composer or drush:
 - **1. install using Composer:**
   - ```sudo composer exec -- drush site:install --existing-config```
@@ -806,7 +844,7 @@ WantedBy=default.target
 
 #### Change default username and password:
 - ```sudo drush upwd admin admin```
-
+________________________________________
 # Add a user to the fedoraadmin role:(Optional)
 for example, giving the default admin user the role:
 
@@ -817,7 +855,7 @@ for example, giving the default admin user the role:
 #### 2. Using Drush:**
 - cd /opt/drupal/islandora-starter-site
 - sudo -u www-data drush -y urol "fedoraadmin" admin
-
+________________________________________
 # Configure the locations of external services:
 Some, we already configured in prerequsits, but we will make sure all the configurations are in place.
 #### Check following configurations before moving forward:
@@ -900,7 +938,7 @@ Some, we already configured in prerequsits, but we will make sure all the config
 
 #### Select default Flysystem:
 visit /admin/config/media/file-system to select the flysystem from the dropdown.
-
+________________________________________
 # Run the migrations command and Enabling EVA Views:
 run the migration tagged with islandora  to populate some taxonomies.
 
@@ -910,7 +948,7 @@ run the migration tagged with islandora  to populate some taxonomies.
 
 #### Enabling EVA Views:
 - ```drush -y views:enable display_media```
-
+________________________________________
 # instrall group modules and dependencies:
 - ```cd /opt/drupal/islandora-starter-site```
 - ```sudo -u www-data composer require digitalutsc/islandora_group```
@@ -918,7 +956,7 @@ run the migration tagged with islandora  to populate some taxonomies.
 - ```drush en -y islandora_group gnode rules```
 #### Rebuild Cache:
 - ```drush cr```
-
+________________________________________
 # Group Configuration:
 #### group type:
 - Navigate to Groups -> create a group type
@@ -986,7 +1024,7 @@ run the migration tagged with islandora  to populate some taxonomies.
 - ```sudo systemctl restart apache2 tomcat```
 - ```sudo systemctl daemon-reload```
 - ```drush cr```
-
+________________________________________
 # re-islandora Workbench to be on V1.0.0:
 #### Remove dev version and install V1 cause dev version is not determined by workbench anymore:
 ```cd /opt/drupal/islandora-starter-site```
@@ -1007,7 +1045,7 @@ run the migration tagged with islandora  to populate some taxonomies.
 #### If you had issue with number of file uploads check apache setting at /etc/php/8.3/apache2/php.ini
 - ```sudo nano /etc/php/8.3/apache2/php.ini```
 - ```max_file_uploads = ???```
-
+________________________________________
 # Fix postgresql mimic_implicite error:
 mimic_implicite for postgresql error occures while creating new content, After groupmedia module installaion, causes the content not to be created in postgresql database. here are steps to resolve it:
 
@@ -1018,10 +1056,10 @@ mimic_implicite for postgresql error occures while creating new content, After g
 - ```sudo systemctl daemon-reload```
 - ```sudo systemctl restart apache2 postgresql```
 - ```sudo systemctl status apache2 postgresql```
-
-# Configure default Flysystem:
+________________________________________
+# Configure default Flysystem to a mounted Storage:
 Need to be decided later
-
+________________________________________
 # Run workbench ingest:
 After running our transformation tools, we are ready to ingest the data. To do this, follow the steps below:
 
