@@ -710,7 +710,7 @@ WantedBy=default.target
 
 ### Run Alpaca using configurations: 
 #### 1. Run from alpaca directory:
-- ```cd /opt/alpaca
+- ```cd /opt/alpaca```
 - ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties```
 #### 2. Run with systemd:
 - ```sudo systemctl start alpaca```
