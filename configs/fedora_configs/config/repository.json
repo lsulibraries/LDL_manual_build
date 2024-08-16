@@ -1,0 +1,39 @@
+{
+    "name" : "repo",
+    "jndiName" : "",
+    "workspaces" : {
+        "predefined" : ["default"],
+        "default" : "default",
+        "allowCreation" : true,
+        "cacheSize" : 10000
+    },
+    "storage" : {
+        "persistence": {
+            "type" : "db",
+            "connectionUrl": "jdbc:postgresql://localhost:5432/fcrepo",
+            "driver" : "org.postgresql.Driver",
+            "username" : "fedora",
+            "password" : "fedora"
+        },
+        "binaryStorage" : {
+            "type" : "file",
+            "directory" : "/opt/fcrepo/data/binaries",
+            "minimumBinarySizeInBytes" : 4096
+        }
+    },
+    "security" : {
+        "anonymous" : {
+            "roles" : ["readonly","readwrite","admin"],
+            "useOnFailedLogin" : false
+        },
+        "providers" : [
+            { "classname" : "org.fcrepo.auth.common.BypassSecurityServletAuthenticationProvider" }
+        ]
+    },
+    "garbageCollection" : {
+        "threadPool" : "modeshape-gc",
+        "initialTime" : "00:00",
+        "intervalInHours" : 24
+    },
+    "node-types" : ["fedora-node-types.cnd", "file:/opt/fcrepo/config/i8_namespaces.cnd"]
+}

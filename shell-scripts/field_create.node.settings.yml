@@ -1,0 +1,99 @@
+###########################################################
+# Example file.
+#
+# Copy it into your own module "/config/install" folder or
+# into your site's config folder (e.g. /config/sync).
+#
+# Import it with `drush config-import` or use manual import: 
+#
+# @code 
+# drush en config -y
+# drush cim --partial --source=modules/custom/mymodule/config/install
+# @endcode
+# 
+# Alternatively, use a hook_create_definitions() to
+# declare fields you want to create. Thus, don't use this file.
+# 
+# Run the import with `drush create` or visit the admin
+# form under `Admin > Config > Development > Field create`.
+#
+# Still have questions? Fill an issue on d.o.
+#
+# @see hook_create_definitions()
+# @see create.api.php
+# @see https://www.drupal.org/project/issues/create
+###########################################################
+#
+# Custom settings to apply on the whole list of fields.
+_settings:
+  # Use a custom prefix. 
+  # By default, it uses the value from ui.settings.
+  #
+  # Warning:
+  # Existing fields won't be updated if prefix changes.
+  # New fields are created instead.
+  # You would need to delete previous fields manually.
+  prefix: add
+  # Mark all fields as required (can be set per bundle too).
+  required: true
+###########################################################
+# Create a simply text field attach to Pages and Articles.
+###########################################################
+mytextfield:
+  # Default settings.
+  name: test_milad
+  label: test_milad
+  type: string
+  force: true
+  required: false
+  bundles:
+    islandora_object:
+      label: Repository Item
+      # Required on article only.
+      required: true
+      displays:
+        view:
+          default:
+            region: hidden
+
+###########################################################
+# Create an entity reference field.
+###########################################################
+# myreffield:
+#   name: myreffield
+#   label: A reference field
+#   type: entity_reference
+#   force: true
+#   cardinality: -1
+#   settings:
+#     handler: "default:node"
+#     handler_settings:
+#       target_bundles:
+#         article: article
+#       sort:
+#         field: _none
+#       auto_create: true
+#   bundles:
+#     page:
+#       label: Articles
+#       settings:
+#         handler_settings:
+#           target_bundles:
+#             article: article
+#           sort:
+#             field: nid
+#           auto_create: true
+#     article:
+#       label: Pages
+#       settings:
+#         handler_settings:
+#           target_bundles:
+#             page: page
+#           sort:
+#             field: name
+#             direction: DESC
+#           auto_create: false
+###########################################################
+# Create an date / smart_date field.
+###########################################################
+# ...

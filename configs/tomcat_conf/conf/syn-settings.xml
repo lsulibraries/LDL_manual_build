@@ -1,0 +1,4 @@
+<config version='1' header='X-Islandora'>
+  <site algorithm='RS256' encoding='PEM' anonymous='true' default='true' path='/opt/keys/syn_public.key'/>
+  <token user='admin' roles='fedoraAdmin'>islandora</token>
+</config>

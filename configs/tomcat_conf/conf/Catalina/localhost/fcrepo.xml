@@ -1,0 +1,5 @@
+<Context>
+    <Valve className="ca.islandora.syn.valve.SynValve" pathname="/mnt/fcrepo/config/syn-settings.xml"/>
+</Context>
+
+

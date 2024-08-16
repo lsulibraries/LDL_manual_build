@@ -1,0 +1,12 @@
+convert_opt:
+  path: /convert
+  methods: OPTIONS
+  controller: App\Islandora\Homarus\Controller\HomarusController::convertOptions
+convert_get:
+  path: /convert
+  methods: GET
+  controller: App\Islandora\Homarus\Controller\HomarusController::convert
+homarus_convert:
+  path: /convert
+  controller: App\Islandora\Homarus\Controller\HomarusController::convert
+

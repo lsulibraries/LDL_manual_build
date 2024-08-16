@@ -1,0 +1,18 @@
+parameters:
+    fedora_base_url: 'http://localhost:8080/fcrepo/rest'
+    drupal_base_url: 'http://localhost'
+    modified_date_predicate: 'http://schema.org/dateModified'
+    strip_format_jsonld: true
+    debug: false
+    db_options:
+        driver: 'pdo_pgsql'
+        host: '127.0.0.1'
+        port: '5432'
+        dbname: 'crayfish_db'
+        user: 'crayfish'
+        password: 'crayfish'
+    log_level: 'NOTICE'
+    log_file: '/var/log/islandora/milliner.log'
+    syn_enable: true
+    syn_config: '/opt/fcrepo/config/syn-settings.xml'
+

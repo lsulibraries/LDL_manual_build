@@ -1,0 +1,12 @@
+#tomcat.service
+[Unit]
+Description=Tomcat
+
+[Service]
+Type=forking
+ExecStart=/opt/tomcat/bin/startup.sh
+ExecStop=/opt/tomcat/bin/shutdown.sh
+SyslogIdentifier=tomcat
+
+[Install]
+WantedBy=multi-user.target
