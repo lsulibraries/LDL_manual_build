@@ -814,7 +814,7 @@ for example, giving the default admin user the role:
 
 #### 1. Using Composer:
 - ```cd /opt/drupal/islandora-starter-site```
-- ```composer exec -- drush user:role:add fedoraadmin admin```
+- ```sudo composer exec -- drush user:role:add fedoraadmin admin```
  
 #### 2. Using Drush:**
 - cd /opt/drupal/islandora-starter-site
@@ -908,7 +908,7 @@ run the migration tagged with islandora  to populate some taxonomies.
 
 #### Run the migrations taged with islandora:
 - ```cd /opt/drupal/islandora-starter-site```
-- ```composer exec -- drush migrate:import --userid=1 --tag=islandora```
+- ```sudo composer exec -- drush migrate:import --userid=1 --tag=islandora```
 
 #### Enabling EVA Views:
 - ```drush -y views:enable display_media```
