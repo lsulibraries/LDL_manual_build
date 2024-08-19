@@ -729,8 +729,99 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 ##### 3. Alpaca Activity:
 - We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
 
-## 4.Extra Configuration on Drupal:
+## 4. Extra Configuration on Drupal For Alpaca:
+### 1. Configuring Actions:
+#### Step 1: Configuring Derivative Creation Actions
+1. Go to **Administration > Structure > Actions**.
+2. For each derivative creation action, select **Fedora** as the file system.
+    - Example: If you have an action called `Generate Thumbnail`, edit it and ensure the file system is set to Fedora.
+3. Ensure that each derivative node action is set to save its output in Fedora.
 
+#### Step 2: Configuring Text Extraction Derivative Actions
+1. Go to **Administration > Structure > Actions**.
+2. Create a new action:
+    - **Action Name:** `Get OCR from Image`
+    - **Machine Name:** Rename the machine name to `get_ocr_from_pdf`.
+    - **Label:** Change the label to `Extract Text from PDF`.
+3. Configure the existing action for text extraction:
+    - **Action Name:** `Extract Text from Image or PDF`
+    - **Edit the Action Label:** Change the label to `Extract Text from Image`.
+    - **Additional Arguments:** Add the following arguments: `--psm 6 -l eng --dpi 300 -c tessedit_create_txt=1`. These arguments are used to generate text from images using Tesseract.
+
+#### Step 3: Verifying the List of Actions
+At the end of this process, you should have the following actions configured:
+
+- **Audio** - Generate a service file from an original file.
+- **Digital Document** - Generate a thumbnail from an original file.
+- **Extract Text from Image**.
+- **Extract Text from PDF**.
+- **FITS** - Generate technical metadata derivative.
+- **Image** - Generate a service file from an original file.
+- **Image** - Generate a thumbnail from an original file.
+- **Video** - Generate a service file from an original file.
+- **Video** - Generate a thumbnail at 0:00:03.
+- **Video** - Generate a thumbnail from an original file.
+
+#### Notes:
+- You can manually add additional arguments to any of these actions if needed. For example:
+    - Use **FFmpeg** to change file types.
+    - Use **Tesseract** to generate text from media files.
+___________________________________________________________________________________________________________________________
+### 2. Configuring Media Types:
+#### Step 1: Edit File System Location for Media Types
+1. Go to **Administration > Structure > Media Types**.
+2. For each media type (e.g., Image, Video, Audio):
+    - Go to **Manage Fields**.
+    - Locate the field that stores the file (usually named `File` or similar).
+    - Click **Edit** next to that field.
+    - Under **File System**, select **Fedora**.
+    - Path: `<MediaType>/Manage fields/<TheOne_fieldType_IS_file>/File System: Fedora`
+
+#### Step 2: Configure the "Media Of" Field
+1. For each media type:
+    - Go to **Manage Fields**.
+    - Locate the `field_media_of` field.
+    - Click **Edit** next to that field.
+    - Under **Content Type**, select `Repository Item`.
+    - Path: `<MediaType>/Manage fields/Media of/Content type: Repository Item`
+___________________________________________________________________________________________________________________________
+### 3. Configuring Contexts:
+#### Step 1: Configuring Image Derivatives for Text Extraction
+1. Go to **Administration > Structure > Context**.
+2. Locate the context named **Image Derivatives** and click **Edit**.
+3. Under **Reactions > Derivatives > Actions**, add the action **Extract Text from Image**.
+    - This action should be configured as described in section 1, including the Tesseract arguments.
+4. Explanation:
+    - After creating an `Image` content model, you can attach both `Image` files (e.g., JPG, PNG) and `File` types (e.g., TIFF, JP2) to the content to be processed for text extraction.
+    - Note: A thumbnail generation action should already be assigned.
+
+#### Step 2: Configuring PDF Derivatives for Text Extraction
+1. Go to **Administration > Structure > Context**.
+2. Locate the context named **PDF Derivatives** and click **Edit**.
+3. Under **Reactions > Derivatives > Actions**, add the action **Extract Text from PDF**.
+    - This action should be configured as described in section 1, using `pdftotext` for PDF processing.
+4. Explanation:
+    - After creating a `Digital Document` content model, you can attach `Document` files (PDFs) to the content to be processed for text extraction.
+    - Note: A thumbnail generation action should already be assigned, such as `Digital Document - Generate thumbnail from Original file`.
+
+#### Step 3: Configuring Video Derivatives for Audio Extraction
+1. Go to **Administration > Structure > Context**.
+2. Locate the context named **Video Derivatives** and click **Edit**.
+3. Under **Reactions > Derivatives > Actions**, add the action **Audio - Generate a service file from an original file**.
+4. Explanation:
+    - The context should already have a thumbnail generation action assigned, such as `Video - Generate thumbnail from Original file`.
+
+### Notes:
+1. **Alpaca integration with Workbench:**
+    - As of now Alpaca integrates with workbench on indexing new content to fedora resource and triplestore
+    - It wont integrate with Workbench on handeling Derivitive when media created with Workbench, For now to do this we may need to:
+      - Index media to fedora manually under content/media and start action to index media to fedora and triplestore
+      - And we need to start action for create derivitives manualy under Content page
+2. **Configuration:**
+    - If we are installing everything on the same server, the provided example properties should be fine as-is. Simply rename the file to alpaca.properties and run the command mentioned above.
+    - If Alpaca is running on a different machine, we will just need to update the URLs in the configuration file to point to the correct host for the various services.
+3. **Alpaca Activity:**
+    - We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
 ________________________________________
 # Download and Scaffold Drupal, Create a project using the Islandora Starter Site:
 #### install php-intl 8.3:
