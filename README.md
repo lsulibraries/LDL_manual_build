@@ -719,18 +719,6 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties
 ```
 2. Run with systemd: ```sudo systemctl start alpaca```
-#### Notes:
-##### 1. Alpaca integration with Workbench:
-- As of now Alpaca integrates with workbench on indexing new content to fedora resource and triplestore
-- It wont integrate with Workbench on handeling Derivitive when media created with Workbench, For now to do this we may need to:
-  - Index media to fedora manually under content/media and start action to index media to fedora and triplestore
-  - And we need to start action for create derivitives manualy under Content page
-##### 2. Configuration:
-- If we are installing everything on the same server, the provided example properties should be fine as-is. Simply rename the file to alpaca.properties and run the command mentioned above.
-- If Alpaca is running on a different machine, we will just need to update the URLs in the configuration file to point to the correct host for the various services.
-##### 3. Alpaca Activity:
-- We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
-
 ## 4. Extra Configuration on Drupal For Alpaca:
 ### 1. Configuring Actions:
 #### Step 1: Configuring Derivative Creation Actions
@@ -824,6 +812,18 @@ ________________________________________________________________________________
     - If Alpaca is running on a different machine, we will just need to update the URLs in the configuration file to point to the correct host for the various services.
 3. **Alpaca Activity:**
     - We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
+  
+#### Notes:
+##### 1. Alpaca integration with Workbench:
+- As of now Alpaca integrates with workbench on indexing new content to fedora resource and triplestore
+- It wont integrate with Workbench on handeling Derivitive when media created with Workbench, For now to do this we may need to:
+  - Index media to fedora manually under content/media and start action to index media to fedora and triplestore
+  - And we need to start action for create derivitives manualy under Content page
+##### 2. Configuration:
+- If we are installing everything on the same server, the provided example properties should be fine as-is. Simply rename the file to alpaca.properties and run the command mentioned above.
+- If Alpaca is running on a different machine, we will just need to update the URLs in the configuration file to point to the correct host for the various services.
+##### 3. Alpaca Activity:
+- We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
 ________________________________________
 # Download and Scaffold Drupal, Create a project using the Islandora Starter Site:
 #### install php-intl 8.3:
