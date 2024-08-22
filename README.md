@@ -75,7 +75,7 @@ the above command runs the following script the :
 >sudo a2enmod php8.3
 >sudo systemctl restart apache2
 ># set default php to the version we have insalled:
->sudo update-alternatives --set php /usr/bin/php8.3
+>sudo update-alternatives --set php /usr/bscatcin/php8.3
 >#install Postgresql
 >sudo apt install -y postgresql-common
 >sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
@@ -206,10 +206,12 @@ ________________________________________
 - ```sh /mnt/hgfs/shared/shell-scripts/PDO-extensions.sh```
 The following shell script will execute the commands below:
 >```
->sudo apt-get install php8.3-mysql
 >sudo apt-get install php8.3-pgsql
->#For mariaDB
->sudo apt-get install php8.3-mysqli
+>
+>#For mariaDB and MySQL 
+>#sudo apt-get install php8.3-mysql
+>#sudo apt-get install php8.3-mysqli
+>
 >sudo add-apt-repository ppa:ondrej/php
 >sudo add-apt-repository ppa:ondrej/apache2
 >sudo apt update
@@ -281,7 +283,7 @@ The following shell script will execute the commands below:
 >sudo mv /opt/apache-tomcat-9.0.89/* /opt/tomcat
 >sudo chown -R tomcat:tomcat /opt/tomcat
 >```
-- Make sure to change the tomcat version in scrathc_4 in ```sudo mv /opt/apache-tomcat-9.0.89/* /opt/tomcat```
+- Make sure to change the tomcat version in tomcat_install in ```sudo mv /opt/apache-tomcat-9.0.89/* /opt/tomcat```
 
 - **NOTE:** If the tomcat tarball link is different you must change the installation path in the tomcat_configs.sh script.
 
@@ -332,6 +334,7 @@ ________________________________________
 >```
 
 - ***Configure Cantaloupe URL(Important)***
+- We need to set the default cantaloup endpoint to correct path, before we install the site.
 >```
 >sudo nano /opt/cantaloupe_config/cantaloupe.properties
 >#set this in properties: base_uri = http://127.0.0.1:8182/iiif/2
@@ -422,7 +425,6 @@ check here for link [Islandora Syn](https://github.com/Islandora/Syn/releases/) 
 >sudo openssl genrsa -out "/opt/keys/syn_private.key" 2048
 >sudo openssl rsa -pubout -in "/opt/keys/syn_private.key" -out "/opt/keys/syn_public.key"
 >sudo chown www-data:www-data /opt/keys/syn*
->sudo mkdir /opt/syn
 >sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/syn-settings.xml /mnt/fcrepo/config/
 >sudo chown tomcat:tomcat /mnt/fcrepo/config/syn-settings.xml
 >sudo chmod 600 /mnt/fcrepo/config/syn-settings.xml
@@ -670,7 +672,7 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
     - Update ***Apache Ports*** to listen to port `8000` and Restart apache service.
 
 #### Configure Logging:
-- ```sudo sh /mnt/hgfs/shared/shell-scripts/crayfcrayfish-logging.sh```
+- ```sudo sh /mnt/hgfs/shared/shell-scripts/crayfish-logging.sh```
 - Above command will create directory on `/var` and set correct permissions so that microservices can write the log files for future debugging.
 
 #### Authentication with fedora repository:
