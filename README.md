@@ -55,7 +55,7 @@ These commands should all be executed in sequence from within the vmware CLI:
 
 ## Start the build:
 - execute in the vmware cli after shared folders are connected:
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_1.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/000-requirements.sh```
 the above command runs a script containing the following:
 >```
 >#!/bin/bash
@@ -66,7 +66,7 @@ the above command runs a script containing the following:
 >``` 
 ________________________________________
 # Install php and postgresql:
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_2.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/php_postgresql.sh```
 
 the above command runs the following script the :
 >```
@@ -139,7 +139,7 @@ from within the postgres cli change to drupal10:
 ________________________________________
 # Install Composer
 
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_3.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/composer_install.sh```
 
 scratch_3.sh contents:
 >```
@@ -268,7 +268,7 @@ type y for yes
 
 - ***install tomcat***
 - find the tar.gz here: https://tomcat.apache.org/download-90.cgi
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_4.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/tomcat_install.sh```
 
 The following shell script will execute the commands below:
 >```
@@ -283,9 +283,9 @@ The following shell script will execute the commands below:
 >```
 - Make sure to change the tomcat version in scrathc_4 in ```sudo mv /opt/apache-tomcat-9.0.89/* /opt/tomcat```
 
-scratch_5.sh (if the tomcat tarball link is different you must change the path in the script or run the commands in the scratch_5 alt section):
+- **NOTE:** If the tomcat tarball link is different you must change the installation path in the tomcat_configs.sh script.
 
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_5.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/tomcat_configs.sh```
 
 - ***Copy environment variables that includes java home to tomcat/bin***
 >```
@@ -301,7 +301,7 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 ________________________________________
 ### Cantatloupe:
 #### Install Cantaloupe 5.0.6
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_6.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/cantaloupe_install.sh```
 
 - scratch_6.sh will perform bellow tasks:
   - install and unzip cantaloupe 5.0.6
