@@ -55,7 +55,7 @@ These commands should all be executed in sequence from within the vmware CLI:
 
 ## Start the build:
 - execute in the vmware cli after shared folders are connected:
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_1.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/000-requirements.sh```
 the above command runs a script containing the following:
 >```
 >#!/bin/bash
@@ -66,7 +66,7 @@ the above command runs a script containing the following:
 >``` 
 ________________________________________
 # Install php and postgresql:
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_2.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/php_postgresql.sh```
 
 the above command runs the following script the :
 >```
@@ -75,7 +75,7 @@ the above command runs the following script the :
 >sudo a2enmod php8.3
 >sudo systemctl restart apache2
 ># set default php to the version we have insalled:
->sudo update-alternatives --set php /usr/bin/php8.3
+>sudo update-alternatives --set php /usr/bscatcin/php8.3
 >#install Postgresql
 >sudo apt install -y postgresql-common
 >sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
@@ -139,7 +139,7 @@ from within the postgres cli change to drupal10:
 ________________________________________
 # Install Composer
 
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_3.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/composer_install.sh```
 
 scratch_3.sh contents:
 >```
@@ -206,10 +206,12 @@ ________________________________________
 - ```sh /mnt/hgfs/shared/shell-scripts/PDO-extensions.sh```
 The following shell script will execute the commands below:
 >```
->sudo apt-get install php8.3-mysql
 >sudo apt-get install php8.3-pgsql
->#For mariaDB
->sudo apt-get install php8.3-mysqli
+>
+>#For mariaDB and MySQL 
+>#sudo apt-get install php8.3-mysql
+>#sudo apt-get install php8.3-mysqli
+>
 >sudo add-apt-repository ppa:ondrej/php
 >sudo add-apt-repository ppa:ondrej/apache2
 >sudo apt update
@@ -268,7 +270,7 @@ type y for yes
 
 - ***install tomcat***
 - find the tar.gz here: https://tomcat.apache.org/download-90.cgi
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_4.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/tomcat_install.sh```
 
 The following shell script will execute the commands below:
 >```
@@ -281,11 +283,11 @@ The following shell script will execute the commands below:
 >sudo mv /opt/apache-tomcat-9.0.89/* /opt/tomcat
 >sudo chown -R tomcat:tomcat /opt/tomcat
 >```
-- Make sure to change the tomcat version in scrathc_4 in ```sudo mv /opt/apache-tomcat-9.0.89/* /opt/tomcat```
+- Make sure to change the tomcat version in tomcat_install in ```sudo mv /opt/apache-tomcat-9.0.89/* /opt/tomcat```
 
-scratch_5.sh (if the tomcat tarball link is different you must change the path in the script or run the commands in the scratch_5 alt section):
+- **NOTE:** If the tomcat tarball link is different you must change the installation path in the tomcat_configs.sh script.
 
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_5.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/tomcat_configs.sh```
 
 - ***Copy environment variables that includes java home to tomcat/bin***
 >```
@@ -301,7 +303,7 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 ________________________________________
 ### Cantatloupe:
 #### Install Cantaloupe 5.0.6
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_6.sh```
+- ```sh /mnt/hgfs/shared/shell-scripts/cantaloupe_install.sh```
 
 - scratch_6.sh will perform bellow tasks:
   - install and unzip cantaloupe 5.0.6
@@ -332,6 +334,7 @@ ________________________________________
 >```
 
 - ***Configure Cantaloupe URL(Important)***
+- We need to set the default cantaloup endpoint to correct path, before we install the site.
 >```
 >sudo nano /opt/cantaloupe_config/cantaloupe.properties
 >#set this in properties: base_uri = http://127.0.0.1:8182/iiif/2
@@ -422,7 +425,6 @@ check here for link [Islandora Syn](https://github.com/Islandora/Syn/releases/) 
 >sudo openssl genrsa -out "/opt/keys/syn_private.key" 2048
 >sudo openssl rsa -pubout -in "/opt/keys/syn_private.key" -out "/opt/keys/syn_public.key"
 >sudo chown www-data:www-data /opt/keys/syn*
->sudo mkdir /opt/syn
 >sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/syn-settings.xml /mnt/fcrepo/config/
 >sudo chown tomcat:tomcat /mnt/fcrepo/config/syn-settings.xml
 >sudo chmod 600 /mnt/fcrepo/config/syn-settings.xml
@@ -670,7 +672,7 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
     - Update ***Apache Ports*** to listen to port `8000` and Restart apache service.
 
 #### Configure Logging:
-- ```sudo sh /mnt/hgfs/shared/shell-scripts/crayfcrayfish-logging.sh```
+- ```sudo sh /mnt/hgfs/shared/shell-scripts/crayfish-logging.sh```
 - Above command will create directory on `/var` and set correct permissions so that microservices can write the log files for future debugging.
 
 #### Authentication with fedora repository:
@@ -717,18 +719,6 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 ```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties
 ```
 2. Run with systemd: ```sudo systemctl start alpaca```
-#### Notes:
-##### 1. Alpaca integration with Workbench:
-- As of now Alpaca integrates with workbench on indexing new content to fedora resource and triplestore
-- It wont integrate with Workbench on handeling Derivitive when media created with Workbench, For now to do this we may need to:
-  - Index media to fedora manually under content/media and start action to index media to fedora and triplestore
-  - And we need to start action for create derivitives manualy under Content page
-##### 2. Configuration:
-- If we are installing everything on the same server, the provided example properties should be fine as-is. Simply rename the file to alpaca.properties and run the command mentioned above.
-- If Alpaca is running on a different machine, we will just need to update the URLs in the configuration file to point to the correct host for the various services.
-##### 3. Alpaca Activity:
-- We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
-
 ## 4. Extra Configuration on Drupal For Alpaca:
 ### 1. Configuring Actions:
 #### Step 1: Configuring Derivative Creation Actions
@@ -822,6 +812,18 @@ ________________________________________________________________________________
     - If Alpaca is running on a different machine, we will just need to update the URLs in the configuration file to point to the correct host for the various services.
 3. **Alpaca Activity:**
     - We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
+  
+#### Notes:
+##### 1. Alpaca integration with Workbench:
+- As of now Alpaca integrates with workbench on indexing new content to fedora resource and triplestore
+- It wont integrate with Workbench on handeling Derivitive when media created with Workbench, For now to do this we may need to:
+  - Index media to fedora manually under content/media and start action to index media to fedora and triplestore
+  - And we need to start action for create derivitives manualy under Content page
+##### 2. Configuration:
+- If we are installing everything on the same server, the provided example properties should be fine as-is. Simply rename the file to alpaca.properties and run the command mentioned above.
+- If Alpaca is running on a different machine, we will just need to update the URLs in the configuration file to point to the correct host for the various services.
+##### 3. Alpaca Activity:
+- We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
 ________________________________________
 # Download and Scaffold Drupal, Create a project using the Islandora Starter Site:
 #### install php-intl 8.3:
