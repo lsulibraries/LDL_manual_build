@@ -272,7 +272,7 @@ The following shell script will execute the commands below:
 >cd /opt
 >#O not 0
 >sudo mkdir tomcat
->sudo wget -O tomcat.tar.gz https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.tar.gz
+>sudo wget -O tomcat.tar.gz https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.93/bin/apache-tomcat-9.0.93.tar.gz
 >sudo tar -zxvf tomcat.tar.gz
 >sudo mv /opt/apache-tomcat-9.0.89/* /opt/tomcat
 >sudo chown -R tomcat:tomcat /opt/tomcat
