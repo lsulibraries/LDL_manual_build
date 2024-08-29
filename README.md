@@ -63,7 +63,7 @@ the above command runs a script containing the following:
 >``` 
 ________________________________________
 # Install php and postgresql:
-- ```sh /mnt//shared/shell-scripts/scratch_2.sh```
+- ```sh /mnt/shared/shell-scripts/scratch_2.sh```
 
 the above command runs the following script the :
 >```
@@ -126,7 +126,7 @@ from within the postgres cli change to drupal10:
 - ```sudo systemctl restart postgresql```
 - ***Editing pg_hba.conf for User Authentication in PostgreSQL***
 
-```sudo cp /mnt//shared/configs/postgresql/pg_hba.conf /etc/postgresql/15/main/```
+```sudo cp /mnt/shared/configs/postgresql/pg_hba.conf /etc/postgresql/15/main/```
 - Adds the following authentication settings for PostgreSQL users and databases on localhost. Note: Do not copy the configurations below into the pg_hba.conf file, as the indentations are incorrect.
 >```
 ># Database administrative login by Unix domain socket
