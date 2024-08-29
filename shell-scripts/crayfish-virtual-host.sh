@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo cp /mnt/hgfs/shared/configs/crayfish_configs/crayfish.conf /etc/apache2/sites-available
+sudo cp /mnt/shared/configs/crayfish_configs/crayfish.conf /etc/apache2/sites-available
 sudo a2ensite crayfish.conf
 sudo a2enmod proxy
 sudo a2enmod proxy_http
