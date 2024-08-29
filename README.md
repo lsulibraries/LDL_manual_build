@@ -572,8 +572,8 @@ ________________________________________
 #### Set permissions to ActiveMQ directory:
 >```
 >sudo chown -R activemq:activemq /opt/activemq
->sudo chmod -R 755 /opt/activemq 
->sudo chmod -R 755 /opt/activemq/bin/activemq
+>sudo chmod -R 775 /opt/activemq 
+>sudo chmod -R 775 /opt/activemq/bin/activemq
 >```
 
 #### Set Up Environment Variables, Add the following to /etc/default/activemq:
