@@ -644,7 +644,7 @@ ________________________________________
 - Copy over these two configurations for setup webconsole and Stopmp ports:
 >```
 ># activemq main configurations:
->sudo cp /mnt/shared/configs/activemq/activemq.xml /opt/activemq/conf```
+>sudo cp /mnt/shared/configs/activemq/activemq.xml /opt/activemq/conf
 >
 ># for web console accessibility
 >sudo cp /mnt/shared/configs/activemq/jetty.xml /opt/activemq/conf
