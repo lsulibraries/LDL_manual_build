@@ -580,6 +580,7 @@ ________________________________________
 - Add activemq user to activemq environment file:
 >```
 >#copy over activemq environment variables
+>sudo mkdir /etc/default/activemq
 >sudo cp /mnt/shared/configs/activemq/setenv /opt/activemq/bin/setenv
 >sudo cp /mnt/shared/configs/activemq/setenv /etc/default/activemq
 >```
