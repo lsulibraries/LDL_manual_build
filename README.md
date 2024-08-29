@@ -629,7 +629,7 @@ ________________________________________
 >sudo systemctl status activemq
 >
 >#start from activemq directory:
->/opt/activemq/bin start
+>/opt/activemq/bin/activemq start
 >```
 
 
