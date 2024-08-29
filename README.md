@@ -566,7 +566,7 @@ ________________________________________
 >sudo wget https://repository.apache.org/content/repositories/snapshots/org/apache/activemq/apache-activemq/6.2.0-SNAPSHOT/apache-activemq-6.2.0-20240816.205844-15-bin.tar.gz
 >sudo tar zxvf apache-activemq-6.2.0-20240816.205844-15-bin.tar.gz
 >sudo mv apache-activemq-6.2.0-SNAPSHOT/* .
->sudo rm -rf apache-activemq-6.2.0-SNAPSHOT apache-activemq-6.2.0-20240714.112132-13-bin.tar.gz
+>sudo rm -rf apache-activemq-6.2.0-SNAPSHOT apache-activemq-6.2.0-20240816.205844-15-bin.tar.gz
 >```
 
 #### Set permissions to ActiveMQ directory:
