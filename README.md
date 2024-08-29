@@ -43,9 +43,6 @@ These commands should all be executed in sequence from within the vmware CLI:
 - ```sudo usermod -a -G www-data `whoami` ```
 - ```sudo usermod -a -G `whoami` www-data```
 
-- Log out of the vm (CTL-D) (this is neccessary for group settings to be applied)
-- Log back in
-
 - ```ls /mnt/hgfs/shared```
 - you should see the shared folders from LSU OneDrive. if you don't see the shared folder, run this command in the vmware cli:
 
