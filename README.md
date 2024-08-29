@@ -27,7 +27,7 @@
 - (right click the vm, go to settings, click the options tab, select "Always Enabled" for shared folders
 - (select a path to the "shared" folder from LSU OneDrive, click save)
 - I keep my path simple and put the files in a folder called 'shared'
-- my path is /mnt/hgfs/shared within the vm, if you use a different path, change it in all commands that use '/mnt/hgfs/shared'
+- my path is /mnt/shared within the vm, if you use a different path, change it in all commands that use '/mnt/shared'
 
 
 ### Begin Build
@@ -43,16 +43,16 @@ These commands should all be executed in sequence from within the vmware CLI:
 - ```sudo usermod -a -G www-data `whoami` ```
 - ```sudo usermod -a -G `whoami` www-data```
 
-- ```ls /mnt/hgfs/shared```
+- ```ls /mnt/shared```
 - you should see the shared folders from LSU OneDrive. if you don't see the shared folder, run this command in the vmware cli:
 
-### If bad mount point '/mnt/hgfs/' no such file or directory:
-- ```mkdir /mnt/hgfs/``` 
-- ```sudo vmhgfs-fuse .host:/ /mnt/hgfs/ -o allow_other -o uid=1000```
+### If bad mount point '/mnt/' no such file or directory:
+- ```mkdir /mnt/``` 
+- ```sudo vmhgfs-fuse .host:/ /mnt/ -o allow_other -o uid=1000```
 
 ## Start the build:
 - execute in the vmware cli after shared folders are connected:
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_1.sh```
+- ```sh /mnt/shared/shell-scripts/scratch_1.sh```
 the above command runs a script containing the following:
 >```
 >#!/bin/bash
@@ -63,7 +63,7 @@ the above command runs a script containing the following:
 >``` 
 ________________________________________
 # Install php and postgresql:
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_2.sh```
+- ```sh /mnt//shared/shell-scripts/scratch_2.sh```
 
 the above command runs the following script the :
 >```
@@ -126,7 +126,7 @@ from within the postgres cli change to drupal10:
 - ```sudo systemctl restart postgresql```
 - ***Editing pg_hba.conf for User Authentication in PostgreSQL***
 
-```sudo cp /mnt/hgfs/shared/configs/postgresql/pg_hba.conf /etc/postgresql/15/main/```
+```sudo cp /mnt//shared/configs/postgresql/pg_hba.conf /etc/postgresql/15/main/```
 - Adds the following authentication settings for PostgreSQL users and databases on localhost. Note: Do not copy the configurations below into the pg_hba.conf file, as the indentations are incorrect.
 >```
 ># Database administrative login by Unix domain socket
@@ -136,7 +136,7 @@ from within the postgres cli change to drupal10:
 ________________________________________
 # Install Composer
 
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_3.sh```
+- ```sh /mnt/shared/shell-scripts/scratch_3.sh```
 
 scratch_3.sh contents:
 >```
@@ -153,10 +153,10 @@ scratch_3.sh contents:
 
 ________________________________________
 # Configure apache server settings:
-- ```sudo cp /mnt/hgfs/shared/configs/apache2/ports.conf /etc/apache2/ports.conf```
+- ```sudo cp /mnt/shared/configs/apache2/ports.conf /etc/apache2/ports.conf```
 - ***Apache virtual host configuration***
-  - ```sudo cp /mnt/hgfs/shared/configs/apache2/000-default-v1.conf /etc/apache2/sites-enabled/000-default.conf```
-  - ```sudo cp /mnt/hgfs/shared/configs/apache2/000-default-v1.conf /etc/apache2/sites-available/000-default.conf```
+  - ```sudo cp /mnt/shared/configs/apache2/000-default-v1.conf /etc/apache2/sites-enabled/000-default.conf```
+  - ```sudo cp /mnt/shared/configs/apache2/000-default-v1.conf /etc/apache2/sites-available/000-default.conf```
 - Copy command above edits the default virtual host configuration file located in /etc/apache2/sites-available/ and /etc/apache2/sites-enabled/.
 >```
 ><VirtualHost *:80>
@@ -176,7 +176,7 @@ ________________________________________
 ***Now We create a Drupal virtual host configuration file using***
 - Copy over configuration from shared folder:
 
- - ```sudo cp /mnt/hgfs/shared/configs/apache2/drupal-v1.conf /etc/apache2/sites-available/drupal.conf```
+ - ```sudo cp /mnt/shared/configs/apache2/drupal-v1.conf /etc/apache2/sites-available/drupal.conf```
 - Or paste following to /etc/apache2/sites-available/drupal.conf:
 ```sudo nano /etc/apache2/sites-available/drupal.conf```
 >```
@@ -200,7 +200,7 @@ ________________________________________
 
 
 #### Add PDO extentions for postgresql and mysql:
-- ```sh /mnt/hgfs/shared/shell-scripts/PDO-extensions.sh```
+- ```sh /mnt/shared/shell-scripts/PDO-extensions.sh```
 The following shell script will execute the commands below:
 >```
 >sudo apt-get install php8.3-mysql
@@ -265,7 +265,7 @@ type y for yes
 
 - ***install tomcat***
 - find the tar.gz here: https://tomcat.apache.org/download-90.cgi
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_4.sh```
+- ```sh /mnt/shared/shell-scripts/scratch_4.sh```
 
 The following shell script will execute the commands below:
 >```
@@ -282,14 +282,14 @@ The following shell script will execute the commands below:
 
 scratch_5.sh (if the tomcat tarball link is different you must change the path in the script or run the commands in the scratch_5 alt section):
 
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_5.sh```
+- ```sh /mnt/shared/shell-scripts/scratch_5.sh```
 
 - ***Copy environment variables that includes java home to tomcat/bin***
 >```
 >//Make sure version of openjdk java is correct in JAVA_HOME:
->sudo cp /mnt/hgfs/shared/configs/tomcat_conf/setenv.sh /opt/tomcat/bin/
+>sudo cp /mnt/shared/configs/tomcat_conf/setenv.sh /opt/tomcat/bin/
 >sudo chmod 755 /opt/tomcat/bin/setenv.sh
->sudo cp /mnt/hgfs/shared/configs/tomcat_conf/tomcat.service /etc/systemd/system/tomcat.service
+>sudo cp /mnt/shared/configs/tomcat_conf/tomcat.service /etc/systemd/system/tomcat.service
 >sudo chmod 755 /etc/systemd/system/tomcat.service
 >sudo systemctl start tomcat
 >sudo systemctl enable tomcat
@@ -298,7 +298,7 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 ________________________________________
 ### Cantatloupe:
 #### Install Cantaloupe 5.0.6
-- ```sh /mnt/hgfs/shared/shell-scripts/scratch_6.sh```
+- ```sh /mnt/shared/shell-scripts/scratch_6.sh```
 
 - scratch_6.sh will perform bellow tasks:
   - install and unzip cantaloupe 5.0.6
@@ -317,7 +317,7 @@ ________________________________________
 
 #### Copy cantaloupe service syetem directory, check the version of your cantaloup in cantaloupe.service
 >```
->sudo cp /mnt/hgfs/shared/configs/cantaloupe/cantaloupe.service /etc/systemd/system/cantaloupe.service
+>sudo cp /mnt/shared/configs/cantaloupe/cantaloupe.service /etc/systemd/system/cantaloupe.service
 >sudo chmod 755 /etc/systemd/system/cantaloupe.service
 >```
 
@@ -343,7 +343,7 @@ ________________________________________
 #### stop tomcat and create fcrepo directy
 - ```sudo systemctl stop tomcat```
 - ```sudo mkdir -p /mnt/fcrepo/data/objects```
-- ```sudo cp -R /mnt/hgfs/shared/configs/fedora_configs/config /mnt/fcrepo/```
+- ```sudo cp -R /mnt/shared/configs/fedora_configs/config /mnt/fcrepo/```
 - ```sudo chown -R tomcat:tomcat /mnt/fcrepo```
 - ```sudo chmod -R 755 /mnt/fcrepo```
 
@@ -366,7 +366,7 @@ ________________________________________
 - ```sudo chown tomcat:tomcat /opt/tomcat/bin/setenv.sh```
 
 ### Edit and Ensuring Tomcat Users Are In Place
-- ```cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/tomcat-users.xml /opt/tomcat/conf```
+- ```cp /mnt/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/tomcat-users.xml /opt/tomcat/conf```
 - tomcat-users permission:
 >```
 >sudo chmod 600 /opt/tomcat/conf/tomcat-users.xml
@@ -376,7 +376,7 @@ ________________________________________
 
 ### download fedora Latest Release:
 - **NOTE:** You may want to check visit [fcrepo repository](https://github.com/fcrepo/fcrepo/releases) to choose the latest version and ajust the commands below if needed
-- ```sh /mnt/hgfs/shared/shell-scripts/fedora-dl.sh```
+- ```sh /mnt/shared/shell-scripts/fedora-dl.sh```
 - The following shell script will execute the commands below to download fedora war file and will place it to catalina webapp directory:
 >```
 >#!/bin/bash
@@ -401,7 +401,7 @@ ________________________________________
 ### Download syn:
 check here for link [Islandora Syn](https://github.com/Islandora/Syn/releases/) to check for latest version:
 - run the command:
-- ```sh /mnt/hgfs/shared/shell-scripts/syn-dl.sh```
+- ```sh /mnt/shared/shell-scripts/syn-dl.sh```
 >```
 >#!/bin/bash
 >sudo wget -P /opt/tomcat/lib https://github.com/Islandora/Syn/releases/download/v1.1.1/islandora-syn-1.1.1-all.jar
@@ -410,7 +410,7 @@ check here for link [Islandora Syn](https://github.com/Islandora/Syn/releases/) 
 >```
 
 ### Generating an SSL Key for Syn and Placing the Syn Settings:
-- ```sudo sh /mnt/hgfs/shared/shell-scripts/syn-config.sh```
+- ```sudo sh /mnt/shared/shell-scripts/syn-config.sh```
 - The following shell script will execute the commands below:
 
 >```
@@ -420,7 +420,7 @@ check here for link [Islandora Syn](https://github.com/Islandora/Syn/releases/) 
 >sudo openssl rsa -pubout -in "/opt/keys/syn_private.key" -out "/opt/keys/syn_public.key"
 >sudo chown www-data:www-data /opt/keys/syn*
 >sudo mkdir /opt/syn
->sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/syn-settings.xml /mnt/fcrepo/config/
+>sudo cp /mnt/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/syn-settings.xml /mnt/fcrepo/config/
 >sudo chown tomcat:tomcat /mnt/fcrepo/config/syn-settings.xml
 >sudo chmod 600 /mnt/fcrepo/config/syn-settings.xml
 >```
@@ -428,7 +428,7 @@ check here for link [Islandora Syn](https://github.com/Islandora/Syn/releases/) 
 ### Adding the Syn Valve to Tomcat | Enable the Syn Valve for all of Tomcat:
 - Add Syn path to tomcat context.xml:
 ```sh
-sudo cp /mnt/hgfs/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/context.xml /opt/tomcat/conf
+sudo cp /mnt/shared/configs/fedora_configs/tomcat-and-syn-for-fedora/context.xml /opt/tomcat/conf
 sudo chmod 644 /opt/tomcat/conf/context.xml
 sudo chown tomcat:tomcat /opt/tomcat/conf/context.xml
 ```
@@ -446,7 +446,7 @@ sudo chown tomcat:tomcat /opt/tomcat/conf/context.xml
 ________________________________________
 # installing blazegraph
 ### Creating a Working Space for Blazegraph and install Blazegraph:
-- ```sh /mnt/hgfs/shared/shell-scripts/blazegraph-dl.sh```
+- ```sh /mnt/shared/shell-scripts/blazegraph-dl.sh```
 >```
 >sudo mkdir -p /opt/blazegraph/data
 >sudo mkdir /opt/blazegraph/conf
@@ -457,23 +457,23 @@ ________________________________________
 >sudo chown tomcat:tomcat /opt/tomcat/webapps/blazegraph.war
 >```
 ### Configuring Logging and Adding Blazegraph Configurations:
-- ```sh /mnt/hgfs/shared/shell-scripts/blazegraph_conf.sh```
+- ```sh /mnt/shared/shell-scripts/blazegraph_conf.sh```
 
 The following shell script will execute the commands below:
 >```
 >#!/bin/bash
 >#Configuring Logging
->sudo cp /mnt/hgfs/shared/log4j.properties /opt/blazegraph/conf/
+>sudo cp /mnt/shared/log4j.properties /opt/blazegraph/conf/
 >sudo chown tomcat:tomcat /opt/blazegraph/conf/log4j.properties
 >sudo chmod 644 /opt/blazegraph/conf/log4j.properties
 >#Adding a Blazegraph Configuration
->sudo cp /mnt/hgfs/shared/RWStore.properties /opt/blazegraph/conf
+>sudo cp /mnt/shared/RWStore.properties /opt/blazegraph/conf
 >sudo chown tomcat:tomcat /opt/blazegraph/conf/RWStore.properties
 >sudo chmod 644 /opt/blazegraph/conf/RWStore.properties
->sudo cp /mnt/hgfs/shared/blazegraph.properties /opt/blazegraph/conf
+>sudo cp /mnt/shared/blazegraph.properties /opt/blazegraph/conf
 >sudo chown tomcat:tomcat /opt/blazegraph/conf/blazegraph.properties
 >sudo chmod 644 /opt/blazegraph/conf/blazegraph.properties
->sudo cp /mnt/hgfs/shared/inference.nt /opt/blazegraph/conf
+>sudo cp /mnt/shared/inference.nt /opt/blazegraph/conf
 >sudo chown tomcat:tomcat /opt/blazegraph/conf/inference.nt
 >sudo chmod 644 /opt/blazegraph/conf/inference.nt
 >sudo chown -R tomcat:tomcat /opt/blazegraph/conf
@@ -509,7 +509,7 @@ ________________________________________
 - ```source ~/.bashrc```
 
 #### download 9.x solr:
-```sh /mnt/hgfs/shared/shell-scripts/solr-dl.sh```
+```sh /mnt/shared/shell-scripts/solr-dl.sh```
 >```
 >cd /opt
 >sudo wget https://www.apache.org/dyn/closer.lua/solr/solr/9.6.0/solr-9.6.0.tgz?action=download
@@ -548,7 +548,7 @@ run following as root to extract and install solr:
 
 #### Create Solr Core
 - ```sudo mkdir -p /var/solr/data/islandora8```
-- ```sudo cp /mnt/hgfs/shared/configs/solr_9.x/conf /var/solr/data/islandora8```
+- ```sudo cp /mnt/shared/configs/solr_9.x/conf /var/solr/data/islandora8```
 - ```sudo chown -R solr:solr /var/solr```
 - ```cd /opt/solr-9.6.0```
 - ```sudo -u solr bin/solr create -c islandora8 -p 8983```
@@ -580,8 +580,8 @@ ________________________________________
 - Add activemq user to activemq environment file:
 >```
 >#copy over activemq environment variables
->sudo cp /mnt/hgfs/shared/configs/activemq/setenv /opt/activemq/bin/setenv
->sudo cp /mnt/hgfs/shared/configs/activemq/setenv /etc/default/activemq
+>sudo cp /mnt/shared/configs/activemq/setenv /opt/activemq/bin/setenv
+>sudo cp /mnt/shared/configs/activemq/setenv /etc/default/activemq
 >```
 
 ##### Set correct permissions:
@@ -600,7 +600,7 @@ ________________________________________
 - ```sudo systemctl daemon-reload```
 
 #### Set Up Service:
-- ```sudo cp /mnt/hgfs/shared/configs/activemq/activemq.service /etc/systemd/system/activemq.service```
+- ```sudo cp /mnt/shared/configs/activemq/activemq.service /etc/systemd/system/activemq.service```
 - reload systemd to recognize the new service ```sudo systemctl daemon-reload```
 - activemq.service contains:
 >```
@@ -643,10 +643,10 @@ ________________________________________
 - Copy over these two configurations for setup webconsole and Stopmp ports:
 >```
 ># activemq main configurations:
->sudo cp /mnt/hgfs/shared/configs/activemq/activemq.xml /opt/activemq/conf```
+>sudo cp /mnt/shared/configs/activemq/activemq.xml /opt/activemq/conf```
 >
 ># for web console accessibility
->sudo cp /mnt/hgfs/shared/configs/activemq/jetty.xml /opt/activemq/conf
+>sudo cp /mnt/shared/configs/activemq/jetty.xml /opt/activemq/conf
 >```
 ## 2. Crayfish Microservices:
 #### Clone Isandora Crayfish repository:
@@ -657,17 +657,17 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 
 #### Install Required Services on VM:
 - Bellow shell scripts will install required services for Crayfish Microservices to perform their tasks:
-- ```sudo sh /mnt/hgfs/shared/shell-scripts/crayfish-requriments.sh```
+- ```sudo sh /mnt/shared/shell-scripts/crayfish-requriments.sh```
 
 #### Configure Virtual Host for Crayfits and Crayfish microservices:
-- ```sudo sh /mnt/hgfs/shared/shell-scripts/crayfish-virtual-host.sh```
+- ```sudo sh /mnt/shared/shell-scripts/crayfish-virtual-host.sh```
 - Above command will perform bellow tasks:
     - Copy over apache configuration for all microservices on port `8000`.
     - Enable apache ***virtual host*** for microservices.
     - Update ***Apache Ports*** to listen to port `8000` and Restart apache service.
 
 #### Configure Logging:
-- ```sudo sh /mnt/hgfs/shared/shell-scripts/crayfcrayfish-logging.sh```
+- ```sudo sh /mnt/shared/shell-scripts/crayfcrayfish-logging.sh```
 - Above command will create directory on `/var` and set correct permissions so that microservices can write the log files for future debugging.
 
 #### Authentication with fedora repository:
@@ -675,18 +675,18 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 - We should come back to handle authentication between Fedora and Micro Services.
 
 #### Install Crayfits:
-- ```sudo sh /mnt/hgfs/shared/shell-scripts/crayfits_install.sh```
+- ```sudo sh /mnt/shared/shell-scripts/crayfits_install.sh```
 - Above command will perform these tasks.
     - Create directory for Fits.
     - Download Fits files:
     - Next, adds two lines to set Fits home directory to catalina properties.
 
 #### Install Crayfish Commons:
-- ```sudo sh /mnt/hgfs/shared/shell-scripts/crayfish-commons.sh```
+- ```sudo sh /mnt/shared/shell-scripts/crayfish-commons.sh```
 
 #### Install Crayfish microservices:
 - Run bellow command to install Crayfish Microservices:
-- ```sudo sh /mnt/hgfs/shared/shell-scripts/crayfish-install.sh```
+- ```sudo sh /mnt/shared/shell-scripts/crayfish-install.sh```
 ## 3. Alpaca:
 #### Alpaca importance in islandora ecosystem:
 - Alpaca integrates and manages various microservices in an Islandora installation, handling content indexing, derivative generation, message routing from Drupal, service integration with repositories and endpoints, and configuration management for seamless system functionality.
@@ -704,9 +704,9 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 #### Copy Alpaca Config files:
 - Alpaca is made up of several microservices, each of these can be configured, enabled or disabled individually with an alpaca properties.
     - bellow command will copy over alpaca properties.
-    - ```sudo cp /mnt/hgfs/shared/config/alpaca/alpaca.properties /opt/alpaca/```
+    - ```sudo cp /mnt/shared/config/alpaca/alpaca.properties /opt/alpaca/```
 - Copy over alpaca services to systemd:
-    - ```sudo cp /mnt/hgfs/shared/config/alpaca/alpaca.service /etc/systemd/system```
+    - ```sudo cp /mnt/shared/config/alpaca/alpaca.service /etc/systemd/system```
 #### Run Alpaca: 
 1. Run from alpaca directory:
 ```sh
@@ -857,7 +857,7 @@ ________________________________________
 
 #### Re-configure Apache root directories:
 #### 1. Re-configure drupal.conf:
-- ```sudo cp /mnt/hgfs/shared/configs/apache2/drupal.conf /etc/apache2/sites-enabled/drupal.conf```
+- ```sudo cp /mnt/shared/configs/apache2/drupal.conf /etc/apache2/sites-enabled/drupal.conf```
 
 - **Bellow is the lines that Changed in drupal.conf Apache configuration:**
 >```
@@ -867,8 +867,8 @@ ________________________________________
 >```
 
 #### 2. Re-configure 000-default.conf:
-- ```sudo cp /mnt/hgfs/shared/configs/apache2/000-default.conf /etc/apache2/sites-enabled/000-default.conf```
-- ```sudo cp /mnt/hgfs/shared/configs/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf```
+- ```sudo cp /mnt/shared/configs/apache2/000-default.conf /etc/apache2/sites-enabled/000-default.conf```
+- ```sudo cp /mnt/shared/configs/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf```
 
 - **Bellow is the lines that Changed in 000-default.conf Apache configuration:**
 >```
@@ -1102,8 +1102,8 @@ ________________________________________
 mimic_implicite for postgresql error occures while creating new content, After groupmedia module installaion, causes the content not to be created in postgresql database. here are steps to resolve it:
 
 #### Copy the fixed postgresql edited php files over:
-- ```sudo cp /mnt/hgfs/shared/configs/postgresql/Connection.php /opt/drupal/islandora-starter-site/web/core/modules/pgsql/src/Driver/Database/pgsql/```
-- ```sudo cp /mnt/hgfs/shared/configs/postgresql/Select.php /opt/drupal/islandora-starter-site/web/core/modules/pgsql/src/Driver/Database/pgsql/```
+- ```sudo cp /mnt/shared/configs/postgresql/Connection.php /opt/drupal/islandora-starter-site/web/core/modules/pgsql/src/Driver/Database/pgsql/```
+- ```sudo cp /mnt/shared/configs/postgresql/Select.php /opt/drupal/islandora-starter-site/web/core/modules/pgsql/src/Driver/Database/pgsql/```
 - ```drush cr```
 - ```sudo systemctl daemon-reload```
 - ```sudo systemctl restart apache2 postgresql```
