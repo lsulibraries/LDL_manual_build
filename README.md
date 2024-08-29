@@ -561,7 +561,7 @@ ________________________________________
 
 ### Download and un-archive ActiveMQ:
 >```
->mkdir /opt/activemq
+>sudo chmod 775 /opt/activemq 
 >cd /opt/activemq
 >sudo wget https://repository.apache.org/content/repositories/snapshots/org/apache/activemq/apache-activemq/6.2.0-SNAPSHOT/apache-activemq-6.2.0-20240816.205844-15-bin.tar.gz
 >sudo tar zxvf apache-activemq-6.2.0-20240816.205844-15-bin.tar.gz
