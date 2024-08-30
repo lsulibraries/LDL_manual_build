@@ -949,7 +949,7 @@ Some, we already configured in prerequsits, but we will make sure all the config
  
 #### Configure solr:
 - **Check for bellow configuration:**
-  - Check solr is availabe at port 8983: sudo netstat -tuln | grep LISTEN
+  - Check solr is availabe at port 8983: ``````sudo lsof -i :8983``````
   - Check solr is running if not run: sudo /opt/solr/bin/start 
   - Then restart: sudo systemctl restart solr
   - Check if your solr core is installed!
