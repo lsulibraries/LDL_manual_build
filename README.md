@@ -960,11 +960,8 @@ Some, we already configured in prerequsits, but we will make sure all the config
   - Solr core: islandora8
 
 ### syn/jwt configuration:
-#### keys must be available at /opt/keys/syn_private.key
- - Symlinking the private key to /opt/drupal/keys/private.key
-   - ```sudo ln -s /opt/keys/syn_private.key /usr/local/bin/drush```
-
-- First, Navigate to /admin/config/system/keys/add
+- Check if syn_private and syn_private keys are available at /opt/keys/
+- First, Navigate to /admin/config/system/keys/Edit
   - key type: JWT RSA KEy
   - JWT Algorithm: RSAASA-PKCXS1-v1_5 Using SHA-256(RS256)
   - Key Provider: file
@@ -983,7 +980,7 @@ run the migration tagged with islandora  to populate some taxonomies.
 
 #### Run the migrations taged with islandora:
 - ```cd /opt/drupal/islandora-starter-site```
-- ```sudo composer exec -- drush migrate:import --userid=1 --tag=islandora```
+- ```sudo -u www-data composer exec -- drush migrate:import --userid=1 --tag=islandora```
 
 #### Enabling EVA Views:
 - ```drush -y views:enable display_media```
