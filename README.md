@@ -653,7 +653,7 @@ ________________________________________
 #### Clone Isandora Crayfish repository:
 ```sh
 sudo mkdir /opt/crayfish 
-sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
+git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 ```
 
 #### Install Required Services on VM:
