@@ -652,7 +652,8 @@ ________________________________________
 ## 2. Crayfish Microservices:
 #### Clone Isandora Crayfish repository:
 ```sh
-sudo mkdir /opt/crayfish 
+sudo mkdir /opt/crayfish
+cd /opt/crayfish
 sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 ```
 
@@ -709,10 +710,10 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 - Copy over alpaca services to systemd:
     - ```sudo cp /mnt/shared/config/alpaca/alpaca.service /etc/systemd/system```
 #### Run Alpaca: 
-1. Run from alpaca directory:
+1. Run from alpaca directory, for testing purpose, And ```CTL+C``` to cancel running it.
 ```sh
-```cd /opt/alpaca
-```java -jar alpaca.jar -c /opt/alpaca/alpaca.properties
+cd /opt/alpaca
+java -jar alpaca.jar -c /opt/alpaca/alpaca.properties
 ```
 2. Run with systemd: ```sudo systemctl start alpaca```
 #### Notes:
@@ -828,7 +829,7 @@ ________________________________________
 #### create islandora starter site project
 
 - ```cd /opt/drupal```
-- ```sudo composer create-project islandora/islandora-starter-site:1.8.0```
+- ```sudo -u www-data composer create-project islandora/islandora-starter-site:1.8.0```
 - ```cd /opt/drupal/islandora-starter-site```
 
 #### Install drush using composer at islandora-starter-site
@@ -839,6 +840,9 @@ ________________________________________
 - ```ls -lart /usr/local/bin/drush```
 
 #### Configure Settings.php and add Flysystem's fedora and trusted host:
+1. Copy the settings.php for drupal in 
+```sudo cp /mnt/shared/configs/settings.php /opt/drupal/islandora-starter-site/web/sites/default/```
+2. edit trusted host patterns and add your ip address.
 ```sudo nano web/sites/default/settings.php```
 >```
 >$settings['trusted_host_patterns'] = [
