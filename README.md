@@ -939,21 +939,14 @@ Some, we already configured in prerequsits, but we will make sure all the config
   - $settings['openseadragon.settings']['iiif_server'] = 'http://127.0.0.1:8182/iiif/2';
 
 #### Configure Cantaloupe for Islandora IIIF:
-- In GUI:
-  - /admin/config/islandora/iiif
-  - set location of the cantaloupe: http://127.0.0.1:8182/iiif/2
-- In settings.php:
-  - $settings['islandora_iiif.settings']['iiif_server'] = 'http://127.0.0.1:8182/iiif/2';
+- /admin/config/islandora/iiif
+- set location of the cantaloupe: http://127.0.0.1:8182/iiif/2
 
 #### Configure ActiveMQ, islandora message broker sertting url:
-- In GUI:
-  - /admin/config/islandora/core
-  - set brocker URL to tcp://127.0.0.1:61613 
+- /admin/config/islandora/core
+- set brocker URL to tcp://127.0.0.1:61613 
 
-- In settings.php:
-  - $settings['islandora.settings']['broker_url'] = 'tcp://127.0.0.1:61613';
-
-- If activeMQ was not active check activemq.service:
+- **If activeMQ was not active check activemq.service:**
   - sudo netstat -tuln | grep LISTEN
   - Check if 61613 is active and being listed to
  
@@ -968,27 +961,18 @@ Some, we already configured in prerequsits, but we will make sure all the config
   - backend: Solr
   - Solr Connector: Standard
   - Solr core: islandora8
-- **In settings.php:**
-  - Set search_api.server.default_solr_server backend_config.connector_config.host
-    - $settings['search_api.server.default_solr_server']['backend_config']['connector_config']['host'] = '127.0.0.1';
 
-  - Solr port: Set search_api.server.default_solr_server backend_config.connector_config.port
-    - $settings['search_api.server.default_solr_server']['backend_config']['connector_config']['port'] = '8983';
-   
-  - Solr, core name: Set search_api.server.default_solr_server backend_config.connector_config.core
-    - $settings['search_api.server.default_solr_server']['backend_config']['connector_config']['core'] = 'islandora8';
- 
-#### Check syn/jwt configuration
+### syn/jwt configuration:
 #### keys must be available at /opt/keys/syn_private.key
  - Symlinking the private key to /opt/drupal/keys/private.key
    - ```sudo ln -s /opt/keys/syn_private.key /usr/local/bin/drush```
-- **In GUI:**
-  - First, Navigate to /admin/config/system/keys/add
-    - key type: JWT RSA KEy
-    - JWT Algorithm: RSAASA-PKCXS1-v1_5 Using SHA-256(RS256)
-    - Key Provider: file
-    - File location: /opt/keys/syn_private.key
-    - Save
+
+- First, Navigate to /admin/config/system/keys/add
+  - key type: JWT RSA KEy
+  - JWT Algorithm: RSAASA-PKCXS1-v1_5 Using SHA-256(RS256)
+  - Key Provider: file
+  - File location: /opt/keys/syn_private.key
+  - Save
    
  - Then, Navigate to /admin/config/system/jwt
     - Select the key you justy created
