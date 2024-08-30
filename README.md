@@ -935,9 +935,6 @@ Some, we already configured in prerequsits, but we will make sure all the config
 
 - save
 
-- In settings.php:
-  - $settings['openseadragon.settings']['iiif_server'] = 'http://127.0.0.1:8182/iiif/2';
-
 #### Configure Cantaloupe for Islandora IIIF:
 - /admin/config/islandora/iiif
 - set location of the cantaloupe: http://127.0.0.1:8182/iiif/2
