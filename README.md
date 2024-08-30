@@ -1064,8 +1064,10 @@ ________________________________________
 # re-islandora Workbench to be on V1.0.0:
 #### Remove dev version and install V1 cause dev version is not determined by workbench anymore:
 ```cd /opt/drupal/islandora-starter-site```
-- remove mjordan/islandora_workbench_integration from composer.json and update composer
-```sudo composer update```
+- remove mjordan/islandora_workbench_integration from composer.json
+    - ```sudo nano composer.json```
+- Then update the composer json:
+  - ```sudo -u www-data composer update```
 
 #### Re-install and enable(Running command bellow will get V1 ) 
 - ```sudo -u www-data composer require mjordan/islandora_workbench_integration```
