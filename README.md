@@ -917,6 +917,7 @@ ________________________________________
 Some, we already configured in prerequsits, but we will make sure all the configurations are in place.
 #### Check following configurations before moving forward:
 - check if your services like cantaloupe, apache, tomcat, databases are available and working
+    - ```sudo systemctl status cantaloupe apache2 tomcat postgresql```
 - check if you have already configured the cantaloup IIIF base URL to http://127.0.0.1:8182/iiif/2
 - check if you have already configured activemq.xml in name="stomp" uri="stomp://127.0.0.1:61613"
 
