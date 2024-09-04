@@ -701,15 +701,16 @@ sudo -u www-data git clone https://github.com/Islandora/Crayfish.git /opt/crayfi
 - Make a directory for Alpaca and download the latest version of Alpaca from the Maven repository. E.g.
 >```
 >sudo mkdir /opt/alpaca
+>sudo chmod -R 775 /opt/alpaca
 >cd /opt/alpaca
 >sudo -u www-data curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
 >```
 #### Copy Alpaca Config files:
 - Alpaca is made up of several microservices, each of these can be configured, enabled or disabled individually with an alpaca properties.
     - bellow command will copy over alpaca properties.
-    - ```sudo cp /mnt/shared/config/alpaca/alpaca.properties /opt/alpaca/```
+    - ```sudo cp /mnt/shared/configs/alpaca/alpaca.properties /opt/alpaca/```
 - Copy over alpaca services to systemd:
-    - ```sudo cp /mnt/shared/config/alpaca/alpaca.service /etc/systemd/system```
+    - ```sudo cp /mnt/shared/configs/alpaca/alpaca.service /etc/systemd/system```
 #### Run Alpaca: 
 1. Run from alpaca directory, for testing purpose, And ```CTL+C``` to cancel running it.
 ```sh
