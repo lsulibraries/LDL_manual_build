@@ -824,16 +824,16 @@ ________________________________________
 #### Change default username and password:
 - ```sudo drush upwd admin admin```
 ________________________________________
-# Add a user to the fedoraadmin role:(Optional)
-for example, giving the default admin user the role:
+# Add a user to the fedoraadmin role:
+for example, giving the default admin user the role using one the steps bellow:
 
 #### 1. Using Composer:
 - ```cd /opt/drupal/islandora-starter-site```
 - ```sudo -u www-data composer exec -- drush user:role:add fedoraadmin admin```
  
-#### 2. Using Drush:**
-- cd /opt/drupal/islandora-starter-site
-- sudo -u www-data drush -y urol "fedoraadmin" admin
+#### 2. OR Using Drush:
+- ```cd /opt/drupal/islandora-starter-site```
+- ```sudo -u www-data drush -y urol "fedoraadmin" admin```
 ________________________________________
 # Configure the locations of external services:
 Some, we already configured in prerequsits, but we will make sure all the configurations are in place.
