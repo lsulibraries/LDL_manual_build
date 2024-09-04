@@ -1043,7 +1043,11 @@ ________________________________________________________________________________
 
 #### set available content in group type:
 - navigate to groups>group type> set avaialble content
-- install each content one by one
+- install plugin for Repository item content types:
+  - Change cardinality to 1
+- Install plugin for each Group media types:
+  - add cardinality to 1
+  - Check Enable Meida tracking
 
 #### Fix the destination for each media type (Important for media ingestion for each media types):
 - Navigate ```Structure>Media types```
