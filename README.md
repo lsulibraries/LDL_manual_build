@@ -700,9 +700,9 @@ sudo -u www-data git clone https://github.com/Islandora/Crayfish.git /opt/crayfi
 #### Download alpaca.jar:
 - Make a directory for Alpaca and download the latest version of Alpaca from the Maven repository. E.g.
 >```
->mkdir /opt/alpaca
+>sudo mkdir /opt/alpaca
 >cd /opt/alpaca
->curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
+>sudo -u www-data curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
 >```
 #### Copy Alpaca Config files:
 - Alpaca is made up of several microservices, each of these can be configured, enabled or disabled individually with an alpaca properties.
