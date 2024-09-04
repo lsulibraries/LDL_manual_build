@@ -898,7 +898,31 @@ Some, we already configured in prerequsits, but we will make sure all the config
 #### Select default Download location Flysystem:
 visit /admin/config/media/file-system to select the flysystem:fedora
 ________________________________________
-# 4. Extra Configuration on Drupal For Alpaca:
+# Run the migrations command and Enabling EVA Views:
+run the migration tagged with islandora  to populate some taxonomies.
+
+#### Run the migrations taged with islandora:
+- ```cd /opt/drupal/islandora-starter-site```
+- ```sudo -u www-data composer exec -- drush migrate:import --userid=1 --tag=islandora```
+
+#### Enabling EVA Views:
+- ```drush -y views:enable display_media```
+________________________________________
+# instrall group modules and dependencies:
+- ```cd /opt/drupal/islandora-starter-site```
+- ```sudo -u www-data composer require digitalutsc/islandora_group```
+- ```sudo -u www-data composer require 'drupal/rules:^3.0@alpha'```
+- ```drush en -y islandora_group gnode rules```
+#### Rebuild Cache:
+- ```drush cr```
+________________________________________
+
+# Extra Drupal Configuratin
+- a. Extra Configuration on Drupal For Alpaca
+- b. Extra Configuration on Drupal For Groups
+- c. Extra Configuration on Drupal For apache2
+
+## a. Extra Configuration on Drupal For Alpaca:
 ### 1. Configuring Actions:
 #### Step 1: Configuring Derivative Creation Actions
 1. Go to **Administration > Structure > Actions**.
@@ -979,26 +1003,9 @@ ________________________________________________________________________________
 3. Under **Reactions > Derivatives > Actions**, add the action **Audio - Generate a service file from an original file**.
 4. Explanation:
     - The context should already have a thumbnail generation action assigned, such as `Video - Generate thumbnail from Original file`.
-________________________________________
-# Run the migrations command and Enabling EVA Views:
-run the migration tagged with islandora  to populate some taxonomies.
+___________________________________________________________________________________________________________________________
 
-#### Run the migrations taged with islandora:
-- ```cd /opt/drupal/islandora-starter-site```
-- ```sudo -u www-data composer exec -- drush migrate:import --userid=1 --tag=islandora```
-
-#### Enabling EVA Views:
-- ```drush -y views:enable display_media```
-________________________________________
-# instrall group modules and dependencies:
-- ```cd /opt/drupal/islandora-starter-site```
-- ```sudo -u www-data composer require digitalutsc/islandora_group```
-- ```sudo -u www-data composer require 'drupal/rules:^3.0@alpha'```
-- ```drush en -y islandora_group gnode rules```
-#### Rebuild Cache:
-- ```drush cr```
-________________________________________
-# Group Configuration:
+## b. Extra Configuration on Drupal For Groups:
 #### group type:
 - Navigate to Groups -> create a group type
 
@@ -1053,7 +1060,7 @@ ________________________________________
    - Image media type's field type is **Image** not **file**
 
 
-
+## c. Extra Configuration on Drupal For apache2:
 #### Ensure you have set maxiumum file size
 - **upload size and max post size:**
   - ```sudo nano /etc/php/8.3/apache2/php.ini```
