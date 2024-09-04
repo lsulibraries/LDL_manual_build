@@ -1074,8 +1074,11 @@ We go back to commandline and perform changes bellow:
 - ```drush cr```
 ________________________________________
 # re-islandora Workbench to be on V1.0.0:
+- ```cd /opt/drupal/islandora-starter-site```
+- ```sudo chmod -R 775 /opt/drupal/islandora-starter-site/web/sites/default```
+- ```sudo chmod 640/opt/drupal/islandora-starter-site/web/sites/default/settings.php```
 #### Remove dev version and install V1 cause dev version is not determined by workbench anymore:
-```cd /opt/drupal/islandora-starter-site```
+
 - remove `mjordan/islandora_workbench_integration` from composer.json, and remove `comma` on line before that
     - ```sudo nano composer.json```
 - Then update the composer json:
