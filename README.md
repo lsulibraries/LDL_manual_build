@@ -932,8 +932,8 @@ ________________________________________
     - **Edit the Action Label:** Change the label to `Extract Text from Image`.
     - **Additional Arguments:** Add the following arguments: `--psm 6 -l eng --dpi 300 -c tessedit_create_txt=1`. These arguments are used to generate text from images using Tesseract.
 
-### 2. Configuring Actions:
-#### Step 1: Configuring Derivative Creation Actions
+### Step2. Configuring Actions:
+#### Step 1: Create Action for OCR From image and PDF:
 1. Go to **Configuration > System > Actions**.
 2. For each Action bellow, select **Fedora** as the file system.
 3. Bellow is the list of actions that storage location i needed to be configured:
@@ -948,9 +948,6 @@ ________________________________________
   - **Video** - Generate a thumbnail at 0:00:03.
   - **Video** - Generate a thumbnail from an original file.
 
-
-
-
 #### Notes:
 - You can manually add additional arguments to any of these actions if needed. For example:
     - Use **FFmpeg** to change file types.
@@ -961,7 +958,7 @@ ________________________________________________________________________________
 1. Go to **Administration > Structure > Media Types**.
 2. For each media type (e.g., Image, Video, Audio):
     - Go to **Manage Fields**.
-    - Locate the field that stores the file (usually named `File` or similar).
+    - Locate the field that stores the file (the field that `file_type` named `File` or similar).
     - Click **Edit** next to that field.
     - Under **File System**, select **Fedora**.
     - Path: `<MediaType>/Manage fields/<TheOne_fieldType_IS_file>/File System: Fedora`
@@ -978,7 +975,7 @@ ________________________________________________________________________________
 #### Step 1: Configuring Image Derivatives for Text Extraction
 1. Go to **Administration > Structure > Context**.
 2. Locate the context named **Image Derivatives** and click **Edit**.
-3. Under **Reactions > Derivatives > Actions**, add the action **Extract Text from Image**.
+3. Under **Reactions > Derivatives > Actions**, While Holding `CTL` botton, add the action **Extract Text from Image**.
     - This action should be configured as described in section 1, including the Tesseract arguments.
 4. Explanation:
     - After creating an `Image` content model, you can attach both `Image` files (e.g., JPG, PNG) and `File` types (e.g., TIFF, JP2) to the content to be processed for text extraction.
@@ -987,7 +984,7 @@ ________________________________________________________________________________
 #### Step 2: Configuring PDF Derivatives for Text Extraction
 1. Go to **Administration > Structure > Context**.
 2. Locate the context named **PDF Derivatives** and click **Edit**.
-3. Under **Reactions > Derivatives > Actions**, add the action **Extract Text from PDF**.
+3. Under **Reactions > Derivatives > Actions**, While Holding `CTL` botton, add the action **Extract Text from PDF**.
     - This action should be configured as described in section 1, using `pdftotext` for PDF processing.
 4. Explanation:
     - After creating a `Digital Document` content model, you can attach `Document` files (PDFs) to the content to be processed for text extraction.
@@ -1003,7 +1000,7 @@ ________________________________________________________________________________
 
 ## b. Extra Configuration on Drupal For Groups:
 #### group type:
-- Navigate to Groups -> create a group type
+- Navigate to groups -> create a group type
 
 #### Groups role and group role permissions:
 - **Create specific roles:**
