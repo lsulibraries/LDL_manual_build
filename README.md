@@ -667,7 +667,8 @@ sudo -u www-data git clone https://github.com/Islandora/Crayfish.git /opt/crayfi
     - Copy over apache configuration for all microservices on port `8000`.
     - Enable apache ***virtual host*** for microservices.
     - Update ***Apache Ports*** to listen to port `8000` and Restart apache service.
-
+#### MOve Crayfish configuration files over:
+- ```sudo sh /mnt/shared/shell-scripts/crayfish-virtual-host.s
 #### Configure Logging:
 - ```sudo sh /mnt/shared/shell-scripts/crayfish-logging.sh```
 - Above command will create directory on `/var` and set correct permissions so that microservices can write the log files for future debugging.
