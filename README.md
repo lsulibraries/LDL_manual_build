@@ -669,7 +669,7 @@ sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
     - Update ***Apache Ports*** to listen to port `8000` and Restart apache service.
 
 #### Configure Logging:
-- ```sudo sh /mnt/shared/shell-scripts/crayfcrayfish-logging.sh```
+- ```sudo sh /mnt/shared/shell-scripts/crayfish-logging.sh```
 - Above command will create directory on `/var` and set correct permissions so that microservices can write the log files for future debugging.
 
 #### Authentication with fedora repository:
