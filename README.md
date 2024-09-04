@@ -923,37 +923,33 @@ ________________________________________
 - c. Extra Configuration on Drupal For apache2
 
 ## a. Extra Configuration on Drupal For Alpaca:
-### 1. Configuring Actions:
-#### Step 1: Configuring Derivative Creation Actions
-1. Go to **Administration > Structure > Actions**.
-2. For each derivative creation action, select **Fedora** as the file system.
-    - Example: If you have an action called `Generate Thumbnail`, edit it and ensure the file system is set to Fedora.
-3. Ensure that each derivative node action is set to save its output in Fedora.
-
-#### Step 2: Configuring Text Extraction Derivative Actions
-1. Go to **Administration > Structure > Actions**.
-2. Create a new action:
-    - **Action Name:** `Get OCR from Image`
+#### Step 1: Configuring Text Extraction Derivative Actions
+1. Go to **Configuration > System > Actions**.
+2. Create a new action called `Get OCR from Image`
     - **Machine Name:** Rename the machine name to `get_ocr_from_pdf`.
     - **Label:** Change the label to `Extract Text from PDF`.
-3. Configure the existing action for text extraction:
-    - **Action Name:** `Extract Text from Image or PDF`
+3. Configure the existing action for text extraction called `Extract Text from Image or PDF`:
     - **Edit the Action Label:** Change the label to `Extract Text from Image`.
     - **Additional Arguments:** Add the following arguments: `--psm 6 -l eng --dpi 300 -c tessedit_create_txt=1`. These arguments are used to generate text from images using Tesseract.
 
-#### Step 3: Verifying the List of Actions
-At the end of this process, you should have the following actions configured:
+### 2. Configuring Actions:
+#### Step 1: Configuring Derivative Creation Actions
+1. Go to **Configuration > System > Actions**.
+2. For each Action bellow, select **Fedora** as the file system.
+3. Bellow is the list of actions that storage location i needed to be configured:
+  - **Audio** - Generate a service file from an original file.
+  - **Digital Document** - Generate a thumbnail from an original file.
+  - **Extract Text from Image**.
+  - **Extract Text from PDF**.
+  - **FITS** - Generate technical metadata derivative.
+  - **Image** - Generate a service file from an original file.
+  - **Image** - Generate a thumbnail from an original file.
+  - **Video** - Generate a service file from an original file.
+  - **Video** - Generate a thumbnail at 0:00:03.
+  - **Video** - Generate a thumbnail from an original file.
 
-- **Audio** - Generate a service file from an original file.
-- **Digital Document** - Generate a thumbnail from an original file.
-- **Extract Text from Image**.
-- **Extract Text from PDF**.
-- **FITS** - Generate technical metadata derivative.
-- **Image** - Generate a service file from an original file.
-- **Image** - Generate a thumbnail from an original file.
-- **Video** - Generate a service file from an original file.
-- **Video** - Generate a thumbnail at 0:00:03.
-- **Video** - Generate a thumbnail from an original file.
+
+
 
 #### Notes:
 - You can manually add additional arguments to any of these actions if needed. For example:
