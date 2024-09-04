@@ -852,7 +852,7 @@ Some, we already configured in prerequsits, but we will make sure all the config
 - In GUI:
 - Navigate to ```/admin/config/media/openseadragon```
 
-- set location of the cantaloupe iiif endpoint to http://localhost:8182/iiif/2
+- set location of the cantaloupe iiif endpoint to http://127.0.0.1:8182/iiif/2
 
 - select IIIF Manifest from dropdown
 
