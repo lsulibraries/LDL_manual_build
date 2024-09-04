@@ -850,7 +850,7 @@ Some, we already configured in prerequsits, but we will make sure all the config
 ### Configurations:
 #### 1. Configure Cantaloupe OpenSeaDragon:
 - In GUI:
-- Navigate to ```http://[your-site-ip-address]/admin/config/media/openseadragon```
+- Navigate to ```/admin/config/media/openseadragon```
 
 - set location of the cantaloupe iiif endpoint to http://localhost:8182/iiif/2
 
