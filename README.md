@@ -829,7 +829,7 @@ for example, giving the default admin user the role:
 
 #### 1. Using Composer:
 - ```cd /opt/drupal/islandora-starter-site```
-- ```sudo composer exec -- drush user:role:add fedoraadmin admin```
+- ```sudo -u www-data composer exec -- drush user:role:add fedoraadmin admin```
  
 #### 2. Using Drush:**
 - cd /opt/drupal/islandora-starter-site
