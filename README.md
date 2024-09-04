@@ -703,7 +703,7 @@ sudo -u www-data git clone https://github.com/Islandora/Crayfish.git /opt/crayfi
 >sudo mkdir /opt/alpaca
 >sudo chmod -R 775 /opt/alpaca
 >cd /opt/alpaca
->sudo -u www-data curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
+>curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
 >```
 #### Copy Alpaca Config files:
 - Alpaca is made up of several microservices, each of these can be configured, enabled or disabled individually with an alpaca properties.
