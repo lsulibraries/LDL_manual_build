@@ -654,7 +654,7 @@ ________________________________________
 ```sh
 sudo mkdir /opt/crayfish
 cd /opt/crayfish
-sudo git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
+sudo -u www-data git clone https://github.com/Islandora/Crayfish.git /opt/crayfish
 ```
 
 #### Install Required Services on VM:
