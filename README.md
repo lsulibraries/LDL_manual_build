@@ -808,7 +808,7 @@ ________________________________________
 
 #### change permission on the web directory:
 - ```sudo chown -R www-data:www-data /opt/drupal/islandora-starter-site/web```
-- ```sudo chmod -R 755 /opt/drupal/islandora-starter-site/web```
+- ```sudo chmod -R 775 /opt/drupal/islandora-starter-site/web```
 
 #### Again, make sure you have already done followings:
 - You should have granted all privileges to the user Drupal when created the table and databases before site install so that these are all permissions on user to create tables on database.
