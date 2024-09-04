@@ -746,7 +746,7 @@ java -jar alpaca.jar -c /opt/alpaca/alpaca.properties
 ________________________________________
 # Download and Scaffold Drupal, Create a project using the Islandora Starter Site:
 #### install php-intl 8.3:
-```sudo apt-get install php8.3-intl```
+```sudo apt install -y php8.3-intl```
 
 #### create islandora starter site project
 
