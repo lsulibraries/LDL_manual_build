@@ -717,7 +717,7 @@ sudo -u www-data git clone https://github.com/Islandora/Crayfish.git /opt/crayfi
 1. Run from alpaca directory, for testing purpose, And ```CTL+C``` to cancel running it.
 ```sh
 cd /opt/alpaca
-java -jar alpaca.jar -c /opt/alpaca/alpaca.properties
+java -Dislandora.alpaca.log=DEBUG -jar alpaca.jar -c alpaca.properties
 ```
 2. Run with systemd: ```sudo systemctl start alpaca```
 #### Notes:
