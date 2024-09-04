@@ -920,7 +920,7 @@ ________________________________________
 # Extra Drupal Configuratin
 - a. Extra Configuration on Drupal For Alpaca
 - b. Extra Configuration on Drupal For Groups
-- c. Extra Configuration on Drupal For apache2
+- c. Configure apache2 php.ini
 
 ## a. Extra Configuration on Drupal For Alpaca:
 #### Step 1: Configuring Text Extraction Derivative Actions
@@ -1057,15 +1057,18 @@ ________________________________________________________________________________
    - Image media type's field type is **Image** not **file**
 
 
-## c. Extra Configuration on Drupal For apache2:
-#### Ensure you have set maxiumum file size
+## c. Configure apache2 php.ini:
+We go back to commandline and perform changes bellow:
+
+#### 1. Ensure you have set maxiumum file size
 - **upload size and max post size:**
   - ```sudo nano /etc/php/8.3/apache2/php.ini```
   - ```change post_max_size = 8M to post_max_size = 200M```
   - ```change upload_max_filesize = 8M to upload_max_filesize = 200M```
   - ```change max_file_uploads = 200 to an appropriate number (1000?)```
+  - ```change memory_limit = 128M to memory_limit = 512M```
 
-#### restart apache and tomcat, daemon-reload, cache rebuild
+#### 2. restart apache and tomcat, daemon-reload, cache rebuild
 - ```sudo systemctl restart apache2 tomcat```
 - ```sudo systemctl daemon-reload```
 - ```drush cr```
