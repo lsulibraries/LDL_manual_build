@@ -756,7 +756,7 @@ ________________________________________
 
 #### Install drush using composer at islandora-starter-site
 - ```sudo chown -R www-data:www-data /opt/drupal/islandora-starter-site```
-- ```sudo chmod 777 -R /opt/drupal/islandora-starter-site```
+- ```sudo chmod 775 -R /opt/drupal/islandora-starter-site```
 - ```sudo -u www-data composer require drush/drush```
 - ```sudo ln -s /opt/drupal/islandora-starter-site/vendor/bin/drush /usr/local/bin/drush```
 - ```ls -lart /usr/local/bin/drush```
