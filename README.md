@@ -852,7 +852,7 @@ Some, we already configured in prerequsits, but we will make sure all the config
 - In GUI:
 - Navigate to ```/admin/config/media/openseadragon```
 
-- set location of the cantaloupe iiif endpoint to http://127.0.0.1:8182/iiif/2
+- set location of the cantaloupe iiif endpoint to ```http://127.0.0.1:8182/iiif/2```
 
 - select IIIF Manifest from dropdown
 
@@ -860,7 +860,7 @@ Some, we already configured in prerequsits, but we will make sure all the config
 
 #### Configure Cantaloupe for Islandora IIIF:
 - /admin/config/islandora/iiif
-- set location of the cantaloupe: http://127.0.0.1:8182/iiif/2
+- set location of the cantaloupe: ```http://127.0.0.1:8182/iiif/2```
 
 #### Configure ActiveMQ, islandora message broker sertting url:
 - /admin/config/islandora/core
@@ -877,26 +877,26 @@ Some, we already configured in prerequsits, but we will make sure all the config
   - Then restart: sudo systemctl restart solr
   - Check if your solr core is installed!
 
-- **In GUI**: Navigate to admin/config/search/search-api edit the existing server or create one:
+- **In GUI**: Navigate to `admin/config/search/search-api` edit the existing server or create one:
   - backend: Solr
   - Solr Connector: Standard
   - Solr core: islandora8
 
 ### syn/jwt configuration:
 - Check if syn_private and syn_private keys are available at /opt/keys/
-- First, Navigate to /admin/config/system/keys/Edit
+- First, Navigate to `/admin/config/system/keys/Edit`
   - key type: JWT RSA KEy
   - JWT Algorithm: RSAASA-PKCXS1-v1_5 Using SHA-256(RS256)
   - Key Provider: file
   - File location: /opt/keys/syn_private.key
   - Save
    
- - Then, Navigate to /admin/config/system/jwt
+ - If you created new key, then, Navigate to /admin/config/system/jwt
     - Select the key you justy created
     - Save configuration
 
-#### Select default Flysystem:
-visit /admin/config/media/file-system to select the flysystem from the dropdown.
+#### Select default Download location Flysystem:
+visit /admin/config/media/file-system to select the flysystem:fedora
 ________________________________________
 # 4. Extra Configuration on Drupal For Alpaca:
 ### 1. Configuring Actions:
