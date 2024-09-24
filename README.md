@@ -720,6 +720,7 @@ cd /opt/alpaca
 java -Dislandora.alpaca.log=DEBUG -jar alpaca.jar -c alpaca.properties
 ```
 2. Run with systemd: ```sudo systemctl start alpaca```
+
 #### Notes:
 ##### 1. Alpaca integration with Workbench:
 - As of now Alpaca integrates with workbench on indexing new content to fedora resource and triplestore
@@ -920,6 +921,7 @@ ________________________________________
 # Extra Drupal Configuratin
 - a. Extra Configuration on Drupal For Alpaca
 - b. Extra Configuration on Drupal For Groups
+- c. Extra Configuration for Manually assign Derivatives to Groups in Drupal
 - c. Configure apache2 php.ini
 
 ## a. Extra Configuration on Drupal For Alpaca:
@@ -996,7 +998,7 @@ ________________________________________________________________________________
 3. Under **Reactions > Derivatives > Actions**, add the action **Audio - Generate a service file from an original file**.
 4. Explanation:
     - The context should already have a thumbnail generation action assigned, such as `Video - Generate thumbnail from Original file`.
-___________________________________________________________________________________________________________________________
+---
 
 ## b. Extra Configuration on Drupal For Groups:
 #### group type:
@@ -1055,9 +1057,36 @@ ________________________________________________________________________________
 - For each media type, edit the field where the type is file and set the Upload destination to Public files (for fedora-less system)
    - Example: for audio: field_media_audio_file
    - Image media type's field type is **Image** not **file**
+---
+## c. Manually Assigning Derivatives to Groups in Drupal: 
+- In a typical Islandora/Drupal setup, when you create media, derivatives like thumbnails, service files, are automatically generated using the Alpaca microservices. While the derivatives are created automatically, Drupal does not always assign these derivatives to the same group or access control settings as the original media by default
+### 1. Create a Separate Action for Each Group:
+- For each group, you’ll need to create a separate action to streamline the process of assigning media to specific groups.
+
+### 2. Create an Action to Assign Media to a Specific Group:
+- Navigate to Configuration > System > Actions.
+- Under Create an advanced action, create a new action called "Assign Media to Groups."
+- Edit the action:
+    - Label: Set the label to something descriptive, such as "Assign media to LSU."
+    - Machine Name: Adjust the machine name accordingly, for example, assign_media_to_lsu.
+    - Add to Group: Enter the name of the group to which the media should be assigned.
+    - Save the action.
+
+### 3. Navigate to the Media Library and Identify Derivatives:
+- In your Drupal dashboard, go to Content > Media. This will show a list of all media files, including the original files and their derivatives (e.g., thumbnails).
 
 
-## c. Configure apache2 php.ini:
+### 4. Edit the Derivative File:
+- Check the box next to the derivative media file (such as the thumbnail) that you want to assign to a group.
+- From the Actions drop-down menu, select the action we created to assign media to a group.
+
+### 5. Assign the Action:
+- Choose the action you created (e.g., "Assign media to LSU") from the Actions drop-down. This will assign the selected derivative to the designated group.
+
+### 6. Assign Media to Multiple Groups **(Optional)**:
+- If needed, you can create actions for multiple groups and assign media to different or multiple groups by selecting the appropriate actions from the drop-down.
+---
+## d. Configure apache2 php.ini:
 We go back to commandline and perform changes bellow:
 
 #### 1. Ensure you have set maxiumum file size
