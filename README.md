@@ -1101,6 +1101,60 @@ We go back to commandline and perform changes bellow:
 - ```sudo systemctl restart apache2 tomcat```
 - ```sudo systemctl daemon-reload```
 - ```drush cr```
+
+---
+# Configure Actions for Image Viewer:
+### 1. Set Proper File Ownership and Permissions:
+Change ownership of the isl-starter-site directory to www-data and set permissions to 775:
+```sh
+sudo chown -R www-data:www-data isl-starter-site
+sudo chmod -R 775 isl-starter-site
+```
+### 2. Check and Update Drupal/Islandora:
+Run the following commands to update Drupal and Islandora:
+
+```sh
+composer require drupal/islandora
+drush en islandora_core_feature
+drush mim islandora_tags
+drush en islandora_iiif
+```
+### 3. Reinstalling the Islandora IIIF and Mirador Modules
+- Uninstall and Reinstall the `islandora_iiif` Module:
+```sh
+drush pmu islandora_iiif
+drush en islandora_iiif islandora_mirador
+```
+- Clear the Drupal Cache:
+```sh
+drush cr
+```
+### 4. Editing Image Derivatives and Adding Service File to Reactions
+- Edit Image Derivative Configuration:
+    * Navigate to the Image Derivative settings and ensure that a Service File is added to its reactions. This step is crucial for correctly handling image derivatives.
+
+### 5. Setting Up the Action as a Context Derivative Reaction
+- Create the Derivative Action:
+    - Go to admin/config/system/actions.
+    - From the Create advanced action drop-down, select "Add image dimensions retrieved from the IIIF server" and click Create.
+    - In the configuration:
+        - Set Original File as the Source Media Use term.
+        - Select Media – File – Width and Media – File – Height for the corresponding configuration values.
+    - Click Save to finalize the action.
+
+- Modify the Context for Derivatives:
+    - Go to admin/structure/context and locate the Page Derivatives row.
+    - Click Duplicate and rename the context to something like "Retrieve Page Dimensions".
+
+- Adjust the Context Configuration:
+    - Edit the duplicated context.
+    - In the 'Media has term with URI' field, remove Original File and replace it with Service File.
+        - Explanation: The IIIF server retrieves dimensions after a service file has been created and fully saved with a URL. Original files don’t yet have URLs when their derivatives are being generated, so the action needs to attach to a service file derivative that’s created afterward.
+
+- Adjust the Reactions:
+    - In the Reactions section, deselect existing actions.
+    - Select "Add image dimensions from IIIF server" and click Save and continue.
+
 ________________________________________
 # re-islandora Workbench to be on V1.0.0:
 - ```cd /opt/drupal/islandora-starter-site```
