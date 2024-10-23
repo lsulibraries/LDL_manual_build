@@ -299,6 +299,7 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 
 ### Cantatloupe:
 #### Install Cantaloupe 5.0.6
+- ```sudo apt -y install libopenjp2-tools```
 - ```sh /mnt/hgfs/shared/scratch_6.sh```
 
 - scratch_6.sh will perform bellow tasks:
@@ -313,7 +314,7 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 >sudo mkdir /opt/cantaloupe_config
 >```
 #### copy the configurations into cantaloupe_config
-- ```sudo cp cantaloupe-5.0.6/cantaloupe.properties.sample /opt/cantaloupe_config/cantaloupe.properties```
+- ```sudo cp /mnt/hgfs/shared/cantaloupe.properties /opt/cantaloupe_config/cantaloupe.properties```
 - ```sudo cp cantaloupe-5.0.6/delegates.rb.sample /opt/cantaloupe_config/delegates.rb```
 
 #### Copy cantaloupe service syetem directory, check the version of your cantaloup in cantaloupe.service
