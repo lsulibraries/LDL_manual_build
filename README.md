@@ -923,7 +923,7 @@ ________________________________________
 - a. Extra Configuration on Drupal For Alpaca
 - b. Extra Configuration on Drupal For Groups
     - Anonymous user role:
-        1. Go to: /admin/group/types/manage/admin/roles
+        1. Go to: /admin/group/types/manage/admin/roles (Group>Group type>Edit group roles)
 	2. Click "Add group role"
 	3. Name the role "Anonymous"
         4. Select "Outsider" as the **Scope**
@@ -949,6 +949,7 @@ ________________________________________
             - Group media type: "Relationship: View any entity relations"
             - Group node (Repository Item): "Entity: View any content item entities"
             - Group node (Repository Item): "Relationship: View any entity relations"
+            - Click "Save permissions"
 - c. Extra Configuration for Manually assign Derivatives to Groups in Drupal
 - c. Configure apache2 php.ini
 
