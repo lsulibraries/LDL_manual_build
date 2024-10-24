@@ -313,7 +313,7 @@ ________________________________________
 >sudo mkdir /opt/cantaloupe_config
 >```
 #### copy the configurations into cantaloupe_config
-- ```sudo cp cantaloupe-5.0.6/cantaloupe.properties.sample /opt/cantaloupe_config/cantaloupe.properties```
+- ```sudo cp /mnt/hgfs/shared/cantaloupe.properties /opt/cantaloupe_config/cantaloupe.properties```
 - ```sudo cp cantaloupe-5.0.6/delegates.rb.sample /opt/cantaloupe_config/delegates.rb```
 
 #### Copy cantaloupe service syetem directory, check the version of your cantaloup in cantaloupe.service
