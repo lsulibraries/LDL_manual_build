@@ -718,9 +718,10 @@ sudo -u www-data git clone https://github.com/Islandora/Crayfish.git /opt/crayfi
 1. Run from alpaca directory, for testing purpose, And ```CTL+C``` to cancel running it.
 ```sh
 cd /opt/alpaca
-java -jar alpaca.jar -c /opt/alpaca/alpaca.properties
+java -Dislandora.alpaca.log=DEBUG -jar alpaca.jar -c alpaca.properties
 ```
 2. Run with systemd: ```sudo systemctl start alpaca```
+
 #### Notes:
 ##### 1. Alpaca integration with Workbench:
 - As of now Alpaca integrates with workbench on indexing new content to fedora resource and triplestore
@@ -732,88 +733,6 @@ java -jar alpaca.jar -c /opt/alpaca/alpaca.properties
 - If Alpaca is running on a different machine, we will just need to update the URLs in the configuration file to point to the correct host for the various services.
 ##### 3. Alpaca Activity:
 - We won't see much activity from Alpaca until our ActiveMQ is populated with messages from Drupal, such as requests to index content or generate derivatives.
-
-## 4. Extra Configuration on Drupal For Alpaca:
-### 1. Configuring Actions:
-#### Step 1: Configuring Derivative Creation Actions
-1. Go to **Administration > Structure > Actions**.
-2. For each derivative creation action, select **Fedora** as the file system.
-    - Example: If you have an action called `Generate Thumbnail`, edit it and ensure the file system is set to Fedora.
-3. Ensure that each derivative node action is set to save its output in Fedora.
-
-#### Step 2: Configuring Text Extraction Derivative Actions
-1. Go to **Administration > Structure > Actions**.
-2. Create a new action:
-    - **Action Name:** `Get OCR from Image`
-    - **Machine Name:** Rename the machine name to `get_ocr_from_pdf`.
-    - **Label:** Change the label to `Extract Text from PDF`.
-3. Configure the existing action for text extraction:
-    - **Action Name:** `Extract Text from Image or PDF`
-    - **Edit the Action Label:** Change the label to `Extract Text from Image`.
-    - **Additional Arguments:** Add the following arguments: `--psm 6 -l eng --dpi 300 -c tessedit_create_txt=1`. These arguments are used to generate text from images using Tesseract.
-
-#### Step 3: Verifying the List of Actions
-At the end of this process, you should have the following actions configured:
-
-- **Audio** - Generate a service file from an original file.
-- **Digital Document** - Generate a thumbnail from an original file.
-- **Extract Text from Image**.
-- **Extract Text from PDF**.
-- **FITS** - Generate technical metadata derivative.
-- **Image** - Generate a service file from an original file.
-- **Image** - Generate a thumbnail from an original file.
-- **Video** - Generate a service file from an original file.
-- **Video** - Generate a thumbnail at 0:00:03.
-- **Video** - Generate a thumbnail from an original file.
-
-#### Notes:
-- You can manually add additional arguments to any of these actions if needed. For example:
-    - Use **FFmpeg** to change file types.
-    - Use **Tesseract** to generate text from media files.
-___________________________________________________________________________________________________________________________
-### 2. Configuring Media Types:
-#### Step 1: Edit File System Location for Media Types
-1. Go to **Administration > Structure > Media Types**.
-2. For each media type (e.g., Image, Video, Audio):
-    - Go to **Manage Fields**.
-    - Locate the field that stores the file (usually named `File` or similar).
-    - Click **Edit** next to that field.
-    - Under **File System**, select **Fedora**.
-    - Path: `<MediaType>/Manage fields/<TheOne_fieldType_IS_file>/File System: Fedora`
-
-#### Step 2: Configure the "Media Of" Field
-1. For each media type:
-    - Go to **Manage Fields**.
-    - Locate the `field_media_of` field.
-    - Click **Edit** next to that field.
-    - Under **Content Type**, select `Repository Item`.
-    - Path: `<MediaType>/Manage fields/Media of/Content type: Repository Item`
-___________________________________________________________________________________________________________________________
-### 3. Configuring Contexts:
-#### Step 1: Configuring Image Derivatives for Text Extraction
-1. Go to **Administration > Structure > Context**.
-2. Locate the context named **Image Derivatives** and click **Edit**.
-3. Under **Reactions > Derivatives > Actions**, add the action **Extract Text from Image**.
-    - This action should be configured as described in section 1, including the Tesseract arguments.
-4. Explanation:
-    - After creating an `Image` content model, you can attach both `Image` files (e.g., JPG, PNG) and `File` types (e.g., TIFF, JP2) to the content to be processed for text extraction.
-    - Note: A thumbnail generation action should already be assigned.
-
-#### Step 2: Configuring PDF Derivatives for Text Extraction
-1. Go to **Administration > Structure > Context**.
-2. Locate the context named **PDF Derivatives** and click **Edit**.
-3. Under **Reactions > Derivatives > Actions**, add the action **Extract Text from PDF**.
-    - This action should be configured as described in section 1, using `pdftotext` for PDF processing.
-4. Explanation:
-    - After creating a `Digital Document` content model, you can attach `Document` files (PDFs) to the content to be processed for text extraction.
-    - Note: A thumbnail generation action should already be assigned, such as `Digital Document - Generate thumbnail from Original file`.
-
-#### Step 3: Configuring Video Derivatives for Audio Extraction
-1. Go to **Administration > Structure > Context**.
-2. Locate the context named **Video Derivatives** and click **Edit**.
-3. Under **Reactions > Derivatives > Actions**, add the action **Audio - Generate a service file from an original file**.
-4. Explanation:
-    - The context should already have a thumbnail generation action assigned, such as `Video - Generate thumbnail from Original file`.
 
 ### Notes:
 1. **Alpaca integration with Workbench:**
@@ -829,7 +748,7 @@ ________________________________________________________________________________
 ________________________________________
 # Download and Scaffold Drupal, Create a project using the Islandora Starter Site:
 #### install php-intl 8.3:
-```sudo apt-get install php8.3-intl```
+```sudo apt install -y php8.3-intl```
 
 #### create islandora starter site project
 
@@ -839,7 +758,7 @@ ________________________________________
 
 #### Install drush using composer at islandora-starter-site
 - ```sudo chown -R www-data:www-data /opt/drupal/islandora-starter-site```
-- ```sudo chmod 777 -R /opt/drupal/islandora-starter-site```
+- ```sudo chmod 775 -R /opt/drupal/islandora-starter-site```
 - ```sudo -u www-data composer require drush/drush```
 - ```sudo ln -s /opt/drupal/islandora-starter-site/vendor/bin/drush /usr/local/bin/drush```
 - ```ls -lart /usr/local/bin/drush```
@@ -891,7 +810,7 @@ ________________________________________
 
 #### change permission on the web directory:
 - ```sudo chown -R www-data:www-data /opt/drupal/islandora-starter-site/web```
-- ```sudo chmod -R 755 /opt/drupal/islandora-starter-site/web```
+- ```sudo chmod -R 775 /opt/drupal/islandora-starter-site/web```
 
 #### Again, make sure you have already done followings:
 - You should have granted all privileges to the user Drupal when created the table and databases before site install so that these are all permissions on user to create tables on database.
@@ -899,7 +818,7 @@ ________________________________________
 ________________________________________
 # Install the site using composer or drush:
 - **1. install using Composer:**
-  - ```sudo composer exec -- drush site:install --existing-config```
+  - ```sudo -u www-data composer exec -- drush site:install --existing-config```
  
 - **2. Install with Drush:**
   - ```sudo -u www-data drush site-install --existing-config --db-url="pgsql://drupal:drupal@127.0.0.1:5432/drupal10"```
@@ -907,22 +826,23 @@ ________________________________________
 #### Change default username and password:
 - ```sudo drush upwd admin admin```
 ________________________________________
-# Add a user to the fedoraadmin role:(Optional)
-for example, giving the default admin user the role:
+# Add a user to the fedoraadmin role:
+for example, giving the default admin user the role using one the steps bellow:
 
 #### 1. Using Composer:
 - ```cd /opt/drupal/islandora-starter-site```
-- ```sudo composer exec -- drush user:role:add fedoraadmin admin```
+- ```sudo -u www-data composer exec -- drush user:role:add fedoraadmin admin```
  
-#### 2. Using Drush:**
-- cd /opt/drupal/islandora-starter-site
-- sudo -u www-data drush -y urol "fedoraadmin" admin
+#### 2. OR Using Drush:
+- ```cd /opt/drupal/islandora-starter-site```
+- ```sudo -u www-data drush -y urol "fedoraadmin" admin```
 ________________________________________
 # Configure the locations of external services:
 Some, we already configured in prerequsits, but we will make sure all the configurations are in place.
 #### Check following configurations before moving forward:
 - check if your services like cantaloupe, apache, tomcat, databases are available and working
     - ```sudo systemctl status cantaloupe apache2 tomcat postgresql```
+    - then hit `q` to exit
 - check if you have already configured the cantaloup IIIF base URL to http://127.0.0.1:8182/iiif/2
 - check if you have already configured activemq.xml in name="stomp" uri="stomp://127.0.0.1:61613"
 
@@ -932,9 +852,9 @@ Some, we already configured in prerequsits, but we will make sure all the config
 ### Configurations:
 #### 1. Configure Cantaloupe OpenSeaDragon:
 - In GUI:
-- Navigate to ```http://[your-site-ip-address]/admin/config/media/openseadragon```
+- Navigate to ```/admin/config/media/openseadragon```
 
-- set location of the cantaloupe iiif endpoint to http://localhost:8182/iiif/2
+- set location of the cantaloupe iiif endpoint to ```http://127.0.0.1:8182/iiif/2```
 
 - select IIIF Manifest from dropdown
 
@@ -942,7 +862,7 @@ Some, we already configured in prerequsits, but we will make sure all the config
 
 #### Configure Cantaloupe for Islandora IIIF:
 - /admin/config/islandora/iiif
-- set location of the cantaloupe: http://127.0.0.1:8182/iiif/2
+- set location of the cantaloupe: ```http://127.0.0.1:8182/iiif/2```
 
 #### Configure ActiveMQ, islandora message broker sertting url:
 - /admin/config/islandora/core
@@ -959,26 +879,26 @@ Some, we already configured in prerequsits, but we will make sure all the config
   - Then restart: sudo systemctl restart solr
   - Check if your solr core is installed!
 
-- **In GUI**: Navigate to admin/config/search/search-api edit the existing server or create one:
+- **In GUI**: Navigate to `admin/config/search/search-api` edit the existing server or create one:
   - backend: Solr
   - Solr Connector: Standard
   - Solr core: islandora8
 
 ### syn/jwt configuration:
 - Check if syn_private and syn_private keys are available at /opt/keys/
-- First, Navigate to /admin/config/system/keys/Edit
+- First, Navigate to `/admin/config/system/keys/Edit`
   - key type: JWT RSA KEy
   - JWT Algorithm: RSAASA-PKCXS1-v1_5 Using SHA-256(RS256)
   - Key Provider: file
   - File location: /opt/keys/syn_private.key
   - Save
    
- - Then, Navigate to /admin/config/system/jwt
+ - If you created new key, then, Navigate to /admin/config/system/jwt
     - Select the key you justy created
     - Save configuration
 
-#### Select default Flysystem:
-visit /admin/config/media/file-system to select the flysystem from the dropdown.
+#### Select default Download location Flysystem:
+visit /admin/config/media/file-system to select the flysystem:fedora
 ________________________________________
 # Run the migrations command and Enabling EVA Views:
 run the migration tagged with islandora  to populate some taxonomies.
@@ -998,9 +918,92 @@ ________________________________________
 #### Rebuild Cache:
 - ```drush cr```
 ________________________________________
-# Group Configuration:
+
+# Extra Drupal Configuratin
+- a. Extra Configuration on Drupal For Alpaca
+- b. Extra Configuration on Drupal For Groups
+- c. Extra Configuration for Manually assign Derivatives to Groups in Drupal
+- c. Configure apache2 php.ini
+
+## a. Extra Configuration on Drupal For Alpaca:
+#### Step 1: Configuring Text Extraction Derivative Actions
+1. Go to **Configuration > System > Actions**.
+2. Create a new action called `Get OCR from Image`
+    - **Machine Name:** Rename the machine name to `get_ocr_from_pdf`.
+    - **Label:** Change the label to `Extract Text from PDF`.
+3. Configure the existing action for text extraction called `Extract Text from Image or PDF`:
+    - **Edit the Action Label:** Change the label to `Extract Text from Image`.
+    - **Additional Arguments:** Add the following arguments: `--psm 6 -l eng --dpi 300 -c tessedit_create_txt=1`. These arguments are used to generate text from images using Tesseract.
+
+### Step2. Configuring Actions:
+#### Step 1: Create Action for OCR From image and PDF:
+1. Go to **Configuration > System > Actions**.
+2. For each Action bellow, select **Fedora** as the file system.
+3. Bellow is the list of actions that storage location i needed to be configured:
+  - **Audio** - Generate a service file from an original file.
+  - **Digital Document** - Generate a thumbnail from an original file.
+  - **Extract Text from Image**.
+  - **Extract Text from PDF**.
+  - **FITS** - Generate technical metadata derivative.
+  - **Image** - Generate a service file from an original file.
+  - **Image** - Generate a thumbnail from an original file.
+  - **Video** - Generate a service file from an original file.
+  - **Video** - Generate a thumbnail at 0:00:03.
+  - **Video** - Generate a thumbnail from an original file.
+
+#### Notes:
+- You can manually add additional arguments to any of these actions if needed. For example:
+    - Use **FFmpeg** to change file types.
+    - Use **Tesseract** to generate text from media files.
+___________________________________________________________________________________________________________________________
+### 2. Configuring Media Types:
+#### Step 1: Edit File System Location for Media Types
+1. Go to **Administration > Structure > Media Types**.
+2. For each media type (e.g., Image, Video, Audio):
+    - Go to **Manage Fields**.
+    - Locate the field that stores the file (the field that `file_type` named `File` or similar).
+    - Click **Edit** next to that field.
+    - Under **File System**, select **Fedora**.
+    - Path: `<MediaType>/Manage fields/<TheOne_fieldType_IS_file>/File System: Fedora`
+
+#### Step 2: Configure the "Media Of" Field
+1. For each media type:
+    - Go to **Manage Fields**.
+    - Locate the `field_media_of` field.
+    - Click **Edit** next to that field.
+    - Under **Content Type**, select `Repository Item`.
+    - Path: `<MediaType>/Manage fields/Media of/Content type: Repository Item`
+___________________________________________________________________________________________________________________________
+### 3. Configuring Contexts:
+#### Step 1: Configuring Image Derivatives for Text Extraction
+1. Go to **Administration > Structure > Context**.
+2. Locate the context named **Image Derivatives** and click **Edit**.
+3. Under **Reactions > Derivatives > Actions**, While Holding `CTL` botton, add the action **Extract Text from Image**.
+    - This action should be configured as described in section 1, including the Tesseract arguments.
+4. Explanation:
+    - After creating an `Image` content model, you can attach both `Image` files (e.g., JPG, PNG) and `File` types (e.g., TIFF, JP2) to the content to be processed for text extraction.
+    - Note: A thumbnail generation action should already be assigned.
+
+#### Step 2: Configuring PDF Derivatives for Text Extraction
+1. Go to **Administration > Structure > Context**.
+2. Locate the context named **PDF Derivatives** and click **Edit**.
+3. Under **Reactions > Derivatives > Actions**, While Holding `CTL` botton, add the action **Extract Text from PDF**.
+    - This action should be configured as described in section 1, using `pdftotext` for PDF processing.
+4. Explanation:
+    - After creating a `Digital Document` content model, you can attach `Document` files (PDFs) to the content to be processed for text extraction.
+    - Note: A thumbnail generation action should already be assigned, such as `Digital Document - Generate thumbnail from Original file`.
+
+#### Step 3: Configuring Video Derivatives for Audio Extraction
+1. Go to **Administration > Structure > Context**.
+2. Locate the context named **Video Derivatives** and click **Edit**.
+3. Under **Reactions > Derivatives > Actions**, add the action **Audio - Generate a service file from an original file**.
+4. Explanation:
+    - The context should already have a thumbnail generation action assigned, such as `Video - Generate thumbnail from Original file`.
+---
+
+## b. Extra Configuration on Drupal For Groups:
 #### group type:
-- Navigate to Groups -> create a group type
+- Navigate to groups -> create a group type
 
 #### Groups role and group role permissions:
 - **Create specific roles:**
@@ -1043,7 +1046,11 @@ ________________________________________
 
 #### set available content in group type:
 - navigate to groups>group type> set avaialble content
-- install each content one by one
+- install plugin for Repository item content types:
+  - Change cardinality to 1
+- Install plugin for each Group media types:
+  - add cardinality to 1
+  - Check Enable Meida tracking
 
 #### Fix the destination for each media type (Important for media ingestion for each media types):
 - Navigate ```Structure>Media types```
@@ -1051,25 +1058,58 @@ ________________________________________
 - For each media type, edit the field where the type is file and set the Upload destination to Public files (for fedora-less system)
    - Example: for audio: field_media_audio_file
    - Image media type's field type is **Image** not **file**
+---
+## c. Manually Assigning Derivatives to Groups in Drupal: 
+- In a typical Islandora/Drupal setup, when you create media, derivatives like thumbnails, service files, are automatically generated using the Alpaca microservices. While the derivatives are created automatically, Drupal does not always assign these derivatives to the same group or access control settings as the original media by default
+### 1. Create a Separate Action for Each Group:
+- For each group, you’ll need to create a separate action to streamline the process of assigning media to specific groups.
+
+### 2. Create an Action to Assign Media to a Specific Group:
+- Navigate to Configuration > System > Actions.
+- Under Create an advanced action, create a new action called "Assign Media to Groups."
+- Edit the action:
+    - Label: Set the label to something descriptive, such as "Assign media to LSU."
+    - Machine Name: Adjust the machine name accordingly, for example, assign_media_to_lsu.
+    - Add to Group: Enter the name of the group to which the media should be assigned.
+    - Save the action.
+
+### 3. Navigate to the Media Library and Identify Derivatives:
+- In your Drupal dashboard, go to Content > Media. This will show a list of all media files, including the original files and their derivatives (e.g., thumbnails).
 
 
+### 4. Edit the Derivative File:
+- Check the box next to the derivative media file (such as the thumbnail) that you want to assign to a group.
+- From the Actions drop-down menu, select the action we created to assign media to a group.
 
-#### Ensure you have set maxiumum file size
+### 5. Assign the Action:
+- Choose the action you created (e.g., "Assign media to LSU") from the Actions drop-down. This will assign the selected derivative to the designated group.
+
+### 6. Assign Media to Multiple Groups **(Optional)**:
+- If needed, you can create actions for multiple groups and assign media to different or multiple groups by selecting the appropriate actions from the drop-down.
+---
+## d. Configure apache2 php.ini:
+We go back to commandline and perform changes bellow:
+
+#### 1. Ensure you have set maxiumum file size
 - **upload size and max post size:**
   - ```sudo nano /etc/php/8.3/apache2/php.ini```
   - ```change post_max_size = 8M to post_max_size = 200M```
   - ```change upload_max_filesize = 8M to upload_max_filesize = 200M```
   - ```change max_file_uploads = 200 to an appropriate number (1000?)```
+  - ```change memory_limit = 128M to memory_limit = 512M```
 
-#### restart apache and tomcat, daemon-reload, cache rebuild
+#### 2. restart apache and tomcat, daemon-reload, cache rebuild
 - ```sudo systemctl restart apache2 tomcat```
 - ```sudo systemctl daemon-reload```
 - ```drush cr```
 ________________________________________
 # re-islandora Workbench to be on V1.0.0:
+- ```cd /opt/drupal/islandora-starter-site```
+- ```sudo chmod -R 775 /opt/drupal/islandora-starter-site/web/sites/default```
+- ```sudo chmod 640/opt/drupal/islandora-starter-site/web/sites/default/settings.php```
 #### Remove dev version and install V1 cause dev version is not determined by workbench anymore:
-```cd /opt/drupal/islandora-starter-site```
-- remove mjordan/islandora_workbench_integration from composer.json
+
+- remove `mjordan/islandora_workbench_integration` from composer.json, and remove `comma` on line before that
     - ```sudo nano composer.json```
 - Then update the composer json:
   - ```sudo -u www-data composer update```
