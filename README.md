@@ -922,6 +922,33 @@ ________________________________________
 # Extra Drupal Configuratin
 - a. Extra Configuration on Drupal For Alpaca
 - b. Extra Configuration on Drupal For Groups
+    - Anonymous user role:
+        1. Go to: /admin/group/types/manage/admin/roles
+	2. Click "Add group role"
+	3. Name the role "Anonymous"
+        4. Select "Outsider" as the **Scope**
+	5. After the role is created select "Edit permissions"
+	6. click the checkbox for the following permissions:
+	    - Group General: "View published group"
+            - Group media (Audio): "Entity: View any media item enttities"
+            - Group media (Audio): "Relationship: View any entity relations"
+            - Group media (Document): "Entity: View any media item enttities"
+            - Group media (Document): "Relationship: View any entity relations"
+            - Group media (Extracted Text): "Entity: View any media item enttities"
+            - Group media (Extracted Text): "Relationship: View any entity relations"
+            - Group media (FITS Technical metadata): "Entity: View any media item enttities"
+            - Group media (FITS Technical metadata): "Relationship: View any entity relations"
+            - Group media (File): "Entity: View any media item enttities"
+            - Group media (File): "Relationship: View any entity relations"
+            - Group media (Image): "Entity: View any media item enttities"
+            - Group media (Image): "Relationship: View any entity relations"
+            - Group media (Remote Video): "Entity: View any media item enttities"
+            - Group media (Remote Video): "Relationship: View any entity relations"
+            - Group media (Video): "Entity: View any media item enttities"
+            - Group media (Video): "Relationship: View any entity relations"
+            - Group media type: "Relationship: View any entity relations"
+            - Group node (Repository Item): "Entity: View any content item entities"
+            - Group node (Repository Item): "Relationship: View any entity relations"
 - c. Extra Configuration for Manually assign Derivatives to Groups in Drupal
 - c. Configure apache2 php.ini
 
