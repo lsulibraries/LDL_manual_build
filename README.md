@@ -298,6 +298,7 @@ scratch_5.sh (if the tomcat tarball link is different you must change the path i
 ________________________________________
 ### Cantatloupe:
 #### Install Cantaloupe 5.0.6
+- ```sudo apt -y install libopenjp2-tools```
 - ```sh /mnt/shared/shell-scripts/scratch_6.sh```
 
 - scratch_6.sh will perform bellow tasks:
